@@ -1,0 +1,3 @@
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles/LightSoakFW-STM.elf.dir
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles/rebuild_cache.dir

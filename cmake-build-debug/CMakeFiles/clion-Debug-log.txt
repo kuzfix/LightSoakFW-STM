@@ -1,0 +1,5 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc -DCMAKE_CXX_COMPILER=/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-g++ -G "CodeBlocks - Unix Makefiles" -S /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM -B /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug
+-- Minimal optimization, debug info included
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug
