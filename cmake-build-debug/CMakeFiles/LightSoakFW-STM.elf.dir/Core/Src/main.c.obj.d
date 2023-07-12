@@ -39,6 +39,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ramfunc.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_usart.h \
@@ -52,8 +54,25 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_dma.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_dmamux.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_exti.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/stdio.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/_ansi.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/newlib.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/config.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/machine/ieeefp.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/cdefs.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/lib/gcc/arm-none-eabi/12.2.1/include/stdarg.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/reent.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/_ansi.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/_types.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/machine/_types.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/lock.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/stdio.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/adc.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/dac.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/usart.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/gpio.h
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/tim.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/gpio.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/front_end_control.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/gpio.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/tim.h

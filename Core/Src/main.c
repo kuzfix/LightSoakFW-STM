@@ -21,10 +21,12 @@
 #include "adc.h"
 #include "dac.h"
 #include "usart.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "front_end_control.h"
 
 /* USER CODE END Includes */
 
@@ -93,6 +95,8 @@ int main(void)
   MX_DAC1_Init();
   MX_USART3_UART_Init();
   MX_LPUART1_UART_Init();
+  MX_TIM1_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -101,6 +105,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    //toggle DGB_LED_1
+    HAL_GPIO_TogglePin(CH1_CUR_EN_GPIO_Port, DBG_LED_1_Pin);
+    printf("%f", fec_ch_params[0].shnt_1_resistance);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

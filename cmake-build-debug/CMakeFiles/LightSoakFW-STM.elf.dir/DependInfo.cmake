@@ -33,6 +33,7 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/adc.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj.d"
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/main.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/stm32g4xx_hal_msp.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj.d"
@@ -40,6 +41,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/syscalls.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/sysmem.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/system_stm32g4xx.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj.d"
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/tim.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/usart.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj.d"

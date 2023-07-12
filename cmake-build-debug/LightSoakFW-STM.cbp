@@ -104,6 +104,9 @@
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/dac.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/front_end_control.h">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/gpio.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
@@ -119,6 +122,9 @@
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32g4xx_it.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/tim.h">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/usart.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
@@ -126,6 +132,9 @@
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c">
@@ -147,6 +156,9 @@
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/system_stm32g4xx.c">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/tim.c">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/usart.c">
@@ -351,6 +363,9 @@
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_system.h">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_tim.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_usart.h">

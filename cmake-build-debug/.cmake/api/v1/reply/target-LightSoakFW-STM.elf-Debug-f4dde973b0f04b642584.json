@@ -188,8 +188,6 @@
 			},
 			"sourceIndexes" : 
 			[
-				8,
-				9,
 				10,
 				11,
 				12,
@@ -198,11 +196,10 @@
 				15,
 				16,
 				17,
-				88,
-				89,
-				90,
-				91,
-				92,
+				18,
+				19,
+				20,
+				21,
 				93,
 				94,
 				95,
@@ -225,7 +222,12 @@
 				112,
 				113,
 				114,
-				115
+				115,
+				116,
+				117,
+				118,
+				119,
+				120
 			]
 		},
 		{
@@ -324,7 +326,7 @@
 			"language" : "ASM",
 			"sourceIndexes" : 
 			[
-				18
+				22
 			]
 		}
 	],
@@ -395,13 +397,11 @@
 				5,
 				6,
 				7,
-				19,
-				20,
-				21,
+				8,
+				9,
 				23,
 				24,
 				25,
-				26,
 				27,
 				28,
 				29,
@@ -422,10 +422,10 @@
 				44,
 				45,
 				46,
+				47,
 				48,
 				49,
 				50,
-				51,
 				52,
 				53,
 				54,
@@ -460,15 +460,18 @@
 				83,
 				84,
 				85,
-				86
+				86,
+				87,
+				88,
+				89,
+				90,
+				91
 			]
 		},
 		{
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				8,
-				9,
 				10,
 				11,
 				12,
@@ -477,11 +480,10 @@
 				15,
 				16,
 				17,
-				88,
-				89,
-				90,
-				91,
-				92,
+				18,
+				19,
+				20,
+				21,
 				93,
 				94,
 				95,
@@ -504,18 +506,23 @@
 				112,
 				113,
 				114,
-				115
+				115,
+				116,
+				117,
+				118,
+				119,
+				120
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				18,
 				22,
-				47,
-				87,
-				116
+				26,
+				51,
+				92,
+				121
 			]
 		}
 	],
@@ -529,6 +536,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "Core/Inc/dac.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Core/Inc/front_end_control.h",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -558,6 +570,11 @@
 		},
 		{
 			"backtrace" : 1,
+			"path" : "Core/Inc/tim.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
 			"path" : "Core/Inc/usart.h",
 			"sourceGroupIndex" : 0
 		},
@@ -571,6 +588,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/dac.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/front_end_control.c",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -613,6 +636,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/system_stm32g4xx.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Src/tim.c",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -955,6 +984,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_system.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_tim.h",
 			"sourceGroupIndex" : 0
 		},
 		{

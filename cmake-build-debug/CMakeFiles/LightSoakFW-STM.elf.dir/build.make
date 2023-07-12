@@ -97,10 +97,24 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.s"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.s
 
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj"
+	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c
+
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.i"
+	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c > CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.i
+
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.s"
+	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.s
+
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.s: cmake_force
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/main.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/main.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.s: cmake_force
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/stm32g4xx_hal_msp.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/stm32g4xx_hal_msp.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.s: cmake_force
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/stm32g4xx_it.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/stm32g4xx_it.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.s: cmake_force
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/syscalls.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/syscalls.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.s: cmake_force
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/sysmem.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/sysmem.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.s: cmake_force
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/system_stm32g4xx.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/system_stm32g4xx.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.i: cmake_force
@@ -195,10 +209,24 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.s"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/system_stm32g4xx.c -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.s
 
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/tim.c
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj"
+	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/tim.c
+
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.i"
+	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/tim.c > CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.i
+
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.s"
+	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/tim.c -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.s
+
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/usart.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/usart.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.i: cmake_force
@@ -211,7 +239,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.s: cmake_force
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Startup/startup_stm32g474qetx.s
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building ASM object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building ASM object CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Startup/startup_stm32g474qetx.s
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.i: cmake_force
@@ -225,7 +253,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.s: cmake
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.i: cmake_force
@@ -239,7 +267,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c.i: cmake_force
@@ -253,7 +281,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c.i: cmake_force
@@ -267,7 +295,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c.i: cmake_force
@@ -281,7 +309,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac.c.i: cmake_force
@@ -295,7 +323,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dac_ex.c.i: cmake_force
@@ -309,7 +337,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c.i: cmake_force
@@ -323,7 +351,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c.i: cmake_force
@@ -337,7 +365,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c.i: cmake_force
@@ -351,7 +379,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c.i: cmake_force
@@ -365,7 +393,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c.i: cmake_force
@@ -379,7 +407,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c.i: cmake_force
@@ -393,7 +421,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c.i: cmake_force
@@ -407,7 +435,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c.i: cmake_force
@@ -421,7 +449,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c.i: cmake_force
@@ -435,7 +463,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c.i: cmake_force
@@ -449,7 +477,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c.i: cmake_force
@@ -463,7 +491,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c.i: cmake_force
@@ -477,7 +505,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c.i: cmake_force
@@ -491,7 +519,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c.i: cmake_force
@@ -505,7 +533,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c.i: cmake_force
@@ -519,7 +547,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ha
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c.i: cmake_force
@@ -533,7 +561,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.i: cmake_force
@@ -547,7 +575,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.i: cmake_force
@@ -561,7 +589,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.i: cmake_force
@@ -575,7 +603,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.i: cmake_force
@@ -589,7 +617,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.i: cmake_force
@@ -603,7 +631,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/flags.make
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj: CMakeFiles/LightSoakFW-STM.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building C object CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj"
 	/Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj -MF CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj.d -o CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj -c /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.i: cmake_force
@@ -618,6 +646,7 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 LightSoakFW__STM_elf_OBJECTS = \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj" \
+"CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj" \
@@ -625,6 +654,7 @@ LightSoakFW__STM_elf_OBJECTS = \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj" \
+"CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.obj" \
 "CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj" \
@@ -661,6 +691,7 @@ LightSoakFW__STM_elf_EXTERNAL_OBJECTS =
 
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj
+LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj
@@ -668,6 +699,7 @@ LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/syscalls.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/sysmem.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.obj
+LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/usart.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Core/Startup/startup_stm32g474qetx.s.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c.obj
@@ -700,7 +732,7 @@ LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Dr
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/build.make
 LightSoakFW-STM.elf: CMakeFiles/LightSoakFW-STM.elf.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Linking C executable LightSoakFW-STM.elf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Linking C executable LightSoakFW-STM.elf"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LightSoakFW-STM.elf.dir/link.txt --verbose=$(VERBOSE)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/LightSoakFW-STM.hex"
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/cmake-build-debug/LightSoakFW-STM.bin"

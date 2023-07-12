@@ -177,6 +177,30 @@ Core/Src/dac.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.s
 .PHONY : Core/Src/dac.c.s
 
+Core/Src/front_end_control.obj: Core/Src/front_end_control.c.obj
+.PHONY : Core/Src/front_end_control.obj
+
+# target to build an object file
+Core/Src/front_end_control.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj
+.PHONY : Core/Src/front_end_control.c.obj
+
+Core/Src/front_end_control.i: Core/Src/front_end_control.c.i
+.PHONY : Core/Src/front_end_control.i
+
+# target to preprocess a source file
+Core/Src/front_end_control.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.i
+.PHONY : Core/Src/front_end_control.c.i
+
+Core/Src/front_end_control.s: Core/Src/front_end_control.c.s
+.PHONY : Core/Src/front_end_control.s
+
+# target to generate assembly for a file
+Core/Src/front_end_control.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.s
+.PHONY : Core/Src/front_end_control.c.s
+
 Core/Src/gpio.obj: Core/Src/gpio.c.obj
 .PHONY : Core/Src/gpio.obj
 
@@ -344,6 +368,30 @@ Core/Src/system_stm32g4xx.s: Core/Src/system_stm32g4xx.c.s
 Core/Src/system_stm32g4xx.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/system_stm32g4xx.c.s
 .PHONY : Core/Src/system_stm32g4xx.c.s
+
+Core/Src/tim.obj: Core/Src/tim.c.obj
+.PHONY : Core/Src/tim.obj
+
+# target to build an object file
+Core/Src/tim.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj
+.PHONY : Core/Src/tim.c.obj
+
+Core/Src/tim.i: Core/Src/tim.c.i
+.PHONY : Core/Src/tim.i
+
+# target to preprocess a source file
+Core/Src/tim.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.i
+.PHONY : Core/Src/tim.c.i
+
+Core/Src/tim.s: Core/Src/tim.c.s
+.PHONY : Core/Src/tim.s
+
+# target to generate assembly for a file
+Core/Src/tim.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.s
+.PHONY : Core/Src/tim.c.s
 
 Core/Src/usart.obj: Core/Src/usart.c.obj
 .PHONY : Core/Src/usart.obj
@@ -1064,6 +1112,9 @@ help:
 	@echo "... Core/Src/dac.obj"
 	@echo "... Core/Src/dac.i"
 	@echo "... Core/Src/dac.s"
+	@echo "... Core/Src/front_end_control.obj"
+	@echo "... Core/Src/front_end_control.i"
+	@echo "... Core/Src/front_end_control.s"
 	@echo "... Core/Src/gpio.obj"
 	@echo "... Core/Src/gpio.i"
 	@echo "... Core/Src/gpio.s"
@@ -1085,6 +1136,9 @@ help:
 	@echo "... Core/Src/system_stm32g4xx.obj"
 	@echo "... Core/Src/system_stm32g4xx.i"
 	@echo "... Core/Src/system_stm32g4xx.s"
+	@echo "... Core/Src/tim.obj"
+	@echo "... Core/Src/tim.i"
+	@echo "... Core/Src/tim.s"
 	@echo "... Core/Src/usart.obj"
 	@echo "... Core/Src/usart.i"
 	@echo "... Core/Src/usart.s"

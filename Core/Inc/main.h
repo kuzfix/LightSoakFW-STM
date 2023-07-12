@@ -43,6 +43,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -137,10 +138,22 @@ void Error_Handler(void);
 #define DBG_PAD_1_GPIO_Port GPIOD
 #define DBG_PAD_2_Pin GPIO_PIN_11
 #define DBG_PAD_2_GPIO_Port GPIOD
+#define CH1_PWM_Pin GPIO_PIN_14
+#define CH1_PWM_GPIO_Port GPIOD
+#define CH3_PWM_Pin GPIO_PIN_15
+#define CH3_PWM_GPIO_Port GPIOD
 #define LEDDRV_GPIO2_Pin GPIO_PIN_8
 #define LEDDRV_GPIO2_GPIO_Port GPIOC
 #define LEDDRV_GPIO1_Pin GPIO_PIN_9
 #define LEDDRV_GPIO1_GPIO_Port GPIOC
+#define CH5_PWM_Pin GPIO_PIN_9
+#define CH5_PWM_GPIO_Port GPIOA
+#define CH2_PWM_Pin GPIO_PIN_10
+#define CH2_PWM_GPIO_Port GPIOA
+#define CH4_PWM_Pin GPIO_PIN_11
+#define CH4_PWM_GPIO_Port GPIOA
+#define CH6_PWM_Pin GPIO_PIN_12
+#define CH6_PWM_GPIO_Port GPIOA
 #define USART3_COMMS_TX_Pin GPIO_PIN_10
 #define USART3_COMMS_TX_GPIO_Port GPIOC
 #define USART3_COMMS_RX_Pin GPIO_PIN_11

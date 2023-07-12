@@ -1,6 +1,6 @@
-CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj: \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/gpio.h \
+CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/tim.c.obj: \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/tim.c \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/tim.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32g4xx_hal_conf.h \
