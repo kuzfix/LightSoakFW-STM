@@ -33,6 +33,8 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/adc.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj.d"
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/debug.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj.d"
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dma.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/main.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj.d"

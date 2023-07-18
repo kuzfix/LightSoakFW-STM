@@ -20,6 +20,7 @@
 #include "main.h"
 #include "adc.h"
 #include "dac.h"
+#include "dma.h"
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
@@ -27,6 +28,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "front_end_control.h"
+#include "debug.h"
 
 /* USER CODE END Includes */
 
@@ -90,6 +92,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_ADC3_Init();
   MX_DAC1_Init();
@@ -106,8 +109,10 @@ int main(void)
   while (1)
   {
     //toggle DGB_LED_1
-    HAL_GPIO_TogglePin(CH1_CUR_EN_GPIO_Port, DBG_LED_1_Pin);
-    printf("%f", fec_ch_params[0].shnt_1_resistance);
+    HAL_GPIO_TogglePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin);
+    HAL_GPIO_TogglePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin);
+    dbg(Debug, "Hello World!\n\r");
+    HAL_Delay(500);
 
     /* USER CODE END WHILE */
 

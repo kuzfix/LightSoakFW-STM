@@ -1073,7 +1073,7 @@ static void DMA_CalcDMAMUXChannelBaseAndMask(DMA_HandleTypeDef *hdma)
 }
 
 /**
-  * @brief  Updates the DMA handle with the DMAMUX  request generator fec_ch_params
+  * @brief  Updates the DMA handle with the DMAMUX  request generator params
   * @param  hdma        pointer to a DMA_HandleTypeDef structure that contains
   *                     the configuration information for the specified DMA Channel.
   * @retval None

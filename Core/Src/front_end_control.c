@@ -109,6 +109,45 @@ const fec_channel_param_t fec_ch_params[FEC_NUM_CHANNELS] = {
 
 
 
+/********* function implementation *********/
+
+
+/**
+ * @brief enable current for channel
+ * @param channel Channel
+ */
+void fec_enable_current(uint8_t channel){
+  uint8_t param_idx = channel - 1;
+
+  //invalid channel number check
+  if(channel >= FEC_NUM_CHANNELS || channel < 1){
+    //todo: report channel number error
+    return;
+  }
+  //set enable pin high
+  HAL_GPIO_WritePin(fec_ch_params[param_idx].cur_en_gpio_port,
+                    fec_ch_params[param_idx].cur_en_gpio_pin,
+                    GPIO_PIN_SET);
+}
+
+/**
+ * @brief disable current for channel
+ * @param channel Channel
+ */
+void fec_disable_current(uint8_t channel){
+  uint8_t param_idx = channel - 1;
+
+  //invalid channel number check
+  if(channel >= FEC_NUM_CHANNELS || channel < 1){
+    //todo: report channel number error
+    return;
+  }
+  //set enable pin low
+  HAL_GPIO_WritePin(fec_ch_params[param_idx].cur_en_gpio_port,
+                    fec_ch_params[param_idx].cur_en_gpio_pin,
+                    GPIO_PIN_RESET);
+}
+
 /**
  * @brief sets shunt range to 1x (all shunt resistors parallel)
  * @param channel Channel

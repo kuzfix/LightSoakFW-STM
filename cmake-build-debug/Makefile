@@ -177,6 +177,54 @@ Core/Src/dac.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.s
 .PHONY : Core/Src/dac.c.s
 
+Core/Src/debug.obj: Core/Src/debug.c.obj
+.PHONY : Core/Src/debug.obj
+
+# target to build an object file
+Core/Src/debug.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj
+.PHONY : Core/Src/debug.c.obj
+
+Core/Src/debug.i: Core/Src/debug.c.i
+.PHONY : Core/Src/debug.i
+
+# target to preprocess a source file
+Core/Src/debug.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.i
+.PHONY : Core/Src/debug.c.i
+
+Core/Src/debug.s: Core/Src/debug.c.s
+.PHONY : Core/Src/debug.s
+
+# target to generate assembly for a file
+Core/Src/debug.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.s
+.PHONY : Core/Src/debug.c.s
+
+Core/Src/dma.obj: Core/Src/dma.c.obj
+.PHONY : Core/Src/dma.obj
+
+# target to build an object file
+Core/Src/dma.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj
+.PHONY : Core/Src/dma.c.obj
+
+Core/Src/dma.i: Core/Src/dma.c.i
+.PHONY : Core/Src/dma.i
+
+# target to preprocess a source file
+Core/Src/dma.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.i
+.PHONY : Core/Src/dma.c.i
+
+Core/Src/dma.s: Core/Src/dma.c.s
+.PHONY : Core/Src/dma.s
+
+# target to generate assembly for a file
+Core/Src/dma.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.s
+.PHONY : Core/Src/dma.c.s
+
 Core/Src/front_end_control.obj: Core/Src/front_end_control.c.obj
 .PHONY : Core/Src/front_end_control.obj
 
@@ -1112,6 +1160,12 @@ help:
 	@echo "... Core/Src/dac.obj"
 	@echo "... Core/Src/dac.i"
 	@echo "... Core/Src/dac.s"
+	@echo "... Core/Src/debug.obj"
+	@echo "... Core/Src/debug.i"
+	@echo "... Core/Src/debug.s"
+	@echo "... Core/Src/dma.obj"
+	@echo "... Core/Src/dma.i"
+	@echo "... Core/Src/dma.s"
 	@echo "... Core/Src/front_end_control.obj"
 	@echo "... Core/Src/front_end_control.i"
 	@echo "... Core/Src/front_end_control.s"
