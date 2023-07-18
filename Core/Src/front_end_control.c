@@ -111,6 +111,47 @@ const fec_channel_param_t fec_ch_params[FEC_NUM_CHANNELS] = {
 
 /********* function implementation *********/
 
+/**
+ * @brief initialize front end control.
+ * Can be used to reset frontend to stock config (high Z on cell)
+ * - shunts on 1000x
+ * - current disabled
+ * - pwm to 0V
+ */
+void fec_init(void){
+
+  //disable current on all channels
+  fec_disable_current(1);
+  fec_disable_current(2);
+  fec_disable_current(3);
+  fec_disable_current(4);
+  fec_disable_current(5);
+  fec_disable_current(6);
+
+  //set shunt resistors to 1000x for all channels
+  fec_set_shunt_1000x(1);
+  fec_set_shunt_1000x(2);
+  fec_set_shunt_1000x(3);
+  fec_set_shunt_1000x(4);
+  fec_set_shunt_1000x(5);
+  fec_set_shunt_1000x(6);
+
+
+  //set pulse values to 0 for all channels
+  __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[0].pwm_timer), fec_ch_params[0].pwm_tim_channel, 0);
+  __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[1].pwm_timer), fec_ch_params[1].pwm_tim_channel, 0);
+  __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[2].pwm_timer), fec_ch_params[2].pwm_tim_channel, 0);
+  __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[3].pwm_timer), fec_ch_params[3].pwm_tim_channel, 0);
+  __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[4].pwm_timer), fec_ch_params[4].pwm_tim_channel, 0);
+  __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[5].pwm_timer), fec_ch_params[5].pwm_tim_channel, 0);
+  //start all timers in pwm mode
+  HAL_TIM_PWM_Start(prv_get_pwm_timer_handle(fec_ch_params[0].pwm_timer), fec_ch_params[0].pwm_tim_channel);
+  HAL_TIM_PWM_Start(prv_get_pwm_timer_handle(fec_ch_params[1].pwm_timer), fec_ch_params[1].pwm_tim_channel);
+  HAL_TIM_PWM_Start(prv_get_pwm_timer_handle(fec_ch_params[2].pwm_timer), fec_ch_params[2].pwm_tim_channel);
+  HAL_TIM_PWM_Start(prv_get_pwm_timer_handle(fec_ch_params[3].pwm_timer), fec_ch_params[3].pwm_tim_channel);
+  HAL_TIM_PWM_Start(prv_get_pwm_timer_handle(fec_ch_params[4].pwm_timer), fec_ch_params[4].pwm_tim_channel);
+  HAL_TIM_PWM_Start(prv_get_pwm_timer_handle(fec_ch_params[5].pwm_timer), fec_ch_params[5].pwm_tim_channel);
+}
 
 /**
  * @brief enable current for channel
@@ -120,10 +161,8 @@ void fec_enable_current(uint8_t channel){
   uint8_t param_idx = channel - 1;
 
   //invalid channel number check
-  if(channel >= FEC_NUM_CHANNELS || channel < 1){
-    //todo: report channel number error
-    return;
-  }
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
   //set enable pin high
   HAL_GPIO_WritePin(fec_ch_params[param_idx].cur_en_gpio_port,
                     fec_ch_params[param_idx].cur_en_gpio_pin,
@@ -138,10 +177,8 @@ void fec_disable_current(uint8_t channel){
   uint8_t param_idx = channel - 1;
 
   //invalid channel number check
-  if(channel >= FEC_NUM_CHANNELS || channel < 1){
-    //todo: report channel number error
-    return;
-  }
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
   //set enable pin low
   HAL_GPIO_WritePin(fec_ch_params[param_idx].cur_en_gpio_port,
                     fec_ch_params[param_idx].cur_en_gpio_pin,
@@ -156,10 +193,8 @@ void fec_set_shunt_1x(uint8_t channel){
   uint8_t param_idx = channel - 1;
 
   //invalid channel number check
-  if(channel >= FEC_NUM_CHANNELS || channel < 1){
-    //todo: report channel number error
-    return;
-  }
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
   //1000x is hardwired on
   //100x on
   HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
@@ -183,10 +218,8 @@ void fec_set_shunt_10x(uint8_t channel){
   uint8_t param_idx = channel - 1;
 
   //invalid channel number check
-  if(channel >= FEC_NUM_CHANNELS || channel < 1){
-    //todo: report channel number error
-    return;
-  }
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
   //1000x is hardwired on
   //100x on
   HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
@@ -210,10 +243,8 @@ void fec_set_shunt_100x(uint8_t channel){
   uint8_t param_idx = channel - 1;
 
   //invalid channel number check
-  if(channel >= FEC_NUM_CHANNELS || channel < 1){
-    //todo: report channel number error
-    return;
-  }
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
   //1000x is hardwired on
   //100x on
   HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
@@ -237,10 +268,8 @@ void fec_set_shunt_1000x(uint8_t channel){
   uint8_t param_idx = channel - 1;
 
   //invalid channel number check
-  if(channel >= FEC_NUM_CHANNELS || channel < 1){
-    //todo: report channel number error
-    return;
-  }
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
   //1000x is hardwired on
   //100x off
   HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
@@ -256,3 +285,70 @@ void fec_set_shunt_1000x(uint8_t channel){
                     GPIO_PIN_RESET);
 }
 
+
+/**
+ * @brief sets the force voltage for the given channel.
+ * use fec_enable_current to connect voltage setopint circuit to cell
+ * @param channel Channel
+ * @param voltage voltage in V
+ */
+void fec_set_force_voltage(uint8_t channel, float voltage){
+  uint8_t param_idx = channel - 1;
+
+  //invalid channel number check
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
+  __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[param_idx].pwm_timer),
+                        fec_ch_params[param_idx].pwm_tim_channel,
+                        prv_get_pwm_value(voltage));
+}
+
+
+
+
+
+/**
+ * @brief returns the timer handle for the given timer.
+ * This is needed because timer handles are not considered constant at compile time
+ * @param timer timer enum
+ */
+TIM_HandleTypeDef* prv_get_pwm_timer_handle(enum timEnum timer){
+  if(timer == timer1) {
+    return &htim1;
+  }
+  else if(timer == timer4){
+    return &htim4;
+  }
+}
+
+
+
+/**
+ * @brief calculates the pwm value for the given voltage.
+ * Takes filter attenuation into account
+ * @param voltage DC component of PWM signal
+ */
+uint32_t prv_get_pwm_value(float voltage){
+  const float supplyVoltage = 3.3f; // MCU supply voltage
+  const uint16_t counterPeriod = 4095; // PWM counter period
+
+  if(voltage > MAX_PWM_FILT_VOLT) {
+    voltage = MAX_PWM_FILT_VOLT; // Cap at max voltage
+    dbg(Warning, "Requested voltage is too high, capping at 1.55V\n");
+  }
+  if(voltage < 0) {
+    return 0; // No need to calculate if voltage is 0
+  }
+
+  //filter attenuation
+  voltage = voltage / PWM_FILT_ATTEN;
+
+  uint32_t pwmValue = (uint32_t)((voltage / MCU_VOLTAGE) * TIMER_RELOAD);
+
+  //just in case of rounding errors
+  if(pwmValue > TIMER_RELOAD) {
+    pwmValue = TIMER_RELOAD;
+  }
+
+  return pwmValue;
+}

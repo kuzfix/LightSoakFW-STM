@@ -75,8 +75,8 @@ void MX_GPIO_Init(void)
                           |CH4_SHNTRNG_1_Pin|CH6_CUR_EN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, DBG_PAD_1_Pin|DBG_PAD_2_Pin|CH4_SHNTRNG_100_Pin|CH2_SHNTRNG_10_Pin
-                          |CH6_SHNTRNG_100_Pin|CH4_SHNTRNG_10_Pin|CH2_SHNTRNG_1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, DBG_PAD_1_Pin|DBG_PAD_2_Pin|CH2_SHNTRNG_100_Pin|CH4_SHNTRNG_100_Pin
+                          |CH2_SHNTRNG_10_Pin|CH6_SHNTRNG_100_Pin|CH4_SHNTRNG_10_Pin|CH2_SHNTRNG_1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PEPin PEPin PEPin PEPin
                            PEPin */
@@ -122,9 +122,9 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PDPin PDPin PDPin PDPin
-                           PDPin PDPin PDPin */
-  GPIO_InitStruct.Pin = DBG_PAD_1_Pin|DBG_PAD_2_Pin|CH4_SHNTRNG_100_Pin|CH2_SHNTRNG_10_Pin
-                          |CH6_SHNTRNG_100_Pin|CH4_SHNTRNG_10_Pin|CH2_SHNTRNG_1_Pin;
+                           PDPin PDPin PDPin PDPin */
+  GPIO_InitStruct.Pin = DBG_PAD_1_Pin|DBG_PAD_2_Pin|CH2_SHNTRNG_100_Pin|CH4_SHNTRNG_100_Pin
+                          |CH2_SHNTRNG_10_Pin|CH6_SHNTRNG_100_Pin|CH4_SHNTRNG_10_Pin|CH2_SHNTRNG_1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -135,12 +135,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(ONEWIRE_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = CH2_SHNTRNG_100_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(CH2_SHNTRNG_100_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PEPin PEPin */
   GPIO_InitStruct.Pin = USART1_TEC_TX_Pin|USART1_TEC_RX_Pin;

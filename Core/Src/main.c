@@ -101,6 +101,13 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
+  fec_init();
+  fec_enable_current(1);
+  fec_enable_current(2);
+  fec_enable_current(3);
+  fec_enable_current(4);
+  fec_enable_current(5);
+  fec_enable_current(6);
 
   /* USER CODE END 2 */
 
@@ -108,11 +115,66 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    //toggle DGB_LED_1
-    HAL_GPIO_TogglePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin);
-    HAL_GPIO_TogglePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin);
-    dbg(Debug, "Hello World!\n\r");
-    HAL_Delay(500);
+
+
+
+    fec_set_force_voltage(1, 0.1);
+    fec_set_force_voltage(2, 0.2);
+    fec_set_force_voltage(3, 0.3);
+    fec_set_force_voltage(4, 0.4);
+    fec_set_force_voltage(5, 0.5);
+    fec_set_force_voltage(6, 0.6);
+
+    HAL_Delay(2000);
+
+    fec_set_force_voltage(1, 0.0);
+    fec_set_force_voltage(2, 0.0);
+    fec_set_force_voltage(3, 0.0);
+    fec_set_force_voltage(4, 0.0);
+    fec_set_force_voltage(5, 0.0);
+    fec_set_force_voltage(6, 0.0);
+
+    HAL_Delay(2000);
+
+    while(0){
+      fec_enable_current(1);
+      fec_enable_current(2);
+      fec_enable_current(3);
+      fec_enable_current(4);
+      fec_enable_current(5);
+      fec_enable_current(6);
+      HAL_Delay(2000);
+      fec_disable_current(1);
+      fec_disable_current(2);
+      fec_disable_current(3);
+      fec_disable_current(4);
+      fec_disable_current(5);
+      fec_disable_current(6);
+      HAL_Delay(2000);
+    }
+//    //toggle DGB_LED_1
+//    HAL_GPIO_TogglePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin);
+//    HAL_GPIO_TogglePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin);
+//
+//    uint8_t ch = 4;
+//    uint32_t tm = 2000;
+//
+//    fec_set_shunt_1x(ch);
+//    dbg(Debug, "set shunt to 1x!\n\r");
+//    HAL_Delay(tm);
+//
+//    fec_set_shunt_10x(ch);
+//    dbg(Debug, "set shunt to 10x!\n\r");
+//    HAL_Delay(tm);
+//
+//    fec_set_shunt_100x(ch);
+//    dbg(Debug, "set shunt to 100x!\n\r");
+//    HAL_Delay(tm);
+//
+//    fec_set_shunt_1000x(ch);
+//    dbg(Debug, "set shunt to 1000x!\n\r");
+//    HAL_Delay(tm);
+
 
     /* USER CODE END WHILE */
 

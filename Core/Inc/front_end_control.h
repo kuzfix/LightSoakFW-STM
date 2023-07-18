@@ -9,9 +9,15 @@
 #include "gpio.h"
 #include "tim.h"
 #include "main.h"
+#include "debug.h"
 
 
 #define FEC_NUM_CHANNELS 6
+#define MCU_VOLTAGE 3.2969f
+#define TIMER_RELOAD 4095
+#define PWM_FILT_ATTEN 0.476190f
+#define MAX_PWM_FILT_VOLT 1.55f
+//todo: check if 4095 or 4096 is corrct for calcs?
 
 enum timEnum{
     timer1,
@@ -51,6 +57,9 @@ extern const fec_channel_param_t fec_ch_params[FEC_NUM_CHANNELS];
 
 // ##############################  FUNCTION PROTOTYPES  ##############################
 
+TIM_HandleTypeDef* prv_get_pwm_timer_handle(enum timEnum timer);
+uint32_t prv_get_pwm_value(float voltage);
+
 void fec_init(void);
 void fec_set_shunt_1x(uint8_t channel);
 void fec_set_shunt_10x(uint8_t channel);
@@ -59,6 +68,8 @@ void fec_set_shunt_1000x(uint8_t channel);
 void fec_enable_current(uint8_t channel);
 void fec_disable_current(uint8_t channel);
 void fec_set_force_voltage(uint8_t channel, float voltage);
+
+// ##############################  END OF FUNCTION PROTOTYPES  ##############################
 
 
 
