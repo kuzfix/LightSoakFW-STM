@@ -332,8 +332,8 @@ uint32_t prv_get_pwm_value(float voltage){
   const float supplyVoltage = 3.3f; // MCU supply voltage
   const uint16_t counterPeriod = 4095; // PWM counter period
 
-  if(voltage > MAX_PWM_FILT_VOLT) {
-    voltage = MAX_PWM_FILT_VOLT; // Cap at max voltage
+  if(voltage > FEC_MAX_PWM_FILT_VOLT) {
+    voltage = FEC_MAX_PWM_FILT_VOLT; // Cap at max voltage
     dbg(Warning, "Requested voltage is too high, capping at 1.55V\n");
   }
   if(voltage < 0) {
@@ -341,13 +341,13 @@ uint32_t prv_get_pwm_value(float voltage){
   }
 
   //filter attenuation
-  voltage = voltage / PWM_FILT_ATTEN;
+  voltage = voltage / FEC_PWM_FILT_ATTEN;
 
-  uint32_t pwmValue = (uint32_t)((voltage / MCU_VOLTAGE) * TIMER_RELOAD);
+  uint32_t pwmValue = (uint32_t)((voltage / FEC_MCU_VOLTAGE) * FEC_TIMER_RELOAD);
 
   //just in case of rounding errors
-  if(pwmValue > TIMER_RELOAD) {
-    pwmValue = TIMER_RELOAD;
+  if(pwmValue > FEC_TIMER_RELOAD) {
+    pwmValue = FEC_TIMER_RELOAD;
   }
 
   return pwmValue;

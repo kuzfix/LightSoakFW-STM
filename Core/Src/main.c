@@ -112,11 +112,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    ledctrl_set_dac_raw(2048);
-    dbg(Debug, "set DAC to 2048\n");
+    ledctrl_set_current(1.0f);
+    dbg(Debug, "set LED to 1A. should be 1.9727V\n");
     HAL_Delay(3000);
-    ledctrl_set_dac_raw(0);
-    dbg(Debug, "set DAC to 0\n");
+    ledctrl_set_current(0.5f);
+    dbg(Debug, "set LED to 0.5A. should be 1.0327V\n");
     HAL_Delay(3000);
 
 
