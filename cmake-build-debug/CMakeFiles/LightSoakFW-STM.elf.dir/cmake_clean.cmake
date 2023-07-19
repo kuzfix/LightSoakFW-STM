@@ -11,6 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj.d"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.obj"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_hal_msp.c.obj"

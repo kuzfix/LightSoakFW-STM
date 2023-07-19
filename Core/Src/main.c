@@ -29,6 +29,7 @@
 /* USER CODE BEGIN Includes */
 #include "front_end_control.h"
 #include "debug.h"
+#include "led_control.h"
 
 /* USER CODE END Includes */
 
@@ -102,12 +103,8 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   fec_init();
-  fec_enable_current(1);
-  fec_enable_current(2);
-  fec_enable_current(3);
-  fec_enable_current(4);
-  fec_enable_current(5);
-  fec_enable_current(6);
+  ledctrl_init();
+  //ledctrl_set_dac_raw(2048);
 
   /* USER CODE END 2 */
 
@@ -115,26 +112,16 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    ledctrl_set_dac_raw(2048);
+    dbg(Debug, "set DAC to 2048\n");
+    HAL_Delay(3000);
+    ledctrl_set_dac_raw(0);
+    dbg(Debug, "set DAC to 0\n");
+    HAL_Delay(3000);
 
 
 
-    fec_set_force_voltage(1, 0.1);
-    fec_set_force_voltage(2, 0.2);
-    fec_set_force_voltage(3, 0.3);
-    fec_set_force_voltage(4, 0.4);
-    fec_set_force_voltage(5, 0.5);
-    fec_set_force_voltage(6, 0.6);
 
-    HAL_Delay(2000);
-
-    fec_set_force_voltage(1, 0.0);
-    fec_set_force_voltage(2, 0.0);
-    fec_set_force_voltage(3, 0.0);
-    fec_set_force_voltage(4, 0.0);
-    fec_set_force_voltage(5, 0.0);
-    fec_set_force_voltage(6, 0.0);
-
-    HAL_Delay(2000);
 
     while(0){
       fec_enable_current(1);

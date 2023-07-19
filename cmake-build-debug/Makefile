@@ -273,6 +273,30 @@ Core/Src/gpio.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.s
 .PHONY : Core/Src/gpio.c.s
 
+Core/Src/led_control.obj: Core/Src/led_control.c.obj
+.PHONY : Core/Src/led_control.obj
+
+# target to build an object file
+Core/Src/led_control.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.obj
+.PHONY : Core/Src/led_control.c.obj
+
+Core/Src/led_control.i: Core/Src/led_control.c.i
+.PHONY : Core/Src/led_control.i
+
+# target to preprocess a source file
+Core/Src/led_control.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.i
+.PHONY : Core/Src/led_control.c.i
+
+Core/Src/led_control.s: Core/Src/led_control.c.s
+.PHONY : Core/Src/led_control.s
+
+# target to generate assembly for a file
+Core/Src/led_control.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.s
+.PHONY : Core/Src/led_control.c.s
+
 Core/Src/main.obj: Core/Src/main.c.obj
 .PHONY : Core/Src/main.obj
 
@@ -1172,6 +1196,9 @@ help:
 	@echo "... Core/Src/gpio.obj"
 	@echo "... Core/Src/gpio.i"
 	@echo "... Core/Src/gpio.s"
+	@echo "... Core/Src/led_control.obj"
+	@echo "... Core/Src/led_control.i"
+	@echo "... Core/Src/led_control.s"
 	@echo "... Core/Src/main.obj"
 	@echo "... Core/Src/main.i"
 	@echo "... Core/Src/main.s"

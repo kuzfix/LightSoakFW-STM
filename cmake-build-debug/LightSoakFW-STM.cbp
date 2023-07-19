@@ -116,6 +116,9 @@
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/gpio.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/led_control.h">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
@@ -150,6 +153,9 @@
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/led_control.c">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/main.c">
