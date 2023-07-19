@@ -98,7 +98,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/SCI.h">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/adc.h">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/buf.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/dac.h">
@@ -137,7 +143,13 @@
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/usart.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/SCI.c">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/adc.c">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/buf.c">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c">

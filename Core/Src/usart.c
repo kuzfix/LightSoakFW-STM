@@ -118,6 +118,10 @@ void MX_USART3_UART_Init(void)
   GPIO_InitStruct.Alternate = LL_GPIO_AF_7;
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
+  /* USART3 interrupt Init */
+  NVIC_SetPriority(USART3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(USART3_IRQn);
+
   /* USER CODE BEGIN USART3_Init 1 */
 
   /* USER CODE END USART3_Init 1 */
@@ -133,6 +137,7 @@ void MX_USART3_UART_Init(void)
   LL_USART_SetTXFIFOThreshold(USART3, LL_USART_FIFOTHRESHOLD_1_8);
   LL_USART_SetRXFIFOThreshold(USART3, LL_USART_FIFOTHRESHOLD_1_8);
   LL_USART_DisableFIFO(USART3);
+  LL_USART_DisableOverrunDetect(USART3);
   LL_USART_ConfigAsyncMode(USART3);
 
   /* USER CODE BEGIN WKUPType USART3 */

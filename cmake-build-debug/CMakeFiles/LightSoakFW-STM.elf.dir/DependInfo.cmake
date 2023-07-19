@@ -31,7 +31,9 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/SCI.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/SCI.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/SCI.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/adc.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj.d"
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/buf.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/debug.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dma.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj.d"

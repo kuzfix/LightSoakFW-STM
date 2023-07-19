@@ -22,6 +22,7 @@
 #include "stm32g4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "SCI.h"	// add SCI system functionality to the interrupts
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -211,6 +212,56 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
   /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles USART3 global interrupt / USART3 wake-up interrupt through EXTI line 28.
+  */
+void USART3_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART3_IRQn 0 */
+  // Here we must determine the source of the interrupt and
+  // then respond accordingly. We use status register flags to determine the source.
+
+  // We must also consider whether the specific interrupts relating to status flags
+  // are even enabled, so we do not respond to a wrong interrupt source.
+
+
+  // Check for new received data -> RXNE flag (Receive data register not empty)
+
+  // First check if this specific IRQ even enabled,
+  if( LL_USART_IsEnabledIT_RXNE(USART3) )
+  {
+    // then check if the corresponding flag is set.
+    if( LL_USART_IsActiveFlag_RXNE(USART3) )
+    {
+      // If the specific IRQs is enabled and its flag is set, then respond via the callback function.
+      SCI_receive_char_Callback();
+
+      // The RXNE flag will be cleared when RX data register is read.
+    }
+  }
+
+
+  // Check if the next character must be transmitted -> TC flag (Transfer Complete)
+
+  // First check if this specific IRQ even enabled,
+  if( LL_USART_IsEnabledIT_TC(USART3) )
+  {
+    // then check if the corresponding flag is set.
+    if( LL_USART_IsActiveFlag_TC(USART3) )
+    {
+      // If the specific IRQs is enabled and its flag is set, then respond via the callback function.
+      SCI_transmit_char_Callback();
+
+      // The RXNE flag will be cleared when RX data register is read.
+    }
+  }
+
+  /* USER CODE END USART3_IRQn 0 */
+  /* USER CODE BEGIN USART3_IRQn 1 */
+
+  /* USER CODE END USART3_IRQn 1 */
 }
 
 /**

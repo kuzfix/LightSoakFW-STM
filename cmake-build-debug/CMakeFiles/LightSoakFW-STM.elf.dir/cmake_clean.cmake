@@ -1,6 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/SCI.c.obj"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/SCI.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj.d"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj"

@@ -129,6 +129,30 @@ LightSoakFW-STM.elf/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/build
 .PHONY : LightSoakFW-STM.elf/fast
 
+Core/Src/SCI.obj: Core/Src/SCI.c.obj
+.PHONY : Core/Src/SCI.obj
+
+# target to build an object file
+Core/Src/SCI.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/SCI.c.obj
+.PHONY : Core/Src/SCI.c.obj
+
+Core/Src/SCI.i: Core/Src/SCI.c.i
+.PHONY : Core/Src/SCI.i
+
+# target to preprocess a source file
+Core/Src/SCI.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/SCI.c.i
+.PHONY : Core/Src/SCI.c.i
+
+Core/Src/SCI.s: Core/Src/SCI.c.s
+.PHONY : Core/Src/SCI.s
+
+# target to generate assembly for a file
+Core/Src/SCI.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/SCI.c.s
+.PHONY : Core/Src/SCI.c.s
+
 Core/Src/adc.obj: Core/Src/adc.c.obj
 .PHONY : Core/Src/adc.obj
 
@@ -152,6 +176,30 @@ Core/Src/adc.s: Core/Src/adc.c.s
 Core/Src/adc.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.s
 .PHONY : Core/Src/adc.c.s
+
+Core/Src/buf.obj: Core/Src/buf.c.obj
+.PHONY : Core/Src/buf.obj
+
+# target to build an object file
+Core/Src/buf.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj
+.PHONY : Core/Src/buf.c.obj
+
+Core/Src/buf.i: Core/Src/buf.c.i
+.PHONY : Core/Src/buf.i
+
+# target to preprocess a source file
+Core/Src/buf.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.i
+.PHONY : Core/Src/buf.c.i
+
+Core/Src/buf.s: Core/Src/buf.c.s
+.PHONY : Core/Src/buf.s
+
+# target to generate assembly for a file
+Core/Src/buf.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.s
+.PHONY : Core/Src/buf.c.s
 
 Core/Src/dac.obj: Core/Src/dac.c.obj
 .PHONY : Core/Src/dac.obj
@@ -1178,9 +1226,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... LightSoakFW-STM.elf"
+	@echo "... Core/Src/SCI.obj"
+	@echo "... Core/Src/SCI.i"
+	@echo "... Core/Src/SCI.s"
 	@echo "... Core/Src/adc.obj"
 	@echo "... Core/Src/adc.i"
 	@echo "... Core/Src/adc.s"
+	@echo "... Core/Src/buf.obj"
+	@echo "... Core/Src/buf.i"
+	@echo "... Core/Src/buf.s"
 	@echo "... Core/Src/dac.obj"
 	@echo "... Core/Src/dac.i"
 	@echo "... Core/Src/dac.s"
