@@ -67,4 +67,5 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/stm32g4xx_it.c.obj: \
  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/machine/_types.h \
  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/lock.h \
  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/stdio.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32g4xx_it.h
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32g4xx_it.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/SCI.h

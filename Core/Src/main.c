@@ -113,9 +113,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    dbg(Debug, "print to main serial...\r\n");
-    printf("Hello World SCI!\r\n");
-    HAL_Delay(1000);
+    SCI_demo_echo_with_interrupts();
+
+//    dbg(Debug, "print to main serial...\r\n");
+//    printf("Hello World SCI!\r\n");
+//    HAL_Delay(1000);
+
 
 
     /* USER CODE END WHILE */
