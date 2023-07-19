@@ -1877,7 +1877,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32_assert.h
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_dma.h \
@@ -1924,7 +1925,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_dmamux.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32_assert.h
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_exti.h \
@@ -1969,7 +1971,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32_assert.h
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_gpio.h \
@@ -2015,7 +2018,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32_assert.h
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_rcc.h \
@@ -2060,7 +2064,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32_assert.h
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_usart.h \
@@ -2107,7 +2112,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_rcc.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_bus.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32_assert.h
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_utils.h \
@@ -2155,7 +2161,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_rcc.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_system.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_pwr.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_pwr.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32_assert.h
 
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c:
@@ -2329,6 +2336,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_cortex.h:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash.h:
+
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/stm32_assert.h:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c:
 
