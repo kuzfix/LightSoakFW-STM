@@ -36,21 +36,38 @@ typedef enum { SCI_ERROR=-1, SCI_NO_ERROR=0} SCI_rtrn_codes_t;
 
 void SCI_init(void);
 
+//standard read write interface
+uint8_t SCI_available(void);
+void SCI_write(char write_data);
+char SCI_read(void);
+
+//send functions (blocking)
 void SCI_send_char(char c);
 void SCI_send_byte(uint8_t data);
-
-uint8_t SCI_is_data_waiting(void);
-
-SCI_rtrn_codes_t SCI_read_char(char *c);
-SCI_rtrn_codes_t SCI_read_byte(uint8_t *data);
-
-
-void SCI_send_string(char *str);
 void SCI_send_bytes(uint8_t *data, uint32_t size);
+void SCI_send_string(char *str);
 
-int SCI_send_string_IT(char *str);
+//send functions (interrupt)
 int SCI_send_bytes_IT(uint8_t *data, uint32_t size);
+int SCI_send_string_IT(char *str);
 
+
+
+
+//checking if there is data waiting in UART peripheral registers
+uint8_t SCI_is_data_waiting_in_reg(void);
+
+//reading icoming bytes from UART peripheral registers
+SCI_rtrn_codes_t SCI_read_char_from_reg(char *c);
+SCI_rtrn_codes_t SCI_read_byte_from_reg(uint8_t *data);
+
+
+
+
+
+
+
+//callbacks to call from interrupts
 void SCI_receive_char_Callback(void);
 void SCI_transmit_char_Callback(void);
 

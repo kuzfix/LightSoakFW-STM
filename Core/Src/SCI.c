@@ -62,15 +62,10 @@ SCI_handle_t SCI;
 
 
 
-
-
-
 // ------ printf() customization definitions -----
 
 // Declare the customized _write() function used by printf() to print strings.
 int _write(int file, char *ptr, int len);
-
-
 
 
 // ------ SCI receive (RX) buffer definitions -------
@@ -295,8 +290,8 @@ int SCI_send_bytes_IT(uint8_t *data, uint32_t size)
 // ------ Reading one byte -------
 
 
-// Function SCI_is_data_waiting() checks if there is received data waiting in the UART interface.
-uint8_t SCI_is_data_waiting(void)
+// Function SCI_is_data_waiting_in_reg() checks if there is received data waiting in the UART interface.
+uint8_t SCI_is_data_waiting_in_reg(void)
 {
     return ( (uint8_t) LL_USART_IsActiveFlag_RXNE_RXFNE (SCI.USART));
 
@@ -304,12 +299,12 @@ uint8_t SCI_is_data_waiting(void)
 }
 
 
-// Function SCI_read_char() reads one character from the UART interface and
+// Function SCI_read_char_from_reg() reads one character from the UART interface and
 // stores it in the location specified by the function input argument *c.
 // Function returns error the following codes: SCI_NO_ERROR, SCI_ERROR;
-SCI_rtrn_codes_t SCI_read_char(char *c)
+SCI_rtrn_codes_t SCI_read_char_from_reg(char *c)
 {
-    if ( SCI_is_data_waiting() )
+    if (SCI_is_data_waiting_in_reg() )
     {
         // save the received character in the provide destination
         *c = (char) LL_USART_ReceiveData8(SCI.USART);
@@ -326,12 +321,12 @@ SCI_rtrn_codes_t SCI_read_char(char *c)
 
 
 
-// Function SCI_read_char() reads one byte from the UART interface and
+// Function SCI_read_char_from_reg() reads one byte from the UART interface and
 // stores it in the location specified by the function input argument *data.
 // Function returns error the following codes: SCI_NO_ERROR, SCI_ERROR;
-SCI_rtrn_codes_t SCI_read_byte(uint8_t *data)
+SCI_rtrn_codes_t SCI_read_byte_from_reg(uint8_t *data)
 {
-    if ( SCI_is_data_waiting() )
+    if (SCI_is_data_waiting_in_reg() )
     {
         // save the received character in the provide destination
         *data = (uint8_t) LL_USART_ReceiveData8(SCI.USART);
@@ -346,8 +341,21 @@ SCI_rtrn_codes_t SCI_read_byte(uint8_t *data)
 }
 
 
-
-
+uint8_t SCI_available(void){
+  return BUF_get_data_size(&SCI_RX_buf_handle) > 0;
+}
+void SCI_write(char write_data){
+  uint8_t data_byte = (uint8_t)write_data;
+  SCI_send_bytes_IT(&data_byte, 1);
+}
+char SCI_read(void){
+  uint8_t data_byte;
+  if(BUF_get_data_size( &SCI_RX_buf_handle) > 0){
+    BUF_get_byte(&SCI_RX_buf_handle, &data_byte);
+    return (char)data_byte;
+  }
+  return 0;
+}
 
 
 
@@ -443,7 +451,7 @@ void SCI_demo_echo_with_polling(void)
     {
 
         // poll for a new received character.
-        if ( SCI_read_char(&c) == SCI_NO_ERROR )
+        if (SCI_read_char_from_reg(&c) == SCI_NO_ERROR )
             SCI_send_char(c);	// and send it back immediately (i.e. echo).
 
 

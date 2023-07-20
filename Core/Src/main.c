@@ -103,9 +103,15 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
+
+  dbg(Warning, "Booting LighSoak V1...\n");
+
+
   fec_init();
   ledctrl_init();
   SCI_init();
+  HAL_Delay(100);
+
 
   /* USER CODE END 2 */
 
@@ -113,11 +119,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    SCI_demo_echo_with_interrupts();
+    while(SCI_available()){
+      char c = SCI_read();
+//      dbg(Debug, "read from main serial: %c\n", c);
+      SCI_write(c);
+    }
+    HAL_Delay(10);
 
-//    dbg(Debug, "print to main serial...\r\n");
-//    printf("Hello World SCI!\r\n");
-//    HAL_Delay(1000);
+
 
 
 
