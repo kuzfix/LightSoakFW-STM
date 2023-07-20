@@ -111,6 +111,7 @@ int main(void)
   ledctrl_init();
   SCI_init();
   HAL_Delay(100);
+  printf("Hello World!\n");
 
 
   /* USER CODE END 2 */
@@ -121,7 +122,7 @@ int main(void)
   {
     while(SCI_available()){
       char c = SCI_read();
-//      dbg(Debug, "read from main serial: %c\n", c);
+      dbg(Debug, "read from main serial: %c\n", c);
       SCI_write(c);
     }
     HAL_Delay(10);
