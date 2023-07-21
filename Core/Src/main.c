@@ -64,6 +64,30 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+volatile uint16_t adcBuf[600] = {0};
+uint8_t adcCpltFlag = 0;
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if(htim->Instance == TIM20)
+  {
+    // Your code here
+    HAL_GPIO_TogglePin(DBG_PAD_1_GPIO_Port, DBG_PAD_1_Pin);
+  }
+}
+
+//adc conversion complete callback
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  if(hadc->Instance == ADC1)
+  {
+    HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_RESET);
+    adcCpltFlag = 1;
+  }
+}
+
+
+
 /* USER CODE END 0 */
 
 /**
@@ -102,6 +126,7 @@ int main(void)
   MX_LPUART1_UART_Init();
   MX_TIM1_Init();
   MX_TIM4_Init();
+  MX_TIM20_Init();
   /* USER CODE BEGIN 2 */
 
   dbg(Warning, "Booting LighSoak V1...\n");
@@ -110,6 +135,12 @@ int main(void)
   fec_init();
   ledctrl_init();
   SCI_init();
+
+  HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+  HAL_Delay(100);
+
+  HAL_TIM_Base_Start_IT(&htim20);
+
   HAL_Delay(100);
   printf("Hello World!\n");
 
@@ -120,12 +151,23 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    while(SCI_available()){
-      char c = SCI_read();
-      dbg(Debug, "read from main serial: %c\n", c);
-      SCI_write(c);
-    }
-    HAL_Delay(10);
+//    while(SCI_available()){
+//      char c = SCI_read();
+//      dbg(Debug, "read from main serial: %c\n", c);
+//      SCI_write(c);
+//    }
+
+
+
+    HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_SET);
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuf, 6);
+
+    while(!adcCpltFlag);
+    adcCpltFlag = 0; //reset flag
+    //HAL_ADC_Stop_DMA(&hadc1);
+//    dbg(Debug, "ADC cplt\n");
+    dbg(Debug, "adcBuf[0]: %d\n", adcBuf[0]);
+    HAL_Delay(20);
 
 
 
