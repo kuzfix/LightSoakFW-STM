@@ -297,6 +297,30 @@ Core/Src/front_end_control.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.s
 .PHONY : Core/Src/front_end_control.c.s
 
+Core/Src/global_callbacks.obj: Core/Src/global_callbacks.c.obj
+.PHONY : Core/Src/global_callbacks.obj
+
+# target to build an object file
+Core/Src/global_callbacks.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/global_callbacks.c.obj
+.PHONY : Core/Src/global_callbacks.c.obj
+
+Core/Src/global_callbacks.i: Core/Src/global_callbacks.c.i
+.PHONY : Core/Src/global_callbacks.i
+
+# target to preprocess a source file
+Core/Src/global_callbacks.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/global_callbacks.c.i
+.PHONY : Core/Src/global_callbacks.c.i
+
+Core/Src/global_callbacks.s: Core/Src/global_callbacks.c.s
+.PHONY : Core/Src/global_callbacks.s
+
+# target to generate assembly for a file
+Core/Src/global_callbacks.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/global_callbacks.c.s
+.PHONY : Core/Src/global_callbacks.c.s
+
 Core/Src/gpio.obj: Core/Src/gpio.c.obj
 .PHONY : Core/Src/gpio.obj
 
@@ -368,6 +392,30 @@ Core/Src/main.s: Core/Src/main.c.s
 Core/Src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.s
 .PHONY : Core/Src/main.c.s
+
+Core/Src/micro_sec.obj: Core/Src/micro_sec.c.obj
+.PHONY : Core/Src/micro_sec.obj
+
+# target to build an object file
+Core/Src/micro_sec.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/micro_sec.c.obj
+.PHONY : Core/Src/micro_sec.c.obj
+
+Core/Src/micro_sec.i: Core/Src/micro_sec.c.i
+.PHONY : Core/Src/micro_sec.i
+
+# target to preprocess a source file
+Core/Src/micro_sec.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/micro_sec.c.i
+.PHONY : Core/Src/micro_sec.c.i
+
+Core/Src/micro_sec.s: Core/Src/micro_sec.c.s
+.PHONY : Core/Src/micro_sec.s
+
+# target to generate assembly for a file
+Core/Src/micro_sec.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/micro_sec.c.s
+.PHONY : Core/Src/micro_sec.c.s
 
 Core/Src/stm32g4xx_hal_msp.obj: Core/Src/stm32g4xx_hal_msp.c.obj
 .PHONY : Core/Src/stm32g4xx_hal_msp.obj
@@ -1247,6 +1295,9 @@ help:
 	@echo "... Core/Src/front_end_control.obj"
 	@echo "... Core/Src/front_end_control.i"
 	@echo "... Core/Src/front_end_control.s"
+	@echo "... Core/Src/global_callbacks.obj"
+	@echo "... Core/Src/global_callbacks.i"
+	@echo "... Core/Src/global_callbacks.s"
 	@echo "... Core/Src/gpio.obj"
 	@echo "... Core/Src/gpio.i"
 	@echo "... Core/Src/gpio.s"
@@ -1256,6 +1307,9 @@ help:
 	@echo "... Core/Src/main.obj"
 	@echo "... Core/Src/main.i"
 	@echo "... Core/Src/main.s"
+	@echo "... Core/Src/micro_sec.obj"
+	@echo "... Core/Src/micro_sec.i"
+	@echo "... Core/Src/micro_sec.s"
 	@echo "... Core/Src/stm32g4xx_hal_msp.obj"
 	@echo "... Core/Src/stm32g4xx_hal_msp.i"
 	@echo "... Core/Src/stm32g4xx_hal_msp.s"

@@ -85,4 +85,5 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/debug.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/led_control.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/dac.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/SCI.h
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/SCI.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/micro_sec.h

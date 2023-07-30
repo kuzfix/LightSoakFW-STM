@@ -31,6 +31,7 @@
 #include "debug.h"
 #include "led_control.h"
 #include "SCI.h"
+#include "micro_sec.h"
 
 /* USER CODE END Includes */
 
@@ -67,24 +68,7 @@ void SystemClock_Config(void);
 volatile uint16_t adcBuf[600] = {0};
 uint8_t adcCpltFlag = 0;
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if(htim->Instance == TIM20)
-  {
-    // Your code here
-    HAL_GPIO_TogglePin(DBG_PAD_1_GPIO_Port, DBG_PAD_1_Pin);
-  }
-}
 
-//adc conversion complete callback
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-  if(hadc->Instance == ADC1)
-  {
-    HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_RESET);
-    adcCpltFlag = 1;
-  }
-}
 
 
 
@@ -127,6 +111,7 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM4_Init();
   MX_TIM20_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
   dbg(Warning, "Booting LighSoak V1...\n");
@@ -135,6 +120,7 @@ int main(void)
   fec_init();
   ledctrl_init();
   SCI_init();
+  usec_init();
 
   HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
   HAL_Delay(100);
@@ -157,17 +143,17 @@ int main(void)
 //      SCI_write(c);
 //    }
 
+    uint32_t t32 = usec_get_timestamp();
+    uint64_t t64 = usec_get_timestamp_64();
+    uint32_t ovfc = g_usec_overflow_count;
 
 
-    HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_SET);
-    HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuf, 6);
+    dbg(Debug, "32bit timestamp: %lu\n", t32);
+    dbg(Debug, "64bit timestamp: %llu\n", t64);
+    dbg(Debug, "overflow count: %lu\n", ovfc);
+    dbg(Debug, "    \n");
 
-    while(!adcCpltFlag);
-    adcCpltFlag = 0; //reset flag
-    //HAL_ADC_Stop_DMA(&hadc1);
-//    dbg(Debug, "ADC cplt\n");
-    dbg(Debug, "adcBuf[0]: %d\n", adcBuf[0]);
-    HAL_Delay(20);
+    HAL_Delay(500);
 
 
 
