@@ -225,6 +225,30 @@ Core/Src/dac.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.s
 .PHONY : Core/Src/dac.c.s
 
+Core/Src/daq.obj: Core/Src/daq.c.obj
+.PHONY : Core/Src/daq.obj
+
+# target to build an object file
+Core/Src/daq.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/daq.c.obj
+.PHONY : Core/Src/daq.c.obj
+
+Core/Src/daq.i: Core/Src/daq.c.i
+.PHONY : Core/Src/daq.i
+
+# target to preprocess a source file
+Core/Src/daq.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/daq.c.i
+.PHONY : Core/Src/daq.c.i
+
+Core/Src/daq.s: Core/Src/daq.c.s
+.PHONY : Core/Src/daq.s
+
+# target to generate assembly for a file
+Core/Src/daq.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/daq.c.s
+.PHONY : Core/Src/daq.c.s
+
 Core/Src/debug.obj: Core/Src/debug.c.obj
 .PHONY : Core/Src/debug.obj
 
@@ -1286,6 +1310,9 @@ help:
 	@echo "... Core/Src/dac.obj"
 	@echo "... Core/Src/dac.i"
 	@echo "... Core/Src/dac.s"
+	@echo "... Core/Src/daq.obj"
+	@echo "... Core/Src/daq.i"
+	@echo "... Core/Src/daq.s"
 	@echo "... Core/Src/debug.obj"
 	@echo "... Core/Src/debug.i"
 	@echo "... Core/Src/debug.s"

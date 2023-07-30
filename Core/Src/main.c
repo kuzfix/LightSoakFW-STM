@@ -155,6 +155,16 @@ int main(void)
 
     HAL_Delay(500);
 
+//    HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_SET);
+//    HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuf, 6);
+//
+//    while(!adcCpltFlag);
+//    adcCpltFlag = 0; //reset flag
+//    //HAL_ADC_Stop_DMA(&hadc1);
+////    dbg(Debug, "ADC cplt\n");
+//    dbg(Debug, "adcBuf[0]: %d\n", adcBuf[0]);
+//    HAL_Delay(20);
+
 
 
 

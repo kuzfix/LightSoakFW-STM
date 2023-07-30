@@ -110,6 +110,9 @@
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/dac.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/debug.h">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
@@ -159,6 +162,9 @@
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c">
+			<Option target="LightSoakFW-STM.elf"/>
+		</Unit>
+		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/daq.c">
 			<Option target="LightSoakFW-STM.elf"/>
 		</Unit>
 		<Unit filename="/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/debug.c">
