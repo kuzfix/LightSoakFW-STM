@@ -8,7 +8,7 @@
 #include "usart.h"
 
 void dbg(DebugLevel level, const char* format, ...) {
-  char buffer[DEBUG_BUFFER_SIZE];
+  static char buffer[DEBUG_BUFFER_SIZE];
   uint32_t msg_len_cnt;
   va_list args;
   va_start(args, format);

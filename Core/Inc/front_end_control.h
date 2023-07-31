@@ -24,6 +24,13 @@ enum timEnum{
     timer4
 };
 
+enum shntEnum{
+    shnt_1X,
+    shnt_10X,
+    shnt_100X,
+    shnt_1000X
+};
+
 /**
  * @brief Struct containing channel parameters for front end control
  */
@@ -68,6 +75,7 @@ void fec_set_shunt_1000x(uint8_t channel);
 void fec_enable_current(uint8_t channel);
 void fec_disable_current(uint8_t channel);
 void fec_set_force_voltage(uint8_t channel, float voltage);
+float fec_get_shunt_resistance(uint8_t channel);
 
 // ##############################  END OF FUNCTION PROTOTYPES  ##############################
 

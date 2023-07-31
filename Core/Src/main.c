@@ -124,7 +124,7 @@ int main(void)
   usec_init();
   daq_init();
 
-  uint32_t t1, t2;
+  uint64_t t1, t2;
 
   HAL_Delay(1000);
 
@@ -139,37 +139,34 @@ int main(void)
   while (1)
   {
 
-    dbg(Debug, "prepare for sample\n");
-    daq_prepare_for_sampling(100);
-    dbg(Debug, "prepare done\n");
-    HAL_Delay(1000);
-    dbg(Debug, "start sampling\n");
+//    dbg(Debug, "prepare for sample\n");
+    daq_prepare_for_sampling(1000);
+//    dbg(Debug, "prepare done\n");
+    HAL_Delay(10);
+//    dbg(Debug, "start sampling\n");
     t1 = usec_get_timestamp_64();
     daq_start_sampling();
-    dbg(Debug, "sampling started\n");
+//    dbg(Debug, "sampling started\n");
     while(!daq_is_sampling_done());
     t2 = usec_get_timestamp_64();
-    dbg(Debug, "sampling done. took: %d\n", t2-t1);
-    dbg(Debug, "started at: %d\n", t1);
-    dbg(Debug, "daw reports start at: %d\n", daq_get_sampling_start_timestamp());
-    dbg(Debug, "end timestamp: %d\n", t2);
-    dbg(Debug, "daq reports volt end at: %d\n", daq_sampling_volt_done_timestamp);
-    dbg(Debug, "daq reports cur end at: %d\n", daq_sampling_curr_done_timestamp);
+//    dbg(Debug, "sampling done. took: %d\n", t2-t1);
+//    dbg(Debug, "started sampling at: %llu\n", t1);
 
-    dbg(Debug, "getting sample 5 voltage...\n");
-    t_daq_sample_raw smpl = daq_get_from_buffer_curr(5);
-    //print all data in sample to dbg
-    dbg(Debug, "ch1: %d\n", smpl.ch1);
-    dbg(Debug, "ch2: %d\n", smpl.ch2);
-    dbg(Debug, "ch3: %d\n", smpl.ch3);
-    dbg(Debug, "ch4: %d\n", smpl.ch4);
-    dbg(Debug, "ch5: %d\n", smpl.ch5);
-    dbg(Debug, "ch6: %d\n", smpl.ch6);
-    dbg(Debug, "timestamp: %d\n", smpl.timestamp);
+    t_daq_sample_raw avg = daq_volt_raw_get_average(1000);
+    dbg(Debug, "avg voltage ch1: %d, at timestamp: %llu\n", avg.ch1, avg.timestamp);
 
-    dbg(Debug, "#####\n");
+    t_daq_sample_raw avgcur = daq_curr_raw_get_average(1000);
+    dbg(Debug, "avg current ch1: %d, at timestamp: %llu\n", avgcur.ch1, avgcur.timestamp);
 
-    HAL_Delay(5000);
+    dbg(Debug, "preforming single shot measures...\n");
+
+    t_daq_sample_convd single_volt = daq_single_shot_volt(500);
+    t_daq_sample_convd single_curr = daq_single_shot_curr(500);
+
+    dbg(Debug, "single shot voltage: %f\n", single_volt.ch1);
+    dbg(Debug, "single shot current: %f\n", single_curr.ch1);
+
+    HAL_Delay(2000);
 
 
 

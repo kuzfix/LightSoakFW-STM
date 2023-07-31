@@ -107,6 +107,8 @@ const fec_channel_param_t fec_ch_params[FEC_NUM_CHANNELS] = {
 };
 
 
+uint8_t prv_fec_shunt_state[FEC_NUM_CHANNELS];
+
 
 
 /********* function implementation *********/
@@ -195,6 +197,9 @@ void fec_set_shunt_1x(uint8_t channel){
   //invalid channel number check
   assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
 
+  //save shunt state
+  prv_fec_shunt_state[param_idx] = shnt_1X;
+
   //1000x is hardwired on
   //100x on
   HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
@@ -219,6 +224,9 @@ void fec_set_shunt_10x(uint8_t channel){
 
   //invalid channel number check
   assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
+  //save shunt state
+  prv_fec_shunt_state[param_idx] = shnt_10X;
 
   //1000x is hardwired on
   //100x on
@@ -245,6 +253,9 @@ void fec_set_shunt_100x(uint8_t channel){
   //invalid channel number check
   assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
 
+  //save shunt state
+  prv_fec_shunt_state[param_idx] = shnt_100X;
+
   //1000x is hardwired on
   //100x on
   HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
@@ -269,6 +280,9 @@ void fec_set_shunt_1000x(uint8_t channel){
 
   //invalid channel number check
   assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
+  //save shunt state
+  prv_fec_shunt_state[param_idx] = shnt_1000X;
 
   //1000x is hardwired on
   //100x off
@@ -351,4 +365,31 @@ uint32_t prv_get_pwm_value(float voltage){
   }
 
   return pwmValue;
+}
+
+/**
+ * @brief returns the currently set shunt resistance for the given channel
+ * @param channel Channel
+ */
+float fec_get_shunt_resistance(uint8_t channel){
+  uint8_t param_idx = channel - 1;
+
+  //invalid channel number check
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+
+  switch (prv_fec_shunt_state[param_idx]) {
+    case shnt_1X:
+      return fec_ch_params[param_idx].shnt_1_resistance;
+    break;
+    case shnt_10X:
+      return fec_ch_params[param_idx].shnt_10_resistance;
+    break;
+    case shnt_100X:
+      return fec_ch_params[param_idx].shnt_100_resistance;
+    break;
+    case shnt_1000X:
+      return fec_ch_params[param_idx].shnt_1000_resistance;
+    break;
+
+  }
 }
