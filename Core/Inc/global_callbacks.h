@@ -13,6 +13,7 @@
 #include "main.h"
 #include "tim.h"
 #include "micro_sec.h"
+#include "daq.h"
 
 
 //void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);

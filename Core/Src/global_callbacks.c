@@ -23,9 +23,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 //adc conversion complete callback
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-  if(hadc->Instance == ADC1)
-  {
+  if(hadc->Instance == DAQ_VOLT_ADC){
+    daq_sampling_done_volt = 1;
+    daq_sampling_volt_done_timestamp = usec_get_timestamp_64();
     HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_RESET);
-    //adcCpltFlag = 1;
+  }
+  else if(hadc->Instance == DAQ_CURR_ADC){
+    daq_sampling_done_curr = 1;
+    daq_sampling_curr_done_timestamp = usec_get_timestamp_64();
   }
 }

@@ -16,7 +16,7 @@ void usec_init(void){
   //start timer
   g_usec_overflow_count = 0;
   //clear overflow interrupt flag (if not, callback called immediately)
-  __HAL_TIM_CLEAR_IT(&htim2 ,TIM_IT_UPDATE);
+  __HAL_TIM_CLEAR_IT(MICRO_SEC_TIM_HANDLE ,TIM_IT_UPDATE);
   HAL_TIM_Base_Start_IT(MICRO_SEC_TIM_HANDLE);
 }
 
@@ -54,11 +54,15 @@ uint32_t usec_get_overflow_count(void){
 
 /**
  * @brief returns the current timestamp in 64bit format
- * @warning THIS IS NOT THREAD SAFE!!!
+ * @warning
  */
 uint64_t usec_get_timestamp_64(void){
+  //this section needs to happen without interrupts to make it thread safe
+  __disable_irq();
   uint32_t timestamp_32 = __HAL_TIM_GET_COUNTER(MICRO_SEC_TIM_HANDLE);
   uint32_t ovf_cnt = g_usec_overflow_count;
+  __enable_irq();
+
   uint64_t timestamp = (uint64_t)ovf_cnt << 32;
   timestamp |= (uint64_t)timestamp_32;
   return timestamp;

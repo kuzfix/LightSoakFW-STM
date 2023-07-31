@@ -17,12 +17,30 @@
 #define LIGHTSOAKFW_STM_DAQ_H
 
 #include "stm32g4xx_hal.h"
+#include "adc.h"
+#include "tim.h"
+#include "debug.h"
 
 //buffer size. buffSize = 6CH x numSamplesInBuffer
 // MUST BE MULTIPLE OF 6 !!!
 //same number used for voltage and current to allow for concurrent sampling
+#define DAQ_NUM_CH 6
 #define DAQ_BUFF_SIZE 6000
-#define SAMPLE_TIMER_HANDLE &htim20
+#define DAQ_SAMPLE_TIMER_HANDLE &htim20
+#define DAQ_SAMPLE_TIMER_PERIOD_100KSPS 1699
+#define DAQ_SAMPLE_TIME_100KSPS 10 //us
+#define DAQ_VOLT_ADC ADC1
+#define DAQ_CURR_ADC ADC3
+#define DAQ_VOLT_ADC_HANDLE &hadc1
+#define DAQ_CURR_ADC_HANDLE &hadc3
+
+//enum for current ranges
+typedef enum {
+    DAQ_SHNT_RNG_1X,
+    DAQ_SHNT_RNG_10X,
+    DAQ_SHNT_RNG_100X,
+    DAQ_SHNT_RNG_1000X,
+} t_daq_shnt_range;
 
 // structure typedef for one sample of all channels
 //can be voltage or current (raw adc data)
@@ -33,6 +51,7 @@ typedef struct {
     uint16_t ch4;
     uint16_t ch5;
     uint16_t ch6;
+    uint64_t timestamp;
 } t_daq_sample_raw;
 
 // structure typedef for one sample of all channels - converted to voltage or current
@@ -44,24 +63,26 @@ typedef struct {
     float ch4;
     float ch5;
     float ch6;
+    uint64_t timestamp;
 } t_daq_sample_convd;
 
 
 //externs
+//todo: check if all are needed
 extern volatile uint16_t daq_buffer_volt[DAQ_BUFF_SIZE];
 extern volatile uint16_t daq_buffer_curr[DAQ_BUFF_SIZE];
 extern volatile uint8_t daq_sampling_done_volt;
 extern volatile uint8_t daq_sampling_done_curr;
+extern volatile uint64_t daq_sampling_volt_done_timestamp;
+extern volatile uint64_t daq_sampling_curr_done_timestamp;
 
 
 //general control functions
 void daq_init(void);
 void daq_prepare_for_sampling(uint32_t num_samples);
 void daq_start_sampling(void);
-void daq_is_sampling_done(void);
-void daq_start_sample_timer(void);
-void daq_stop_sample_timer(void);
-void daq_reset_sample_timer(void);
+uint8_t daq_is_sampling_done(void);
+void daq_calibrate_adcs(void);
 
 //getting raw data from buffer indexed by sample number (for all channels)
 t_daq_sample_raw daq_get_from_buffer_volt(uint32_t sample_idx);
@@ -76,11 +97,13 @@ t_daq_sample_raw daq_curr_raw_get_average(uint32_t num_samples);
 
 // raw to voltage and current conversions (for all channels). Should handle calibration and corrections
 t_daq_sample_convd daq_raw_to_volt(t_daq_sample_raw raw);
-t_daq_sample_convd daq_raw_to_curr(t_daq_sample_raw raw); //todo: add enum for current ranges
+t_daq_sample_convd daq_raw_to_curr(t_daq_sample_raw raw, t_daq_shnt_range shunt_range);
 
 //single shot measurement of voltage and current (for all channels), with specified number of samples averaged
 t_daq_sample_convd daq_single_shot_volt(uint32_t num_samples);
 t_daq_sample_convd daq_single_shot_curr(uint32_t num_samples);
+
+uint64_t daq_get_sampling_start_timestamp(void);
 
 
 
