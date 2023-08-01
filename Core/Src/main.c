@@ -127,7 +127,7 @@ int main(void)
 
   uint64_t t1, t2;
 
-  HAL_Delay(1000);
+  HAL_Delay(5000);
 
 
 
@@ -167,7 +167,7 @@ int main(void)
 //    dbg(Warning, "single shot voltage: %f\n", single_volt.ch1);
 ////    dbg(Warning, "single shot current: %f\n", single_curr.ch1);
 
-    meas_basic_volt_test_single_ch(1, 22);
+    meas_basic_volt_test_dump_single_ch(1, 1000);
 
     HAL_Delay(10000);
 

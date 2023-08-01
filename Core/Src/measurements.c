@@ -10,7 +10,24 @@
  * @param num_samples number of samples to measure
 
  */
-void meas_basic_volt_test_single_ch(uint8_t channel, uint32_t num_samples){
+
+//define number of averaged samples for all measurements here
+//todo: do value setting in init
+uint32_t prv_meas_num_avg = MEAS_NUM_AVG_DEFAULT;
+
+
+
+/**
+ * @brief Sets number of samples to take and average for each voltage / current measurement
+ * @param num_avg_smpl samples to average
+
+ */
+void meas_set_num_avg(uint32_t num_avg_smpl){
+  //no paramete validity checking, use wisely
+  prv_meas_num_avg = num_avg_smpl;
+}
+
+void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
   uint32_t t1, t2;
   static uint64_t splstrt;
 
