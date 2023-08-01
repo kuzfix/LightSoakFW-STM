@@ -39,9 +39,11 @@
 #define DAQ_CURR_ADC_HANDLE &hadc3
 
 #define DAQ_VREF 3.0f
-#define DAQ_MAX_ADC_VAL 0xFFF
+#define DAQ_MAX_ADC_VAL 0xFFFF
 #define DAQ_VOLT_AMP_GAIN 2.0f
 #define DAQ_SHUNT_AMP_GAIN 30.0f
+
+#define DAQ_SAMPLE_BITSIHFT 4
 
 
 // structure typedef for one sample of all channels
@@ -104,8 +106,6 @@ t_daq_sample_convd daq_raw_to_volt(t_daq_sample_raw raw);
 t_daq_sample_convd daq_raw_to_curr(t_daq_sample_raw raw);
 
 //single shot measurement of voltage and current (for all channels), with specified number of samples averaged
-//for testing purposes, since cant get both voltage and current values
-//todo: make one function that returns voltage and current somehow
 t_daq_sample_convd daq_single_shot_volt(uint32_t num_samples);
 t_daq_sample_convd daq_single_shot_curr(uint32_t num_samples);
 

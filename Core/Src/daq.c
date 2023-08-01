@@ -151,12 +151,12 @@ t_daq_sample_raw daq_get_from_buffer_volt(uint32_t sample_idx){
     sample.timestamp = 0;
     return sample;
   }
-  sample.ch1 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 0];
-  sample.ch2 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 1];
-  sample.ch3 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 2];
-  sample.ch4 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 3];
-  sample.ch5 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 4];
-  sample.ch6 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 5];
+  sample.ch1 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 0]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch2 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 1]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch3 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 2]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch4 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 3]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch5 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 4]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch6 = g_daq_buffer_volt[sample_idx * DAQ_NUM_CH + 5]<<DAQ_SAMPLE_BITSIHFT;
   sample.timestamp = daq_get_sampling_start_timestamp()+DAQ_SAMPLE_TIME_100KSPS*sample_idx;
   return sample;
 }
@@ -181,12 +181,12 @@ t_daq_sample_raw daq_get_from_buffer_curr(uint32_t sample_idx){
     sample.timestamp = 0;
     return sample;
   }
-  sample.ch1 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 0];
-  sample.ch2 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 1];
-  sample.ch3 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 2];
-  sample.ch4 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 3];
-  sample.ch5 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 4];
-  sample.ch6 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 5];
+  sample.ch1 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 0]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch2 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 1]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch3 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 2]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch4 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 3]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch5 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 4]<<DAQ_SAMPLE_BITSIHFT;
+  sample.ch6 = g_daq_buffer_curr[sample_idx * DAQ_NUM_CH + 5]<<DAQ_SAMPLE_BITSIHFT;
   sample.timestamp = daq_get_sampling_start_timestamp()+DAQ_SAMPLE_TIME_100KSPS*sample_idx;
   return sample;
 }
@@ -299,12 +299,12 @@ t_daq_sample_raw daq_volt_raw_get_average(uint32_t num_samples){
 
   for(uint32_t n = 0 ; n<num_samples ; n++){
     //add to accumulator
-    sum_array[0] += g_daq_buffer_volt[n * DAQ_NUM_CH + 0];
-    sum_array[1] += g_daq_buffer_volt[n * DAQ_NUM_CH + 1];
-    sum_array[2] += g_daq_buffer_volt[n * DAQ_NUM_CH + 2];
-    sum_array[3] += g_daq_buffer_volt[n * DAQ_NUM_CH + 3];
-    sum_array[4] += g_daq_buffer_volt[n * DAQ_NUM_CH + 4];
-    sum_array[5] += g_daq_buffer_volt[n * DAQ_NUM_CH + 5];
+    sum_array[0] += g_daq_buffer_volt[n * DAQ_NUM_CH + 0]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[1] += g_daq_buffer_volt[n * DAQ_NUM_CH + 1]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[2] += g_daq_buffer_volt[n * DAQ_NUM_CH + 2]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[3] += g_daq_buffer_volt[n * DAQ_NUM_CH + 3]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[4] += g_daq_buffer_volt[n * DAQ_NUM_CH + 4]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[5] += g_daq_buffer_volt[n * DAQ_NUM_CH + 5]<<DAQ_SAMPLE_BITSIHFT;
   }
   avg_sample.ch1 = sum_array[0] / num_samples;
   avg_sample.ch2 = sum_array[1] / num_samples;
@@ -346,12 +346,12 @@ t_daq_sample_raw daq_curr_raw_get_average(uint32_t num_samples){
 
   for(uint32_t n = 0 ; n<num_samples ; n++){
     //add to accumulator
-    sum_array[0] += g_daq_buffer_curr[n * DAQ_NUM_CH + 0];
-    sum_array[1] += g_daq_buffer_curr[n * DAQ_NUM_CH + 1];
-    sum_array[2] += g_daq_buffer_curr[n * DAQ_NUM_CH + 2];
-    sum_array[3] += g_daq_buffer_curr[n * DAQ_NUM_CH + 3];
-    sum_array[4] += g_daq_buffer_curr[n * DAQ_NUM_CH + 4];
-    sum_array[5] += g_daq_buffer_curr[n * DAQ_NUM_CH + 5];
+    sum_array[0] += g_daq_buffer_curr[n * DAQ_NUM_CH + 0]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[1] += g_daq_buffer_curr[n * DAQ_NUM_CH + 1]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[2] += g_daq_buffer_curr[n * DAQ_NUM_CH + 2]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[3] += g_daq_buffer_curr[n * DAQ_NUM_CH + 3]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[4] += g_daq_buffer_curr[n * DAQ_NUM_CH + 4]<<DAQ_SAMPLE_BITSIHFT;
+    sum_array[5] += g_daq_buffer_curr[n * DAQ_NUM_CH + 5]<<DAQ_SAMPLE_BITSIHFT;
   }
   avg_sample.ch1 = sum_array[0] / num_samples;
   avg_sample.ch2 = sum_array[1] / num_samples;
