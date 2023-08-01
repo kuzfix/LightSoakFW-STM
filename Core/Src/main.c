@@ -33,6 +33,7 @@
 #include "SCI.h"
 #include "micro_sec.h"
 #include "daq.h"
+#include "measurements.h"
 
 /* USER CODE END Includes */
 
@@ -139,34 +140,36 @@ int main(void)
   while (1)
   {
 
-////    dbg(Debug, "prepare for sample\n");
-//    daq_prepare_for_sampling(1000);
-////    dbg(Debug, "prepare done\n");
-//    HAL_Delay(10);
-////    dbg(Debug, "start sampling\n");
-//    t1 = usec_get_timestamp_64();
-//    daq_start_sampling();
-////    dbg(Debug, "sampling started\n");
-//    while(!daq_is_sampling_done());
-//    t2 = usec_get_timestamp_64();
-////    dbg(Debug, "sampling done. took: %d\n", t2-t1);
-////    dbg(Debug, "started sampling at: %llu\n", t1);
+//////    dbg(Debug, "prepare for sample\n");
+////    daq_prepare_for_sampling(1000);
+//////    dbg(Debug, "prepare done\n");
+////    HAL_Delay(10);
+//////    dbg(Debug, "start sampling\n");
+////    t1 = usec_get_timestamp_64();
+////    daq_start_sampling();
+//////    dbg(Debug, "sampling started\n");
+////    while(!daq_is_sampling_done());
+////    t2 = usec_get_timestamp_64();
+//////    dbg(Debug, "sampling done. took: %d\n", t2-t1);
+//////    dbg(Debug, "started sampling at: %llu\n", t1);
+////
+////    t_daq_sample_raw avg = daq_volt_raw_get_average(1000);
+////    dbg(Debug, "avg voltage ch1: %d, at timestamp: %llu\n", avg.ch1, avg.timestamp);
+////
+////    t_daq_sample_raw avgcur = daq_curr_raw_get_average(1000);
+////    dbg(Debug, "avg current ch1: %d, at timestamp: %llu\n", avgcur.ch1, avgcur.timestamp);
+////
+////    dbg(Debug, "preforming single shot measures...\n");
 //
-//    t_daq_sample_raw avg = daq_volt_raw_get_average(1000);
-//    dbg(Debug, "avg voltage ch1: %d, at timestamp: %llu\n", avg.ch1, avg.timestamp);
+//    t_daq_sample_convd single_volt = daq_single_shot_volt(1000);
+//    t_daq_sample_convd single_curr = daq_single_shot_curr(1);
 //
-//    t_daq_sample_raw avgcur = daq_curr_raw_get_average(1000);
-//    dbg(Debug, "avg current ch1: %d, at timestamp: %llu\n", avgcur.ch1, avgcur.timestamp);
-//
-//    dbg(Debug, "preforming single shot measures...\n");
+//    dbg(Warning, "single shot voltage: %f\n", single_volt.ch1);
+////    dbg(Warning, "single shot current: %f\n", single_curr.ch1);
 
-    t_daq_sample_convd single_volt = daq_single_shot_volt(1000);
-    t_daq_sample_convd single_curr = daq_single_shot_curr(1);
+    meas_basic_volt_test_single_ch(1, 22);
 
-    dbg(Warning, "single shot voltage: %f\n", single_volt.ch1);
-//    dbg(Warning, "single shot current: %f\n", single_curr.ch1);
-
-    HAL_Delay(100);
+    HAL_Delay(10000);
 
 
 

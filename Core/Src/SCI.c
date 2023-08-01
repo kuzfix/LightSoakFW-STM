@@ -72,8 +72,7 @@ int _write(int file, char *ptr, int len);
 
 // We must also prepare the data structures that will implement the SCI buffer.
 
-// Define the length of the SCI buffer.
-#define SCI_RX_BUF_LEN 	500
+
 
 // And define the data structures required to implement the circular buffer:
 uint8_t SCI_RX_buffer[SCI_RX_BUF_LEN];	// the buffer data array
@@ -85,8 +84,7 @@ buf_handle_t SCI_RX_buf_handle;			// the buffer handle structure
 
 // We must also prepare the data structures that will implement the SCI buffer.
 
-// Define the length of the SCI buffer.
-#define SCI_TX_BUF_LEN 	500
+
 
 // And define the data structures required to implement the circular buffer:
 uint8_t SCI_TX_buffer[SCI_TX_BUF_LEN];	// the buffer data array
@@ -572,6 +570,16 @@ void SCI_demo_echo_with_interrupts(void)
     }
 
 
+}
+
+//returns remaining space in TX buffer
+uint32_t SCI_get_tx_buffer_remaining(void){
+  return BUF_get_free_size(&SCI_TX_buf_handle);
+}
+
+//returns remaining space in RX buffer
+uint32_t SCI_get_rx_buffer_remaining(void){
+  return BUF_get_free_size(&SCI_RX_buf_handle);
 }
 
 

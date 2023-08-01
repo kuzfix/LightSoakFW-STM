@@ -19,7 +19,11 @@
 // From the functions above we can see that the handle structure requires only one parameter
 // that specifies which USARTx we will use.
 
+// Define the length of the SCI RX buffer.
+#define SCI_RX_BUF_LEN 	500
 
+// Define the length of the SCI TX buffer.
+#define SCI_TX_BUF_LEN 	500
 
 
 // -------------------- Public definitions --------------------
@@ -50,6 +54,10 @@ void SCI_send_string(char *str);
 //send functions (interrupt)
 int SCI_send_bytes_IT(uint8_t *data, uint32_t size);
 int SCI_send_string_IT(char *str);
+
+//check buffer free size
+uint32_t SCI_get_tx_buffer_remaining(void);
+uint32_t SCI_get_rx_buffer_remaining(void);
 
 
 

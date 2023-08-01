@@ -30,7 +30,7 @@
 
 // ############################## USER PARAMETERS ##############################
 // Set the debug level here.
-#define DEBUG_LEVEL DBG_WARNING
+#define DEBUG_LEVEL DBG_ALL
 //set the UART handle here
 #define DEBUG_UART_HANDLE &hlpuart1
 //set the buffer size here

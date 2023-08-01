@@ -127,7 +127,7 @@ void daq_calibrate_adcs(void){
  */
 uint64_t daq_get_sampling_start_timestamp(void){
   //sampling time for n samples takes n-1 periods of TIM20 + 1 conversion time
-  return daq_sampling_volt_done_timestamp - DAQ_SAMPLE_TIME_100KSPS*(prv_daq_num_samples-1);
+  return daq_sampling_volt_done_timestamp - (uint64_t)DAQ_SAMPLE_TIME_100KSPS*(prv_daq_num_samples-1);
 }
 
 
@@ -322,7 +322,6 @@ t_daq_sample_raw daq_volt_raw_get_average(uint32_t num_samples){
 
   //print averaging time
   dbg(Debug, "Averaging %d samples took %d usec\n", num_samples, t2-t1);
-  HAL_Delay(100);
 
   return avg_sample;
 }

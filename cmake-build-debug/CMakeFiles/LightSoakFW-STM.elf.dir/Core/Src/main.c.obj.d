@@ -90,4 +90,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/adc.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/front_end_control.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/micro_sec.h
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/micro_sec.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/led_control.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/SCI.h

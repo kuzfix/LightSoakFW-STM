@@ -29,7 +29,7 @@
 // MUST BE MULTIPLE OF 6 !!!
 //same number used for voltage and current to allow for concurrent sampling
 #define DAQ_NUM_CH 6
-#define DAQ_BUFF_SIZE 6000
+#define DAQ_BUFF_SIZE 12000
 #define DAQ_SAMPLE_TIMER_HANDLE &htim20
 #define DAQ_SAMPLE_TIMER_PERIOD_100KSPS 1699
 #define DAQ_SAMPLE_TIME_100KSPS 10 //us

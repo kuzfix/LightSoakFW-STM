@@ -831,7 +831,11 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: /Users/matej/Documents/p
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/adc.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/front_end_control.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/micro_sec.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/micro_sec.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/led_control.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/SCI.h
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/measurements.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/measurements.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h \
@@ -2904,6 +2908,10 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/CMSIS/Include/cmsis_compiler.h:
 
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c:
+
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h:
+
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h:
 
 /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/features.h:
@@ -2911,10 +2919,6 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c:
 
 /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/_newlib_version.h:
-
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h:
-
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/CMSIS/Include/mpu_armv7.h:
 
