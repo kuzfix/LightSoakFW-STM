@@ -48,11 +48,11 @@ void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
 
   //send data to UART. This will be human-readable for testing
   //start sequence
-  printf("YEEET\n");
+  SCI_printf("YEEET\n");
   //sent start of sampling timestamp
   //todo: this printf of timestamp not working if close to 1000 samples take. WTF???
   splstrt = daq_get_sampling_start_timestamp();
-  printf("T:%llu\n", splstrt);
+  SCI_printf("T:%llu\n", splstrt);
   //convert raw and send for one channel
   for(uint32_t i = 0; i < num_samples; i++){
     //wait if uart buffer is full
@@ -84,13 +84,55 @@ void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
         break;
     }
     //send
-    printf("V:%f\n", volt);
+    SCI_printf("V:%f\n", volt);
   }
   //end sequence
-  printf("YOOOT\n");
+  SCI_printf("YOOOT\n");
 
 
   t2 = usec_get_timestamp();
   dbg(Debug, "Meas&send end. Took: %lu us\n", t2-t1);
+}
 
+/**
+ * @brief Measures voltage on one or all (param=0) channels. Prints to main serial
+ * @param channel channel to measure
+ */
+void meas_get_voltage(uint8_t channel){
+  dbg(Debug, "MEAS:get_voltage()\n");
+  assert_param(channel <= 6);
+  t_daq_sample_convd meas = daq_single_shot_volt(prv_meas_num_avg);
+  switch(channel){
+    case 0:
+      SCI_printf("VOLT[V]:\nCH1:%f\nCH2:%f\nCH3:%f\nCH4:%f\nCH5:%f\nCH6:%f\nTIME:%llu\n",
+          meas.ch1,meas.ch2, meas.ch3, meas.ch4, meas.ch5, meas.ch6, meas.timestamp);
+      break;
+    case 1:
+      SCI_printf("VOLT[V]:\nCH1:%f\nTIME:%llu\n", meas.ch1, meas.timestamp);
+      break;
+    case 2:
+      SCI_printf("VOLT[V]:\nCH2:%f\nTIME:%llu\n", meas.ch2, meas.timestamp);
+      break;
+    case 3:
+      SCI_printf("VOLT[V]:\nCH3:%f\nTIME:%llu\n", meas.ch3, meas.timestamp);
+      break;
+    case 4:
+      SCI_printf("VOLT[V]:\nCH4:%f\nTIME:%llu\n", meas.ch4, meas.timestamp);
+      break;
+    case 5:
+      SCI_printf("VOLT[V]:\nCH5:%f\nTIME:%llu\n", meas.ch5, meas.timestamp);
+      break;
+    case 6:
+      SCI_printf("VOLT[V]:\nCH6:%f\nTIME:%llu\n", meas.ch6, meas.timestamp);
+      break;
+  }
+}
+
+/**
+ * @brief Measures current on one or all (param=0) channels. Prints to main serial
+ * Not that usefull to measure jut current - more for testing
+ * @param channel channel to measure
+ */
+void meas_get_current(uint8_t channel){
+  //todo: switch current ranges
 }

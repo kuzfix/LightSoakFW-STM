@@ -6,6 +6,8 @@
 #define SCI_H
 // ----------- Include other modules (for public) -------------
 
+#include <stdarg.h>
+
 // Include low-level USART support.
 #include "stm32g4xx_ll_usart.h"
 
@@ -24,6 +26,9 @@
 
 // Define the length of the SCI TX buffer.
 #define SCI_TX_BUF_LEN 	500
+
+//buffer size for SCI_printf
+#define SCI_PRINTF_BUF_LEN 500
 
 
 // -------------------- Public definitions --------------------
@@ -58,6 +63,9 @@ int SCI_send_string_IT(char *str);
 //check buffer free size
 uint32_t SCI_get_tx_buffer_remaining(void);
 uint32_t SCI_get_rx_buffer_remaining(void);
+
+//printf-like output
+void SCI_printf(const char* format, ...);
 
 
 

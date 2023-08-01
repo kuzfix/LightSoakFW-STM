@@ -27,16 +27,26 @@ void measurements_init(void);
 
 void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples);
 
-//set averaging number
+// set/get averaging number
 void meas_set_num_avg(uint32_t num_avg_smpl);
+uint32_t meas_get_num_avg(void);
 
-//all functions have number of averaging samples as argument. Can be fast and noisy or slow and exact
-//these averages might be fixed or CLI parameter
-void meas_get_voltage_single_ch(uint8_t channel);
-void meas_get_voltage_all_ch(uint32_t num_avg_smpl);
+// call with 0 for all channels
+void meas_get_voltage(uint8_t channel);
 
-void meas_get_current_single_ch(uint8_t channel);
-void meas_get_current_all_ch(uint32_t num_avg_smpl);
+//for testing purposes
+//call with 0 for all channels
+void meas_get_current(uint8_t channel);
+
+//for testing purposes
+//call with 0 for all channels
+void meas_get_voltage_and_current(uint8_t channel);
+
+//call with 0 for all channels
+void meas_get_current_at_voltage(uint8_t channel, float voltage);
+
+//call with 0 for all channels
+void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt);
 
 
 #endif //LIGHTSOAKFW_STM_MEASUREMENTS_H

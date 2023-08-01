@@ -91,6 +91,9 @@ uint8_t SCI_TX_buffer[SCI_TX_BUF_LEN];	// the buffer data array
 buf_handle_t SCI_TX_buf_handle;			// the buffer handle structure
 
 
+//buffer for formatted out SCI_formatted
+char SCI_printf_buffer[SCI_PRINTF_BUF_LEN];
+
 
 
 
@@ -582,8 +585,16 @@ uint32_t SCI_get_rx_buffer_remaining(void){
   return BUF_get_free_size(&SCI_RX_buf_handle);
 }
 
-
-
+//printf style output to SCI serial
+void SCI_printf(const char* format, ...){
+  uint32_t msg_len_cnt;
+  va_list args;
+  va_start(args, format);
+  msg_len_cnt = 0;
+  msg_len_cnt = vsnprintf(SCI_printf_buffer, SCI_PRINTF_BUF_LEN, format, args);
+//  while(SCI_printf_buffer[msg_len_cnt] != 0) msg_len_cnt++;
+  SCI_send_bytes_IT( (uint8_t*)SCI_printf_buffer, msg_len_cnt);
+}
 
 
 
