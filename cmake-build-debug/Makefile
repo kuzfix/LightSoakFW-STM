@@ -417,6 +417,30 @@ Core/Src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.s
 .PHONY : Core/Src/main.c.s
 
+Core/Src/measurements.obj: Core/Src/measurements.c.obj
+.PHONY : Core/Src/measurements.obj
+
+# target to build an object file
+Core/Src/measurements.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/measurements.c.obj
+.PHONY : Core/Src/measurements.c.obj
+
+Core/Src/measurements.i: Core/Src/measurements.c.i
+.PHONY : Core/Src/measurements.i
+
+# target to preprocess a source file
+Core/Src/measurements.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/measurements.c.i
+.PHONY : Core/Src/measurements.c.i
+
+Core/Src/measurements.s: Core/Src/measurements.c.s
+.PHONY : Core/Src/measurements.s
+
+# target to generate assembly for a file
+Core/Src/measurements.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/measurements.c.s
+.PHONY : Core/Src/measurements.c.s
+
 Core/Src/micro_sec.obj: Core/Src/micro_sec.c.obj
 .PHONY : Core/Src/micro_sec.obj
 
@@ -1334,6 +1358,9 @@ help:
 	@echo "... Core/Src/main.obj"
 	@echo "... Core/Src/main.i"
 	@echo "... Core/Src/main.s"
+	@echo "... Core/Src/measurements.obj"
+	@echo "... Core/Src/measurements.i"
+	@echo "... Core/Src/measurements.s"
 	@echo "... Core/Src/micro_sec.obj"
 	@echo "... Core/Src/micro_sec.i"
 	@echo "... Core/Src/micro_sec.s"

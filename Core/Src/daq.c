@@ -27,8 +27,8 @@ uint32_t prv_daq_num_samples;
  */
 void daq_init(void){
   //init vars
-  daq_sampling_done_volt = 0;
-  daq_sampling_done_curr = 0;
+  daq_sampling_done_volt = 1;
+  daq_sampling_done_curr = 1;
   daq_sampling_volt_done_timestamp = 0;
   daq_sampling_curr_done_timestamp = 0;
   prv_daq_ready_to_sample = 0;
@@ -46,7 +46,8 @@ void daq_init(void){
  * @param num_samples number of samples to take
  */
 void daq_prepare_for_sampling(uint32_t num_samples){
-  //check if sample number possible
+  //check if sampling is not in progress and if sample number possible
+  assert_param(daq_sampling_done_volt && daq_sampling_done_curr);
   assert_param(num_samples*DAQ_NUM_CH <= DAQ_BUFF_SIZE);
 
   //save how many samples we will take. Needed for timestamp calcs
