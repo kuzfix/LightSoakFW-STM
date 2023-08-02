@@ -178,11 +178,13 @@ int main(void)
 
 
 
-    meas_get_current(0);
+//    meas_get_current(0);
+
+
 //    meas_get_voltage(0);
 
 //    meas_basic_volt_test_dump_single_ch(1, 10);
-
+    meas_get_voltage_and_current(0);
 
     HAL_Delay(5000);
 //    dbg(Warning, "   \n");

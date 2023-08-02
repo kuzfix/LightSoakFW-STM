@@ -110,7 +110,7 @@ void prv_meas_print_volt(t_daq_sample_convd sample, uint8_t channel){
       SCI_printf("CH4:%f\n", sample.ch4);
       SCI_printf("CH5:%f\n", sample.ch5);
       SCI_printf("CH6:%f\n", sample.ch6);
-      SCI_printf("TIME:%llu YY\n", sample.timestamp);
+      SCI_printf("TIME:%llu\n", sample.timestamp);
       break;
     case 1:
       SCI_printf("VOLT[V]:\nCH1:%f\nTIME:%llu\n", sample.ch1, sample.timestamp);
@@ -202,6 +202,8 @@ void meas_get_current(uint8_t channel){
   uint32_t t1, t2;
 
   t1= usec_get_timestamp();
+
+  dbg(Debug, "MEAS:meas_get_current()\n");
 
   //autorange shunts
   daq_autorange();
@@ -379,7 +381,37 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel){
  * @param channel channel to sample. 0 for all channels
  */
 void meas_get_voltage_and_current(uint8_t channel){
+  t_daq_sample_raw raw_volt, raw_curr;
+  t_daq_sample_convd convd_volt, convd_curr;
+  uint32_t t1, t2;
 
+  t1 = usec_get_timestamp();
 
+  dbg(Debug, "MEAS:meas_get_voltage_and_current()\n");
+
+  //autorange shunts
+  daq_autorange();
+  //prepare for sampling
+  daq_prepare_for_sampling(MEAS_NUM_AVG_DEFAULT);
+  //start sampling
+  daq_start_sampling();
+  //wait for sampling to finish
+  while(!daq_is_sampling_done());
+  //get raw averages from buffer
+  raw_volt = daq_volt_raw_get_average(MEAS_NUM_AVG_DEFAULT);
+  raw_curr = daq_curr_raw_get_average(MEAS_NUM_AVG_DEFAULT);
+  //convert to volts and amps
+  convd_volt = daq_raw_to_volt(raw_volt);
+  convd_curr = daq_raw_to_curr(raw_curr);
+  //check for overrange
+  meas_check_out_of_rng_volt(convd_volt, channel);
+  meas_check_out_of_rng_curr(convd_curr, channel);
+  //print voltage and current
+  prv_meas_print_volt(convd_volt, channel);
+  prv_meas_print_curr(convd_curr, channel);
+
+  t2 = usec_get_timestamp();
+
+  dbg(Debug, "meas_get_voltage_and_current() took: %lu usec\n", t2-t1);
 }
 
