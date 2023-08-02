@@ -19,6 +19,18 @@
 
 //todo: check if 4095 or 4096 is corrct for calcs?
 
+#define FEC_VOLT_OVRNG 1.45f
+#define FEC_VOLT_UNDRNG 0.001f
+
+#define FEC_CURR_OVRNG 4.7f
+#define FEC_CURR_UNDRNG 0.0001f
+
+//thresholds at which to switch from lower to higher resistance shunt
+//currently switch at 8% range, goes to 80% on next range
+#define FEC_SHNT_1X_LOWTHR 0.387f
+#define FEC_SHNT_10X_LOWTHR 0.0387f
+#define FEC_SHNT_100X_LOWTHR 0.00383f
+
 enum timEnum{
     timer1,
     timer4

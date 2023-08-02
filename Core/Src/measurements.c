@@ -102,6 +102,8 @@ void meas_get_voltage(uint8_t channel){
   dbg(Debug, "MEAS:get_voltage()\n");
   assert_param(channel <= 6);
   t_daq_sample_convd meas = daq_single_shot_volt(prv_meas_num_avg);
+  //check if out of range
+  meas_check_out_of_rng_volt(meas);
   switch(channel){
     case 0:
       SCI_printf("VOLT[V]:\nCH1:%f\nCH2:%f\nCH3:%f\nCH4:%f\nCH5:%f\nCH6:%f\nTIME:%llu\n",
@@ -131,8 +133,86 @@ void meas_get_voltage(uint8_t channel){
 /**
  * @brief Measures current on one or all (param=0) channels. Prints to main serial
  * Not that usefull to measure jut current - more for testing
+ * does shunt autoranging
  * @param channel channel to measure
  */
 void meas_get_current(uint8_t channel){
   //todo: switch current ranges
+}
+
+/**
+ * @brief checks if voltage sample (per channel check) is out of range
+ * @param sample sample to check
+ */
+void meas_check_out_of_rng_volt(t_daq_sample_convd sample){
+  float volt;
+
+  volt = sample.ch1;
+  if(volt > FEC_VOLT_OVRNG || volt < FEC_VOLT_UNDRNG){
+    SCI_printf("CH1:VOLT:OUT_OF_RANGE\n");
+  }
+
+  volt = sample.ch2;
+  if(volt > FEC_VOLT_OVRNG || volt < FEC_VOLT_UNDRNG){
+    SCI_printf("CH2:VOLT:OUT_OF_RANGE\n");
+  }
+
+  volt = sample.ch3;
+  if(volt > FEC_VOLT_OVRNG || volt < FEC_VOLT_UNDRNG){
+    SCI_printf("CH3:VOLT:OUT_OF_RANGE\n");
+  }
+
+  volt = sample.ch4;
+  if(volt > FEC_VOLT_OVRNG || volt < FEC_VOLT_UNDRNG){
+    SCI_printf("CH4:VOLT:OUT_OF_RANGE\n");
+  }
+
+  volt = sample.ch5;
+  if(volt > FEC_VOLT_OVRNG || volt < FEC_VOLT_UNDRNG){
+    SCI_printf("CH5:VOLT:OUT_OF_RANGE\n");
+  }
+
+  volt = sample.ch6;
+  if(volt > FEC_VOLT_OVRNG || volt < FEC_VOLT_UNDRNG){
+    SCI_printf("CH6:VOLT:OUT_OF_RANGE\n");
+  }
+}
+
+/**
+ * @brief checks if current sample (per channel check) is out of range
+ * does not check for propperly selected shunt !!!
+ * @param sample sample to check
+ */
+void meas_check_out_of_rng_curr(t_daq_sample_convd sample){
+  float curr;
+
+  curr = sample.ch1;
+  if(curr > FEC_CURR_OVRNG || curr < FEC_CURR_UNDRNG){
+    SCI_printf("CH1:CURRENT:OUT_OF_RANGE\n");
+  }
+
+  curr = sample.ch2;
+  if(curr > FEC_CURR_OVRNG || curr < FEC_CURR_UNDRNG){
+    SCI_printf("CH2:CURRENT:OUT_OF_RANGE\n");
+  }
+
+  curr = sample.ch3;
+  if(curr > FEC_CURR_OVRNG || curr < FEC_CURR_UNDRNG){
+    SCI_printf("CH3:CURRENT:OUT_OF_RANGE\n");
+  }
+
+  curr = sample.ch4;
+  if(curr > FEC_CURR_OVRNG || curr < FEC_CURR_UNDRNG){
+    SCI_printf("CH4:CURRENT:OUT_OF_RANGE\n");
+  }
+
+  curr = sample.ch5;
+  if(curr > FEC_CURR_OVRNG || curr < FEC_CURR_UNDRNG){
+    SCI_printf("CH5:CURRENT:OUT_OF_RANGE\n");
+  }
+
+  curr = sample.ch6;
+  if(curr > FEC_CURR_OVRNG || curr < FEC_CURR_UNDRNG){
+    SCI_printf("CH6:CURRENT:OUT_OF_RANGE\n");
+  }
 }

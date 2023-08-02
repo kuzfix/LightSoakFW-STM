@@ -107,7 +107,8 @@ t_daq_sample_convd daq_raw_to_curr(t_daq_sample_raw raw);
 
 //single shot measurement of voltage and current (for all channels), with specified number of samples averaged
 t_daq_sample_convd daq_single_shot_volt(uint32_t num_samples);
-t_daq_sample_convd daq_single_shot_curr(uint32_t num_samples);
+//uses currently set shunts, no autoranging!
+t_daq_sample_convd daq_single_shot_curr_no_autorng(uint32_t num_samples);
 
 uint64_t daq_get_sampling_start_timestamp(void);
 

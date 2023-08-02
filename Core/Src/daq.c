@@ -395,10 +395,11 @@ t_daq_sample_convd daq_single_shot_volt(uint32_t num_samples){
  * averages num_samples samples
  * timestamp is middle of first and last sample
  * !! WARNING: blocking function !!
+ * !! WARNING: uses currently set shunts, no autoranging!
  * @param num_samples number of samples to take
  * @return averaged measurement, converted to mA, all channels
  */
-t_daq_sample_convd daq_single_shot_curr(uint32_t num_samples){
+t_daq_sample_convd daq_single_shot_curr_no_autorng(uint32_t num_samples){
   daq_prepare_for_sampling(num_samples);
   daq_start_sampling();
   while(!daq_is_sampling_done());

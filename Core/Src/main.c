@@ -166,7 +166,7 @@ int main(void)
 ////    dbg(Debug, "preforming single shot measures...\n");
 //
 //    t_daq_sample_convd single_volt = daq_single_shot_volt(100);
-//    t_daq_sample_convd single_curr = daq_single_shot_curr(100);
+//    t_daq_sample_convd single_curr = daq_single_shot_curr_no_autorng(100);
 //
 //    dbg(Warning, "single shot voltage: %f\n", single_volt.ch1);
 //    dbg(Warning, "single shot current: %f\n", single_curr.ch1);
