@@ -11,6 +11,9 @@
 // Include low-level USART support.
 #include "stm32g4xx_ll_usart.h"
 
+#include "debug.h"
+#include "micro_sec.h"
+
 // We will need the following LL functions:
 //		- void LL_USART_TransmitData8(USART_TypeDef *USARTx, uint8_t Value)
 //		- uint8_t LL_USART_ReceiveData8(USART_TypeDef *USARTx)
@@ -28,7 +31,7 @@
 #define SCI_TX_BUF_LEN 	500
 
 //buffer size for SCI_printf
-#define SCI_PRINTF_BUF_LEN 500
+#define SCI_PRINTF_BUF_LEN 256
 
 
 // -------------------- Public definitions --------------------

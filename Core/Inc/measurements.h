@@ -49,8 +49,12 @@ void meas_get_current_at_voltage(uint8_t channel, float voltage);
 void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt);
 
 //checks sample for over/under range, reports to main serial
-void meas_check_out_of_rng_volt(t_daq_sample_convd sample);
-void meas_check_out_of_rng_curr(t_daq_sample_convd sample);
+void meas_check_out_of_rng_volt(t_daq_sample_convd sample, uint8_t channel);
+void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
+
+
+void prv_meas_print_volt(t_daq_sample_convd sample, uint8_t channel);
+void prv_meas_print_curr(t_daq_sample_convd sample, uint8_t channel);
 
 
 #endif //LIGHTSOAKFW_STM_MEASUREMENTS_H

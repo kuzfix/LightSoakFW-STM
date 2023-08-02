@@ -70,6 +70,8 @@ void SystemClock_Config(void);
 volatile uint16_t adcBuf[600] = {0};
 uint8_t adcCpltFlag = 0;
 
+uint64_t test = 0xFFFFFF;
+
 
 
 
@@ -125,13 +127,13 @@ int main(void)
   usec_init();
   daq_init();
 
-  uint64_t t1, t2;
+  uint32_t t1, t2;
 
   HAL_Delay(5000);
 
 //  fec_set_shunt_10x(1);
-  fec_set_force_voltage(1, 1.5f);
-//  fec_enable_current(1);
+  fec_set_force_voltage(1, -0.9f);
+  fec_enable_current(1);
 
 
 
@@ -171,12 +173,16 @@ int main(void)
 //    dbg(Warning, "single shot voltage: %f\n", single_volt.ch1);
 //    dbg(Warning, "single shot current: %f\n", single_curr.ch1);
 
-    meas_get_voltage(0);
+
+
+    meas_get_current(0);
+//    meas_get_voltage(0);
 
 //    meas_basic_volt_test_dump_single_ch(1, 10);
 
-    HAL_Delay(5000);
-    dbg(Warning, "   \n");
+
+    HAL_Delay(1000);
+//    dbg(Warning, "   \n");
 
 
 

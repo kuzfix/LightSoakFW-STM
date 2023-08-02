@@ -321,7 +321,7 @@ t_daq_sample_raw daq_volt_raw_get_average(uint32_t num_samples){
   t2 = usec_get_timestamp();
 
   //print averaging time
-  dbg(Debug, "Averaging %d samples took %d usec\n", num_samples, t2-t1);
+//  dbg(Debug, "Averaging %d samples took %d usec\n", num_samples, t2-t1);
 
   return avg_sample;
 }
@@ -367,7 +367,7 @@ t_daq_sample_raw daq_curr_raw_get_average(uint32_t num_samples){
   t2 = usec_get_timestamp();
 
   //print averaging time
-  dbg(Debug, "Averaging %d samples took %d usec\n", num_samples, t2-t1);
+//  dbg(Debug, "Averaging %d samples took %d usec\n", num_samples, t2-t1);
 
   return avg_sample;
 

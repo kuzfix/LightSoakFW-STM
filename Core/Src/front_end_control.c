@@ -400,3 +400,27 @@ float fec_get_shunt_resistance(uint8_t channel){
 
   }
 }
+
+/**
+ * @brief report current shunt config for each channel to dbg serial
+ */
+void fec_report_shunt_ranges_dbg(void){
+  dbg(Debug, "Shunt ranges report:\n");
+  //note: index for array is -1 of channel number
+  for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
+    switch (prv_fec_shunt_state[i]) {
+      case shnt_1X:
+        dbg(Debug, "CH%d: 1X\n", i+1);
+      break;
+      case shnt_10X:
+        dbg(Debug, "CH%d: 10X\n", i+1);
+      break;
+      case shnt_100X:
+        dbg(Debug, "CH%d: 100X\n", i+1);
+      break;
+      case shnt_1000X:
+        dbg(Debug, "CH%d: 1000X\n", i+1);
+      break;
+    }
+  }
+}

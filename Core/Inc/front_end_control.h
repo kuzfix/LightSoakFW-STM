@@ -25,6 +25,8 @@
 #define FEC_CURR_OVRNG 4.7f
 #define FEC_CURR_UNDRNG 0.0001f
 
+#define SHUNT_SWITCH_SETTLING_TIME 1000 //us
+
 //thresholds at which to switch from lower to higher resistance shunt
 //currently switch at 8% range, goes to 80% on next range
 #define FEC_SHNT_1X_LOWTHR 0.387f
@@ -88,6 +90,8 @@ void fec_enable_current(uint8_t channel);
 void fec_disable_current(uint8_t channel);
 void fec_set_force_voltage(uint8_t channel, float voltage);
 float fec_get_shunt_resistance(uint8_t channel);
+
+void fec_report_shunt_ranges_dbg(void);
 
 // ##############################  END OF FUNCTION PROTOTYPES  ##############################
 

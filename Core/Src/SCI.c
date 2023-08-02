@@ -593,6 +593,8 @@ void SCI_printf(const char* format, ...){
   msg_len_cnt = 0;
   msg_len_cnt = vsnprintf(SCI_printf_buffer, SCI_PRINTF_BUF_LEN, format, args);
 //  while(SCI_printf_buffer[msg_len_cnt] != 0) msg_len_cnt++;
+//  usec_delay(1000);
+  va_end(args);
   SCI_send_bytes_IT( (uint8_t*)SCI_printf_buffer, msg_len_cnt);
 }
 
