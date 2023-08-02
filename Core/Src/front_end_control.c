@@ -303,6 +303,7 @@ void fec_set_shunt_1000x(uint8_t channel){
 /**
  * @brief sets the force voltage for the given channel.
  * use fec_enable_current to connect voltage setopint circuit to cell
+ * !! takes into account +1V DUT cell negative terminal offset
  * @param channel Channel
  * @param voltage voltage in V
  */
@@ -311,6 +312,15 @@ void fec_set_force_voltage(uint8_t channel, float voltage){
 
   //invalid channel number check
   assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+  //voltage request check
+  if(voltage > FEC_MCU_VOLTAGE || voltage < -FEC_CELL_NEG_OFFSET){
+    //voltage request out of range
+    dbg(Error, "FEC: force voltage request out of range\n");
+    return;
+  }
+
+  //DUT cell has negative terminal offset, compensate for this
+  voltage += FEC_CELL_NEG_OFFSET;
 
   __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[param_idx].pwm_timer),
                         fec_ch_params[param_idx].pwm_tim_channel,
@@ -346,16 +356,13 @@ uint32_t prv_get_pwm_value(float voltage){
   const float supplyVoltage = 3.3f; // MCU supply voltage
   const uint16_t counterPeriod = 4095; // PWM counter period
 
-  if(voltage > FEC_MAX_PWM_FILT_VOLT) {
-    voltage = FEC_MAX_PWM_FILT_VOLT; // Cap at max voltage
-    dbg(Warning, "Requested voltage is too high, capping at 1.55V\n");
+  if(voltage > FEC_MCU_VOLTAGE) {
+    voltage = FEC_MCU_VOLTAGE; // Cap at max voltage
+    dbg(Warning, "Requested voltage is too high, capping at MCU_SPLYV\n");
   }
   if(voltage < 0) {
     return 0; // No need to calculate if voltage is 0
   }
-
-  //filter attenuation
-  voltage = voltage / FEC_PWM_FILT_ATTEN;
 
   uint32_t pwmValue = (uint32_t)((voltage / FEC_MCU_VOLTAGE) * FEC_TIMER_RELOAD);
 

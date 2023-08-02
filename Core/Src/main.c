@@ -130,7 +130,7 @@ int main(void)
   HAL_Delay(5000);
 
 //  fec_set_shunt_10x(1);
-//  fec_set_force_voltage(1, 0.2f);
+  fec_set_force_voltage(1, 1.5f);
 //  fec_enable_current(1);
 
 
