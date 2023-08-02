@@ -45,6 +45,9 @@
 
 #define DAQ_SAMPLE_BITSIHFT 4
 
+//samples to take for autoranging measurements
+#define DAQ_AUTORANGE_SAMPLES 16
+
 
 // structure typedef for one sample of all channels
 //can be voltage or current (raw adc data)
@@ -97,7 +100,8 @@ t_daq_sample_raw daq_get_from_buffer_curr(uint32_t sample_idx);
 t_daq_sample_raw daq_volt_raw_get_average(uint32_t num_samples);
 t_daq_sample_raw daq_curr_raw_get_average(uint32_t num_samples);
 
-
+//autorange control
+void daq_autorange(void);
 
 
 // raw to voltage and current conversions (for all channels). Should handle calibration and corrections

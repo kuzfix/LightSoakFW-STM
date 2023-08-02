@@ -198,175 +198,22 @@ void meas_get_voltage(uint8_t channel){
  * @param channel channel to measure
  */
 void meas_get_current(uint8_t channel){
-  //todo: change delays to RTOS delyas
   t_daq_sample_convd meas;
-  uint8_t shunts_switched;
   uint32_t t1, t2;
 
-  t1 = usec_get_timestamp();
+  t1= usec_get_timestamp();
 
-  dbg(Debug, "MEAS:get_current()\n");
-  //check channel validity
-  assert_param(channel <= 6);
+  //autorange shunts
+  daq_autorange();
 
-  // ######## START AT SHUNT 1X ########
-
-  //set all shunts to 1x
-  for(uint8_t i=1 ; i<=DAQ_NUM_CH ; i++){
-    fec_set_shunt_1x(i);
-  }
-  //wait to settle
-  usec_delay(SHUNT_SWITCH_SETTLING_TIME);
-
-  //measure currents
+  //measure and print
   meas = daq_single_shot_curr_no_autorng(prv_meas_num_avg);
-
-  shunts_switched = 0;
-  //check if any shunt needs to be switched to 10x
-  if(meas.ch1 < FEC_SHNT_1X_LOWTHR){
-    fec_set_shunt_10x(1);
-    shunts_switched++;
-  }
-  if(meas.ch2 < FEC_SHNT_1X_LOWTHR){
-    fec_set_shunt_10x(2);
-    shunts_switched++;
-  }
-  if(meas.ch3 < FEC_SHNT_1X_LOWTHR){
-    fec_set_shunt_10x(3);
-    shunts_switched++;
-  }
-  if(meas.ch4 < FEC_SHNT_1X_LOWTHR){
-    fec_set_shunt_10x(4);
-    shunts_switched++;
-  }
-  if(meas.ch5 < FEC_SHNT_1X_LOWTHR){
-    fec_set_shunt_10x(5);
-    shunts_switched++;
-  }
-  if(meas.ch6 < FEC_SHNT_1X_LOWTHR){
-    fec_set_shunt_10x(6);
-    shunts_switched++;
-  }
-
-  //switched any shunts?
-  if(shunts_switched == 0){
-    //no shunts switched - all currents are in range
-    //print sample
-    meas_check_out_of_rng_curr(meas, channel);
-    prv_meas_print_curr(meas, channel);
-    fec_report_shunt_ranges_dbg();
-    t2 = usec_get_timestamp();
-    dbg(Debug, "meas_get_current() took: %d usec\n", t2-t1);
-    //done
-    return;
-  }
-
-  // ######## SOME SHUNTS WERE SWITCHED TO 10X ########
-
-  //shunts were switched, wait to settle and measure again
-  usec_delay(SHUNT_SWITCH_SETTLING_TIME);
-  meas = daq_single_shot_curr_no_autorng(prv_meas_num_avg);
-
-  shunts_switched = 0;
-  //check if any shunt needs to be switched to 10x
-  if(meas.ch1 < FEC_SHNT_10X_LOWTHR){
-    fec_set_shunt_100x(1);
-    shunts_switched++;
-  }
-  if(meas.ch2 < FEC_SHNT_10X_LOWTHR){
-    fec_set_shunt_100x(2);
-    shunts_switched++;
-  }
-  if(meas.ch3 < FEC_SHNT_10X_LOWTHR){
-    fec_set_shunt_100x(3);
-    shunts_switched++;
-  }
-  if(meas.ch4 < FEC_SHNT_10X_LOWTHR){
-    fec_set_shunt_100x(4);
-    shunts_switched++;
-  }
-  if(meas.ch5 < FEC_SHNT_10X_LOWTHR){
-    fec_set_shunt_100x(5);
-    shunts_switched++;
-  }
-  if(meas.ch6 < FEC_SHNT_10X_LOWTHR){
-    fec_set_shunt_100x(6);
-    shunts_switched++;
-  }
-
-  //switched any shunts?
-  if(shunts_switched == 0){
-    //no shunts switched - all currents are in range
-    //print sample
-    meas_check_out_of_rng_curr(meas, channel);
-    prv_meas_print_curr(meas, channel);
-    fec_report_shunt_ranges_dbg();
-    t2 = usec_get_timestamp();
-    dbg(Debug, "meas_get_current() took: %d usec\n", t2-t1);
-    //done
-    return;
-  }
-
-  // ######## SOME SHUNTS WERE SWITCHED TO 100X ########
-
-  //shunts were switched, wait to settle and measure again
-  usec_delay(SHUNT_SWITCH_SETTLING_TIME);
-  meas = daq_single_shot_curr_no_autorng(prv_meas_num_avg);
-
-  shunts_switched = 0;
-  //check if any shunt needs to be switched to 10x
-  if(meas.ch1 < FEC_SHNT_100X_LOWTHR){
-    fec_set_shunt_1000x(1);
-    shunts_switched++;
-  }
-  if(meas.ch2 < FEC_SHNT_100X_LOWTHR){
-    fec_set_shunt_1000x(2);
-    shunts_switched++;
-  }
-  if(meas.ch3 < FEC_SHNT_100X_LOWTHR){
-    fec_set_shunt_1000x(3);
-    shunts_switched++;
-  }
-  if(meas.ch4 < FEC_SHNT_100X_LOWTHR){
-    fec_set_shunt_1000x(4);
-    shunts_switched++;
-  }
-  if(meas.ch5 < FEC_SHNT_100X_LOWTHR){
-    fec_set_shunt_1000x(5);
-    shunts_switched++;
-  }
-  if(meas.ch6 < FEC_SHNT_100X_LOWTHR){
-    fec_set_shunt_1000x(6);
-    shunts_switched++;
-  }
-
-  //switched any shunts?
-  if(shunts_switched == 0){
-    //no shunts switched - all currents are in range
-    //print sample
-    meas_check_out_of_rng_curr(meas, channel);
-    prv_meas_print_curr(meas, channel);
-    fec_report_shunt_ranges_dbg();
-    t2 = usec_get_timestamp();
-    dbg(Debug, "meas_get_current() took: %d usec\n", t2-t1);
-    //done
-    return;
-  }
-
-  // ######## SOME SHUNTS WERE SWITCHED TO 1000X ########
-
-  //shunts were switched, wait to settle and measure again
-  usec_delay(SHUNT_SWITCH_SETTLING_TIME);
-  meas = daq_single_shot_curr_no_autorng(prv_meas_num_avg);
-
-  //we've run out of shunts to switch, print sample
   meas_check_out_of_rng_curr(meas, channel);
   prv_meas_print_curr(meas, channel);
 
   //report shunt config to debug serial
-  fec_report_shunt_ranges_dbg();
   t2 = usec_get_timestamp();
-  dbg(Debug, "meas_get_current() took: %d usec\n", t2-t1);
+  dbg(Debug, "meas_get_current() took: %lu usec\n", t2-t1);
 
 }
 
@@ -527,10 +374,12 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel){
 /**
  * @brief Measures current and voltage at the exact same time. on one or all (param=0) channels. Prints to main serial
  * - autoranges current before making a final measurement
+ * - does not manipulate enable current and voltage force setpoint
  * does not check for propperly selected shunt !!!
  * @param channel channel to sample. 0 for all channels
  */
 void meas_get_voltage_and_current(uint8_t channel){
+
 
 }
 

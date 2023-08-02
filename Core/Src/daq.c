@@ -407,3 +407,166 @@ t_daq_sample_convd daq_single_shot_curr_no_autorng(uint32_t num_samples){
   t_daq_sample_convd avg_convd = daq_raw_to_curr(avg_raw);
   return avg_convd;
 }
+
+/**
+ * @brief Do the autoranging procedure to set shunts for all channels to the best value
+ * !! WARNING: blocking function (does some settling delays) !!
+ */
+void daq_autorange(void){
+  //todo: change delays to RTOS delyas
+  t_daq_sample_convd meas;
+  uint8_t shunts_switched;
+  uint32_t t1, t2;
+
+  t1 = usec_get_timestamp();
+
+
+  // ######## START AT SHUNT 1X ########
+
+  //set all shunts to 1x
+  for(uint8_t i=1 ; i<=DAQ_NUM_CH ; i++){
+    fec_set_shunt_1x(i);
+  }
+  //wait to settle
+  usec_delay(SHUNT_SWITCH_SETTLING_TIME);
+
+  //measure currents
+  meas = daq_single_shot_curr_no_autorng(DAQ_AUTORANGE_SAMPLES);
+
+  shunts_switched = 0;
+  //check if any shunt needs to be switched to 10x
+  if(meas.ch1 < FEC_SHNT_1X_LOWTHR){
+    fec_set_shunt_10x(1);
+    shunts_switched++;
+  }
+  if(meas.ch2 < FEC_SHNT_1X_LOWTHR){
+    fec_set_shunt_10x(2);
+    shunts_switched++;
+  }
+  if(meas.ch3 < FEC_SHNT_1X_LOWTHR){
+    fec_set_shunt_10x(3);
+    shunts_switched++;
+  }
+  if(meas.ch4 < FEC_SHNT_1X_LOWTHR){
+    fec_set_shunt_10x(4);
+    shunts_switched++;
+  }
+  if(meas.ch5 < FEC_SHNT_1X_LOWTHR){
+    fec_set_shunt_10x(5);
+    shunts_switched++;
+  }
+  if(meas.ch6 < FEC_SHNT_1X_LOWTHR){
+    fec_set_shunt_10x(6);
+    shunts_switched++;
+  }
+
+  //switched any shunts?
+  if(shunts_switched == 0){
+    //no shunts were switched, we are done
+    fec_report_shunt_ranges_dbg();
+    t2 = usec_get_timestamp();
+    dbg(Debug, "Autorange took: %d usec\n", t2-t1);
+    //done
+    return;
+  }
+
+  // ######## SOME SHUNTS WERE SWITCHED TO 10X ########
+
+  //shunts were switched, wait to settle and measure again
+  usec_delay(SHUNT_SWITCH_SETTLING_TIME);
+  meas = daq_single_shot_curr_no_autorng(DAQ_AUTORANGE_SAMPLES);
+
+  shunts_switched = 0;
+  //check if any shunt needs to be switched to 10x
+  if(meas.ch1 < FEC_SHNT_10X_LOWTHR){
+    fec_set_shunt_100x(1);
+    shunts_switched++;
+  }
+  if(meas.ch2 < FEC_SHNT_10X_LOWTHR){
+    fec_set_shunt_100x(2);
+    shunts_switched++;
+  }
+  if(meas.ch3 < FEC_SHNT_10X_LOWTHR){
+    fec_set_shunt_100x(3);
+    shunts_switched++;
+  }
+  if(meas.ch4 < FEC_SHNT_10X_LOWTHR){
+    fec_set_shunt_100x(4);
+    shunts_switched++;
+  }
+  if(meas.ch5 < FEC_SHNT_10X_LOWTHR){
+    fec_set_shunt_100x(5);
+    shunts_switched++;
+  }
+  if(meas.ch6 < FEC_SHNT_10X_LOWTHR){
+    fec_set_shunt_100x(6);
+    shunts_switched++;
+  }
+
+  //switched any shunts?
+  if(shunts_switched == 0){
+    //no shunts were switched, we are done
+    fec_report_shunt_ranges_dbg();
+    t2 = usec_get_timestamp();
+    dbg(Debug, "Autorange took: %d usec\n", t2-t1);
+    //done
+    return;
+  }
+
+  // ######## SOME SHUNTS WERE SWITCHED TO 100X ########
+
+  //shunts were switched, wait to settle and measure again
+  usec_delay(SHUNT_SWITCH_SETTLING_TIME);
+  meas = daq_single_shot_curr_no_autorng(DAQ_AUTORANGE_SAMPLES);
+
+  shunts_switched = 0;
+  //check if any shunt needs to be switched to 10x
+  if(meas.ch1 < FEC_SHNT_100X_LOWTHR){
+    fec_set_shunt_1000x(1);
+    shunts_switched++;
+  }
+  if(meas.ch2 < FEC_SHNT_100X_LOWTHR){
+    fec_set_shunt_1000x(2);
+    shunts_switched++;
+  }
+  if(meas.ch3 < FEC_SHNT_100X_LOWTHR){
+    fec_set_shunt_1000x(3);
+    shunts_switched++;
+  }
+  if(meas.ch4 < FEC_SHNT_100X_LOWTHR){
+    fec_set_shunt_1000x(4);
+    shunts_switched++;
+  }
+  if(meas.ch5 < FEC_SHNT_100X_LOWTHR){
+    fec_set_shunt_1000x(5);
+    shunts_switched++;
+  }
+  if(meas.ch6 < FEC_SHNT_100X_LOWTHR){
+    fec_set_shunt_1000x(6);
+    shunts_switched++;
+  }
+
+  //switched any shunts?
+  if(shunts_switched == 0){
+    //no shunts were switched, we are done
+    fec_report_shunt_ranges_dbg();
+    t2 = usec_get_timestamp();
+    dbg(Debug, "Autorange took: %d usec\n", t2-t1);
+    //done
+    return;
+  }
+
+  // ######## SOME SHUNTS WERE SWITCHED TO 1000X ########
+
+  //shunts were switched, wait to settle and measure again
+  usec_delay(SHUNT_SWITCH_SETTLING_TIME);
+
+  //we've run out of shunts to switch, thus done
+  //no shunts were switched, we are done
+  fec_report_shunt_ranges_dbg();
+  t2 = usec_get_timestamp();
+  dbg(Debug, "Autorange took: %d usec\n", t2-t1);
+  //done
+  return;
+
+}

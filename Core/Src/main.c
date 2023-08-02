@@ -129,7 +129,10 @@ int main(void)
 
   uint32_t t1, t2;
 
-  HAL_Delay(5000);
+  HAL_Delay(3000);
+
+  //turn on active LED
+//  HAL_GPIO_WritePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin, GPIO_PIN_SET);
 
 //  fec_set_shunt_10x(1);
   fec_set_force_voltage(1, -0.9f);
@@ -181,7 +184,7 @@ int main(void)
 //    meas_basic_volt_test_dump_single_ch(1, 10);
 
 
-    HAL_Delay(1000);
+    HAL_Delay(5000);
 //    dbg(Warning, "   \n");
 
 
