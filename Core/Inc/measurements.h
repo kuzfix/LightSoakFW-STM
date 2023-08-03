@@ -55,6 +55,7 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
 
 void prv_meas_print_volt(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_curr(t_daq_sample_convd sample, uint8_t channel);
+void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
 //todo: add print volt&curr together for nicer outout
 
 

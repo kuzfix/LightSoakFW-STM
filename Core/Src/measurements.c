@@ -169,6 +169,73 @@ void prv_meas_print_curr(t_daq_sample_convd sample, uint8_t channel){
 }
 
 /**
+ * @brief prints voltage and current to main serial in human readable format. for internal use
+ * - use 0 to print all channels
+ * @param sample_volt voltage to print
+ * @param sample_curr current to print
+ * @param channel channel to measure
+ */
+void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel){
+  //voltage and current should have same timestamp if we want to print them in one go. Timestamp for voltage is used.
+  //warning if timestamps not equal
+  if(sample_volt.timestamp != sample_curr.timestamp){
+    dbg(Warning,"prv_meas_print_volt_and_curr(): Volt/Curr timestamps not equal!\n");
+  }
+
+  switch(channel){
+    case 0:
+      SCI_printf("VOLT[V]:\n");
+      SCI_printf("CH1:%f\n", sample_volt.ch1);
+      SCI_printf("CH2:%f\n", sample_volt.ch2);
+      SCI_printf("CH3:%f\n", sample_volt.ch3);
+      SCI_printf("CH4:%f\n", sample_volt.ch4);
+      SCI_printf("CH5:%f\n", sample_volt.ch5);
+      SCI_printf("CH6:%f\n", sample_volt.ch6);
+      SCI_printf("CURR[mA]:\n");
+      SCI_printf("CH1:%f\n", sample_curr.ch1);
+      SCI_printf("CH2:%f\n", sample_curr.ch2);
+      SCI_printf("CH3:%f\n", sample_curr.ch3);
+      SCI_printf("CH4:%f\n", sample_curr.ch4);
+      SCI_printf("CH5:%f\n", sample_curr.ch5);
+      SCI_printf("CH6:%f\n", sample_curr.ch6);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 1:
+      SCI_printf("VOLT[V]:\nCH1:%f\n", sample_volt.ch1);
+      SCI_printf("CURR[mA]:\nCH1:%f\n", sample_curr.ch1);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 2:
+      SCI_printf("VOLT[V]:\nCH2:%f\n", sample_volt.ch2);
+      SCI_printf("CURR[mA]:\nCH2:%f\n", sample_curr.ch2);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 3:
+      SCI_printf("VOLT[V]:\nCH3:%f\n", sample_volt.ch3);
+      SCI_printf("CURR[mA]:\nCH3:%f\n", sample_curr.ch3);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 4:
+      SCI_printf("VOLT[V]:\nCH4:%f\n", sample_volt.ch4);
+      SCI_printf("CURR[mA]:\nCH4:%f\n", sample_curr.ch4);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 5:
+      SCI_printf("VOLT[V]:\nCH5:%f\n", sample_volt.ch5);
+      SCI_printf("CURR[mA]:\nCH5:%f\n", sample_curr.ch5);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 6:
+      SCI_printf("VOLT[V]:\nCH6:%f\n", sample_volt.ch6);
+      SCI_printf("CURR[mA]:\nCH6:%f\n", sample_curr.ch6);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    default:
+      break;
+  }
+}
+
+/**
  * @brief Measures voltage on one or all (param=0) channels. Prints to main serial
  * @param channel channel to measure
  */
@@ -407,8 +474,7 @@ void meas_get_voltage_and_current(uint8_t channel){
   meas_check_out_of_rng_volt(convd_volt, channel);
   meas_check_out_of_rng_curr(convd_curr, channel);
   //print voltage and current
-  prv_meas_print_volt(convd_volt, channel);
-  prv_meas_print_curr(convd_curr, channel);
+  prv_meas_print_volt_and_curr(convd_volt, convd_curr, channel);
 
   t2 = usec_get_timestamp();
 
