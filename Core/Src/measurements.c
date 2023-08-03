@@ -500,7 +500,7 @@ void meas_get_current_at_forced_voltage(uint8_t channel, float voltage){
 
   t_daq_sample_raw raw_volt, raw_curr;
   t_daq_sample_convd convd_volt, convd_curr;
-  float ch_volt, ch_curr, volt_cmd;
+  float ch_volt, ch_curr, volt_cmd, min_curr_shntrng;
   uint32_t t1, t2;
   uint8_t iter_cnt;
 
@@ -511,81 +511,120 @@ void meas_get_current_at_forced_voltage(uint8_t channel, float voltage){
 
   //set force voltage
   volt_cmd = voltage;
+  //set force voltage
   fec_set_force_voltage(channel, volt_cmd);
   dbg(Debug, "force: %f\n", volt_cmd);
   //connect current stuff to DUT
   fec_enable_current(channel);
 
-  //wait for DUT to settle
-  HAL_Delay(MEAS_DUT_SETTLING_TIME_MS);
 
-  //autorange shunts
-  daq_autorange();
+  //try to approach voltage first at 1x shunt, then 10x, 100x and 1000x
+  for(uint8_t i=0 ; i<3 ; i++){
+    //set shunt depending in which phase we are
+    switch(i){
+      case 0:
+        //set shunt to 1x
+        fec_set_shunt_1x(channel);
+        min_curr_shntrng = FEC_SHNT_1X_LOWTHR;
+        break;
+      case 1:
+        //set shunt to 10x
+        fec_set_shunt_10x(channel);
+        min_curr_shntrng = FEC_SHNT_10X_LOWTHR;
+        break;
+      case 2:
+        //set shunt to 100x
+        fec_set_shunt_100x(channel);
+        min_curr_shntrng = FEC_SHNT_100X_LOWTHR;
+        break;
+      case 3:
+        //set shunt to 1000x
+        fec_set_shunt_1000x(channel);
+        min_curr_shntrng = 0.0f;
+        break;
+      default:
+        //never happens
+        break;
+    }
+    //wait to settle
+    HAL_Delay(MEAS_DUT_SETTLING_TIME_MS);
+    //approach voltage, do not change shunt
+    iter_cnt = 0;
+    while(1){
+      //prepare for sampling
+      daq_prepare_for_sampling(MEAS_NUM_AVG_DEFAULT);
+      //start sampling
+      daq_start_sampling();
+      //wait for sampling to finish
+      while(!daq_is_sampling_done());
+      //get raw averages from buffer
+      raw_volt = daq_volt_raw_get_average(MEAS_NUM_AVG_DEFAULT);
+      raw_curr = daq_curr_raw_get_average(MEAS_NUM_AVG_DEFAULT);
 
+      //convert to volts and amps
+      convd_volt = daq_raw_to_volt(raw_volt);
+      convd_curr = daq_raw_to_curr(raw_curr);
 
-  //shunts need to be autoranged so the shunt drop stays the same
-  //we need to do some voltage approach because DUT voltage is shunt drop above commanded setpoint
-  iter_cnt = 0;
-  while(1){
-    //autorange shunts
-    daq_autorange();
-    //prepare for sampling
-    daq_prepare_for_sampling(MEAS_NUM_AVG_DEFAULT);
-    //start sampling
-    daq_start_sampling();
-    //wait for sampling to finish
-    while(!daq_is_sampling_done());
-    //get raw averages from buffer
-    raw_volt = daq_volt_raw_get_average(MEAS_NUM_AVG_DEFAULT);
-    raw_curr = daq_curr_raw_get_average(MEAS_NUM_AVG_DEFAULT);
+      //get voltage of channel
+      ch_volt = daq_get_from_sample_convd_by_index(convd_volt, channel);
+      ch_curr = daq_get_from_sample_convd_by_index(convd_curr, channel);
 
-    //convert to volts and amps
-    convd_volt = daq_raw_to_volt(raw_volt);
-    convd_curr = daq_raw_to_curr(raw_curr);
+      dbg(Debug, "vmeas: %f\n", ch_volt);
+      dbg(Debug, "imeas: %f\n", ch_curr);
 
-    //get voltage of channel
-    ch_volt = daq_get_from_sample_convd_by_index(convd_volt, channel);
-    ch_curr = daq_get_from_sample_convd_by_index(convd_curr, channel);
+      //check if actual DUT voltage is close enough to setpoint
+      if(ch_volt > voltage - MEAS_FORCE_VOLT_CLOSE_ENOUGH && ch_volt < voltage + MEAS_FORCE_VOLT_CLOSE_ENOUGH){
+        //cool, we are close enough. report uter_cnt and break from for loop
+        dbg(Debug, "Voltage approach converged with %d iterations\n", iter_cnt);
+        break;
+      }
+      //not yet :/
+      if(iter_cnt > MEAS_FORCE_VOLT_ITER_MAX){
+        //approach iteration limit reached
+        dbg(Warning, "Voltage approach did not converge!!\n");
+        SCI_printf("NOCONVERGE\n");
+        //break out of for loop
+        break;
+      }
+        //compensate and try again
+      else{
+        //approximate drop across shunt and compensate.
+        //this will not get us to the exact setpoint, but it will get us close enough
+        //because current is dependent on voltage on DUT
+        dbg(Debug, "Not close enough...:\n");
 
-    dbg(Debug, "vmeas: %f\n", ch_volt);
-    dbg(Debug, "imeas: %f\n", ch_curr);
-
-    //check if actual DUT voltage is close enough to setpoint
-    if(ch_volt > voltage - MEAS_FORCE_VOLT_CLOSE_ENOUGH && ch_volt < voltage + MEAS_FORCE_VOLT_CLOSE_ENOUGH){
-      //cool, we are close enough. report uter_cnt and break from for loop
-      dbg(Debug, "Voltage approach converged in %d iterations\n", iter_cnt);
+        float diff = ch_volt-voltage;
+        dbg(Debug, "error: %f\n", diff);
+        //calculate new voltage to force
+        volt_cmd = volt_cmd - diff;
+        //set new voltage
+        fec_set_force_voltage(channel, volt_cmd);
+        dbg(Debug, "force: %f\n", volt_cmd);
+        //wait for DUT to settle
+        HAL_Delay(MEAS_DUT_SETTLING_TIME_MS);
+      }
+      //increment iteration counter
+      iter_cnt++;
+    }
+    //check if current is in current shunt range
+    if(ch_curr > min_curr_shntrng){
+      //cool, we are in range. break from for loop
+      dbg(Debug, "Current in shnt range. Doing final measure...\n");
       break;
     }
-    //not yet :/
-    if(iter_cnt > MEAS_FORCE_VOLT_ITER_MAX){
-      //approach iteration limit reached
-      dbg(Warning, "Voltage approach did not converge!!\n");
-      SCI_printf("NOCONVERGE\n");
-      //break out of for loop
-      break;
-    }
-    //compensate and try again
+    //current is below shunt range
     else{
-      //approximate drop across shunt and compensate.
-      //this will not get us to the exact setpoint, but it will get us close enough
-      //because current is dependent on voltage on DUT
-
-      float diff = voltage-ch_volt;
-      dbg(Debug, "error: %f\n", diff);
-      //calculate new voltage to force
-      volt_cmd = volt_cmd + diff;
-      //set new voltage
-      fec_set_force_voltage(channel, volt_cmd);
-      dbg(Debug, "force: %f\n", volt_cmd);
-      //wait for DUT to settle
-      HAL_Delay(MEAS_DUT_SETTLING_TIME_MS);
+      //increase shunt and try again
+      dbg(Debug, "Current below shnt range. Trying next...\n");
     }
-    //increment iteration counter
-    iter_cnt++;
 
   }
 
+
   //measure and print data
+
+  //report shunt ranges
+  fec_report_shunt_ranges_dbg();
 
   //prepare for sampling
   daq_prepare_for_sampling(MEAS_NUM_AVG_DEFAULT);
@@ -606,6 +645,7 @@ void meas_get_current_at_forced_voltage(uint8_t channel, float voltage){
   //turn off current
   fec_set_force_voltage(channel, 0.0f);
   fec_disable_current(channel);
+
 
   //evaluate time and print
   t2 = usec_get_timestamp();

@@ -186,9 +186,9 @@ int main(void)
 //    meas_basic_volt_test_dump_single_ch(1, 10);
 //    meas_get_voltage_and_current(0);
 
-    meas_get_current_at_forced_voltage(1, 0.14f);
+    meas_get_current_at_forced_voltage(1, 0.145f);
 
-    HAL_Delay(3000);
+    HAL_Delay(100000);
 //    dbg(Warning, "   \n");
 
 
