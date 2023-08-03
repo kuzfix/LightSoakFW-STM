@@ -20,7 +20,7 @@
 #include "led_control.h"
 #include "SCI.h"
 
-#define MEAS_NUM_AVG_DEFAULT 100
+#define MEAS_NUM_AVG_DEFAULT 32
 
 #define MEAS_DUT_SETTLING_TIME_MS 1 //ms
 #define MEAS_FORCE_VOLT_CLOSE_ENOUGH 0.002f //V
@@ -51,7 +51,7 @@ void meas_get_current(uint8_t channel);
 void meas_get_voltage_and_current(uint8_t channel);
 
 //only single channel
-void meas_get_current_at_forced_voltage(uint8_t channel, float voltage);
+void meas_get_current_at_forced_voltage(uint8_t channel, float voltage, uint8_t disable_current_when_finished);
 
 //call with 0 for all channels
 void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt);
@@ -64,6 +64,9 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_volt(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_curr(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
+
+//this kinda replaces prv_meas_print_volt_and_curr(). todo: pick one to use consistently
+void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
 //todo: add print volt&curr together for nicer outout
 
 

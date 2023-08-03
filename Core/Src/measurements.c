@@ -243,6 +243,60 @@ void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_c
 }
 
 /**
+ * @brief prints voltage and current to main serial in human readable format - as a IV curve point. for internal use
+ * - use 0 to print all channels
+ * @param sample_volt voltage to print
+ * @param sample_curr current to print
+ * @param channel channel to measure
+ */
+void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel){
+  //voltage and current should have same timestamp if we want to print them in one go. Timestamp for voltage is used.
+  //warning if timestamps not equal
+  if(sample_volt.timestamp != sample_curr.timestamp){
+    dbg(Warning,"prv_meas_print_volt_and_curr(): Volt/Curr timestamps not equal!\n");
+
+  }
+
+  switch(channel){
+    case 0:
+      SCI_printf("IV[mA-V]:\nCH1:CURR:%f@VOLT:%f\n", sample_curr.ch1, sample_volt.ch1);
+      SCI_printf("IV[mA-V]:\nCH2:CURR:%f@VOLT:%f\n", sample_curr.ch2, sample_volt.ch2);
+      SCI_printf("IV[mA-V]:\nCH3:CURR:%f@VOLT:%f\n", sample_curr.ch3, sample_volt.ch3);
+      SCI_printf("IV[mA-V]:\nCH4:CURR:%f@VOLT:%f\n", sample_curr.ch4, sample_volt.ch4);
+      SCI_printf("IV[mA-V]:\nCH5:CURR:%f@VOLT:%f\n", sample_curr.ch5, sample_volt.ch5);
+      SCI_printf("IV[mA-V]:\nCH6:CURR:%f@VOLT:%f\n", sample_curr.ch6, sample_volt.ch6);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 1:
+      SCI_printf("IV[mA-V]:\nCH1:CURR:%f@VOLT:%f\n", sample_curr.ch1, sample_volt.ch1);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 2:
+      SCI_printf("IV[mA-V]:\nCH2:CURR:%f@VOLT:%f\n", sample_curr.ch2, sample_volt.ch2);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 3:
+      SCI_printf("IV[mA-V]:\nCH3:CURR:%f@VOLT:%f\n", sample_curr.ch3, sample_volt.ch3);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 4:
+      SCI_printf("IV[mA-V]:\nCH4:CURR:%f@VOLT:%f\n", sample_curr.ch4, sample_volt.ch4);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 5:
+      SCI_printf("IV[mA-V]:\nCH5:CURR:%f@VOLT:%f\n", sample_curr.ch5, sample_volt.ch5);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    case 6:
+      SCI_printf("IV[mA-V]:\nCH6:CURR:%f@VOLT:%f\n", sample_curr.ch6, sample_volt.ch6);
+      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      break;
+    default:
+      break;
+  }
+}
+
+/**
  * @brief Measures voltage on one or all (param=0) channels. Prints to main serial
  * @param channel channel to measure
  */
@@ -492,10 +546,12 @@ void meas_get_voltage_and_current(uint8_t channel){
  * @brief measures a point of IV curve. Prints to main serial
  * - prints voltage and current measurement. Actual voltage might not be exactly the same as setpoint
  * - !! only one channel at a time
+ * - During IV curve meassurement, usefull to leave current on to reduce settling time
  * @param channel channel to sample.
  * @param voltage voltage to force
+ * @param disable_current_when_finished if 1, disables current when finished.
  */
-void meas_get_current_at_forced_voltage(uint8_t channel, float voltage){
+void meas_get_current_at_forced_voltage(uint8_t channel, float voltage, uint8_t disable_current_when_finished){
   //todo: change delays to RTOS delays
 
   t_daq_sample_raw raw_volt, raw_curr;
@@ -519,7 +575,7 @@ void meas_get_current_at_forced_voltage(uint8_t channel, float voltage){
 
 
   //try to approach voltage first at 1x shunt, then 10x, 100x and 1000x
-  for(uint8_t i=0 ; i<3 ; i++){
+  for(uint8_t i=0 ; i<=3 ; i++){
     //set shunt depending in which phase we are
     switch(i){
       case 0:
@@ -640,11 +696,19 @@ void meas_get_current_at_forced_voltage(uint8_t channel, float voltage){
   convd_curr = daq_raw_to_curr(raw_curr);
 
   //print to main serial
-  prv_meas_print_volt_and_curr(convd_volt, convd_curr, channel);
+  prv_meas_print_IV_point(convd_volt, convd_curr, channel);
 
   //turn off current
-  fec_set_force_voltage(channel, 0.0f);
-  fec_disable_current(channel);
+  if(disable_current_when_finished){
+    fec_disable_current(channel);
+    fec_set_force_voltage(channel, 0.0f);
+    fec_set_shunt_1000x(channel);
+    dbg(Debug, "Disabled current\n");
+  }
+  else{
+    dbg(Debug, "Kept current at last used value.\n");
+  }
+
 
 
   //evaluate time and print

@@ -25,7 +25,7 @@
 #define FEC_CURR_OVRNG 4.7f
 #define FEC_CURR_UNDRNG 0.0001f
 
-#define SHUNT_SWITCH_SETTLING_TIME 1000 //us
+#define SHUNT_SWITCH_SETTLING_TIME 100 //us
 
 //thresholds at which to switch from lower to higher resistance shunt
 //currently switch at 8% range, goes to 80% on next range
