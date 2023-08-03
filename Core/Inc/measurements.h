@@ -22,6 +22,14 @@
 
 #define MEAS_NUM_AVG_DEFAULT 100
 
+#define MEAS_DUT_SETTLING_TIME_MS 1 //ms
+#define MEAS_FORCE_VOLT_CLOSE_ENOUGH 0.002f //V
+#define MEAS_FORCE_VOLT_ITER_MAX 10
+
+//each approach iteration, shunt voltage is calculated and compensated
+//for better stability we can compensate a bit less
+#define MEAS_FORCE_VOLT_APPROACH_K 1.0f
+
 
 void measurements_init(void);
 
@@ -42,8 +50,8 @@ void meas_get_current(uint8_t channel);
 //call with 0 for all channels
 void meas_get_voltage_and_current(uint8_t channel);
 
-//call with 0 for all channels
-void meas_get_current_at_voltage(uint8_t channel, float voltage);
+//only single channel
+void meas_get_current_at_forced_voltage(uint8_t channel, float voltage);
 
 //call with 0 for all channels
 void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt);

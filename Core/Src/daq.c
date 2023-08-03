@@ -570,3 +570,35 @@ void daq_autorange(void){
   return;
 
 }
+
+
+/**
+ * @brief Gets value from sample by channel index (1-NUM_CHANNELS)
+ */
+float daq_get_from_sample_convd_by_index(t_daq_sample_convd sample, uint8_t ch){
+  //check if channel is valid
+  assert_param(ch > 0 && ch <= DAQ_NUM_CH);
+  switch(ch){
+    case 1:
+      return sample.ch1;
+      break;
+    case 2:
+      return sample.ch2;
+      break;
+    case 3:
+      return sample.ch3;
+      break;
+    case 4:
+      return sample.ch4;
+      break;
+    case 5:
+      return sample.ch5;
+      break;
+    case 6:
+      return sample.ch6;
+      break;
+    default:
+      return 0.0f;
+      break;
+  }
+}

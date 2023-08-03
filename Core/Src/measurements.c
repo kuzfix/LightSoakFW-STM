@@ -20,11 +20,18 @@ uint32_t prv_meas_num_avg = MEAS_NUM_AVG_DEFAULT;
 /**
  * @brief Sets number of samples to take and average for each voltage / current measurement
  * @param num_avg_smpl samples to average
-
  */
 void meas_set_num_avg(uint32_t num_avg_smpl){
   //no paramete validity checking, use wisely
   prv_meas_num_avg = num_avg_smpl;
+}
+
+/**
+ * @brief Gets number of samples to take and average for each voltage / current measurement
+ * @return num_avg_smpl samples used to average
+ */
+uint32_t meas_get_num_avg(void){
+  return prv_meas_num_avg;
 }
 
 void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
@@ -481,3 +488,127 @@ void meas_get_voltage_and_current(uint8_t channel){
   dbg(Debug, "meas_get_voltage_and_current() took: %lu usec\n", t2-t1);
 }
 
+/**
+ * @brief measures a point of IV curve. Prints to main serial
+ * - prints voltage and current measurement. Actual voltage might not be exactly the same as setpoint
+ * - !! only one channel at a time
+ * @param channel channel to sample.
+ * @param voltage voltage to force
+ */
+void meas_get_current_at_forced_voltage(uint8_t channel, float voltage){
+  //todo: change delays to RTOS delays
+
+  t_daq_sample_raw raw_volt, raw_curr;
+  t_daq_sample_convd convd_volt, convd_curr;
+  float ch_volt, ch_curr, volt_cmd;
+  uint32_t t1, t2;
+  uint8_t iter_cnt;
+
+  dbg(Debug, "MEAS:meas_get_current_at_forced_voltage()\n");
+  assert_param(channel <= 6 && channel != 0);
+
+  t1 = usec_get_timestamp();
+
+  //set force voltage
+  volt_cmd = voltage;
+  fec_set_force_voltage(channel, volt_cmd);
+  dbg(Debug, "force: %f\n", volt_cmd);
+  //connect current stuff to DUT
+  fec_enable_current(channel);
+
+  //wait for DUT to settle
+  HAL_Delay(MEAS_DUT_SETTLING_TIME_MS);
+
+  //autorange shunts
+  daq_autorange();
+
+
+  //shunts need to be autoranged so the shunt drop stays the same
+  //we need to do some voltage approach because DUT voltage is shunt drop above commanded setpoint
+  iter_cnt = 0;
+  while(1){
+    //autorange shunts
+    daq_autorange();
+    //prepare for sampling
+    daq_prepare_for_sampling(MEAS_NUM_AVG_DEFAULT);
+    //start sampling
+    daq_start_sampling();
+    //wait for sampling to finish
+    while(!daq_is_sampling_done());
+    //get raw averages from buffer
+    raw_volt = daq_volt_raw_get_average(MEAS_NUM_AVG_DEFAULT);
+    raw_curr = daq_curr_raw_get_average(MEAS_NUM_AVG_DEFAULT);
+
+    //convert to volts and amps
+    convd_volt = daq_raw_to_volt(raw_volt);
+    convd_curr = daq_raw_to_curr(raw_curr);
+
+    //get voltage of channel
+    ch_volt = daq_get_from_sample_convd_by_index(convd_volt, channel);
+    ch_curr = daq_get_from_sample_convd_by_index(convd_curr, channel);
+
+    dbg(Debug, "vmeas: %f\n", ch_volt);
+    dbg(Debug, "imeas: %f\n", ch_curr);
+
+    //check if actual DUT voltage is close enough to setpoint
+    if(ch_volt > voltage - MEAS_FORCE_VOLT_CLOSE_ENOUGH && ch_volt < voltage + MEAS_FORCE_VOLT_CLOSE_ENOUGH){
+      //cool, we are close enough. report uter_cnt and break from for loop
+      dbg(Debug, "Voltage approach converged in %d iterations\n", iter_cnt);
+      break;
+    }
+    //not yet :/
+    if(iter_cnt > MEAS_FORCE_VOLT_ITER_MAX){
+      //approach iteration limit reached
+      dbg(Warning, "Voltage approach did not converge!!\n");
+      SCI_printf("NOCONVERGE\n");
+      //break out of for loop
+      break;
+    }
+    //compensate and try again
+    else{
+      //approximate drop across shunt and compensate.
+      //this will not get us to the exact setpoint, but it will get us close enough
+      //because current is dependent on voltage on DUT
+
+      float diff = voltage-ch_volt;
+      dbg(Debug, "error: %f\n", diff);
+      //calculate new voltage to force
+      volt_cmd = volt_cmd + diff;
+      //set new voltage
+      fec_set_force_voltage(channel, volt_cmd);
+      dbg(Debug, "force: %f\n", volt_cmd);
+      //wait for DUT to settle
+      HAL_Delay(MEAS_DUT_SETTLING_TIME_MS);
+    }
+    //increment iteration counter
+    iter_cnt++;
+
+  }
+
+  //measure and print data
+
+  //prepare for sampling
+  daq_prepare_for_sampling(MEAS_NUM_AVG_DEFAULT);
+  //start sampling
+  daq_start_sampling();
+  //wait for sampling to finish
+  while(!daq_is_sampling_done());
+  //get raw averages from buffer
+  raw_volt = daq_volt_raw_get_average(MEAS_NUM_AVG_DEFAULT);
+  raw_curr = daq_curr_raw_get_average(MEAS_NUM_AVG_DEFAULT);
+  //convert to volts and amps
+  convd_volt = daq_raw_to_volt(raw_volt);
+  convd_curr = daq_raw_to_curr(raw_curr);
+
+  //print to main serial
+  prv_meas_print_volt_and_curr(convd_volt, convd_curr, channel);
+
+  //turn off current
+  fec_set_force_voltage(channel, 0.0f);
+  fec_disable_current(channel);
+
+  //evaluate time and print
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MEAS:meas_get_current_at_forced_voltage() took: %lu usec\n", t2-t1);
+
+}

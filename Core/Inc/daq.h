@@ -100,6 +100,8 @@ t_daq_sample_raw daq_get_from_buffer_curr(uint32_t sample_idx);
 t_daq_sample_raw daq_volt_raw_get_average(uint32_t num_samples);
 t_daq_sample_raw daq_curr_raw_get_average(uint32_t num_samples);
 
+float daq_get_from_sample_convd_by_index(t_daq_sample_convd sample, uint8_t ch);
+
 //autorange control
 void daq_autorange(void);
 

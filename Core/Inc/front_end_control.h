@@ -15,7 +15,7 @@
 #define FEC_NUM_CHANNELS 6
 #define FEC_MCU_VOLTAGE 3.2969f
 #define FEC_TIMER_RELOAD 4095
-#define FEC_CELL_NEG_OFFSET 1.0f
+#define FEC_CELL_NEG_OFFSET 0.0f
 
 //todo: check if 4095 or 4096 is corrct for calcs?
 
