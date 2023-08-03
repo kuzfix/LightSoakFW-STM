@@ -27,6 +27,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
     daq_sampling_done_volt = 1;
     daq_sampling_volt_done_timestamp = usec_get_timestamp_64();
     HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_RESET);
+    //turn off LED
+    HAL_GPIO_WritePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin, GPIO_PIN_RESET);
   }
   else if(hadc->Instance == DAQ_CURR_ADC){
     daq_sampling_done_curr = 1;

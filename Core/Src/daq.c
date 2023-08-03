@@ -93,6 +93,9 @@ void daq_start_sampling(void){
   HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_SET);
   HAL_TIM_Base_Start_IT(DAQ_SAMPLE_TIMER_HANDLE);
   //adc sampling at every update(overflow) of TIM20
+
+  //turn on LED
+  HAL_GPIO_WritePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin, GPIO_PIN_SET);
 }
 
 /**

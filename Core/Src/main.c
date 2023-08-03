@@ -188,7 +188,7 @@ int main(void)
 
     meas_get_current_at_forced_voltage(1, 0.14f);
 
-    HAL_Delay(100000);
+    HAL_Delay(3000);
 //    dbg(Warning, "   \n");
 
 
