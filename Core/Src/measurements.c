@@ -57,7 +57,7 @@ void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
   //start sequence
   SCI_printf("YEEET\n");
   //sent start of sampling timestamp
-  //todo: this printf of timestamp not working if close to 1000 samples take. WTF???
+  //todo: this printf of timestamp not working if close to 1000 samples take. WTF??? maybe? maybe not a prooblem anymore?
   splstrt = daq_get_sampling_start_timestamp();
   SCI_printf("T:%llu\n", splstrt);
   //convert raw and send for one channel
@@ -107,73 +107,34 @@ void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
  * @param sample sample to print
  * @param channel channel to measure
  */
-void prv_meas_print_volt(t_daq_sample_convd sample, uint8_t channel){
+void prv_meas_print_sample(t_daq_sample_convd sample, uint8_t channel){
   switch(channel){
     case 0:
-      SCI_printf("VOLT[V]:\n");
-      SCI_printf("CH1:%f\n", sample.ch1);
-      SCI_printf("CH2:%f\n", sample.ch2);
-      SCI_printf("CH3:%f\n", sample.ch3);
-      SCI_printf("CH4:%f\n", sample.ch4);
-      SCI_printf("CH5:%f\n", sample.ch5);
-      SCI_printf("CH6:%f\n", sample.ch6);
-      SCI_printf("TIME:%llu\n", sample.timestamp);
+      SCI_printf("%f:%f:%f:%f:%f:%f\n", sample.ch1,sample.ch2, sample.ch3, sample.ch4, sample.ch5, sample.ch6);
       break;
     case 1:
-      SCI_printf("VOLT[V]:\nCH1:%f\nTIME:%llu\n", sample.ch1, sample.timestamp);
+      SCI_printf("%f\n", sample.ch1);
       break;
     case 2:
-      SCI_printf("VOLT[V]:\nCH2:%f\nTIME:%llu\n", sample.ch2, sample.timestamp);
+      SCI_printf("%f\n", sample.ch2);
       break;
     case 3:
-      SCI_printf("VOLT[V]:\nCH3:%f\nTIME:%llu\n", sample.ch3, sample.timestamp);
+      SCI_printf("%f\n", sample.ch3);
       break;
     case 4:
-      SCI_printf("VOLT[V]:\nCH4:%f\nTIME:%llu\n", sample.ch4, sample.timestamp);
+      SCI_printf("%f\n", sample.ch4);
       break;
     case 5:
-      SCI_printf("VOLT[V]:\nCH5:%f\nTIME:%llu\n", sample.ch5, sample.timestamp);
+      SCI_printf("%f\n", sample.ch5);
       break;
     case 6:
-      SCI_printf("VOLT[V]:\nCH6:%f\nTIME:%llu\n", sample.ch6, sample.timestamp);
+      SCI_printf("%f\n", sample.ch6);
       break;
     default:
       break;
   }
 }
 
-/**
- * @brief prints voltage sample to main serial in human readable format. for internal use
- * - use 0 to print all channels
- * @param sample sample to print
- * @param channel channel to measure
- */
-void prv_meas_print_curr(t_daq_sample_convd sample, uint8_t channel){
-  switch(channel){
-    case 0:
-      SCI_printf("CURR[mA]:\nCH1:%f\nCH2:%f\nCH3:%f\nCH4:%f\nCH5:%f\nCH6:%f\nTIME:%llu\n",
-                 sample.ch1,sample.ch2, sample.ch3, sample.ch4, sample.ch5, sample.ch6, sample.timestamp);
-      break;
-    case 1:
-      SCI_printf("CURR[mA]:\nCH1:%f\nTIME:%llu\n", sample.ch1, sample.timestamp);
-      break;
-    case 2:
-      SCI_printf("CURR[mA]:\nCH2:%f\nTIME:%llu\n", sample.ch2, sample.timestamp);
-      break;
-    case 3:
-      SCI_printf("CURR[mA]:\nCH3:%f\nTIME:%llu\n", sample.ch3, sample.timestamp);
-      break;
-    case 4:
-      SCI_printf("CURR[mA]:\nCH4:%f\nTIME:%llu\n", sample.ch4, sample.timestamp);
-      break;
-    case 5:
-      SCI_printf("CURR[mA]:\nCH5:%f\nTIME:%llu\n", sample.ch5, sample.timestamp);
-      break;
-    case 6:
-      SCI_printf("CURR[mA]:\nCH6:%f\nTIME:%llu\n", sample.ch6, sample.timestamp);
-      break;
-  }
-}
 
 /**
  * @brief prints voltage and current to main serial in human readable format. for internal use
@@ -259,37 +220,30 @@ void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd 
 
   switch(channel){
     case 0:
-      SCI_printf("IV[mA-V]:\nCH1:CURR:%f@VOLT:%f\n", sample_curr.ch1, sample_volt.ch1);
-      SCI_printf("IV[mA-V]:\nCH2:CURR:%f@VOLT:%f\n", sample_curr.ch2, sample_volt.ch2);
-      SCI_printf("IV[mA-V]:\nCH3:CURR:%f@VOLT:%f\n", sample_curr.ch3, sample_volt.ch3);
-      SCI_printf("IV[mA-V]:\nCH4:CURR:%f@VOLT:%f\n", sample_curr.ch4, sample_volt.ch4);
-      SCI_printf("IV[mA-V]:\nCH5:CURR:%f@VOLT:%f\n", sample_curr.ch5, sample_volt.ch5);
-      SCI_printf("IV[mA-V]:\nCH6:CURR:%f@VOLT:%f\n", sample_curr.ch6, sample_volt.ch6);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      SCI_printf("%f_%f:", sample_curr.ch1, sample_volt.ch1);
+      SCI_printf("%f_%f:", sample_curr.ch2, sample_volt.ch2);
+      SCI_printf("%f_%f:", sample_curr.ch3, sample_volt.ch3);
+      SCI_printf("%f_%f:", sample_curr.ch4, sample_volt.ch4);
+      SCI_printf("%f_%f:", sample_curr.ch5, sample_volt.ch5);
+      SCI_printf("%f_%f\n", sample_curr.ch6, sample_volt.ch6);
       break;
     case 1:
-      SCI_printf("IV[mA-V]:\nCH1:CURR:%f@VOLT:%f\n", sample_curr.ch1, sample_volt.ch1);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      SCI_printf("%f_%f\n", sample_curr.ch1, sample_volt.ch1);
       break;
     case 2:
-      SCI_printf("IV[mA-V]:\nCH2:CURR:%f@VOLT:%f\n", sample_curr.ch2, sample_volt.ch2);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      SCI_printf("%f_%f\n", sample_curr.ch2, sample_volt.ch2);
       break;
     case 3:
-      SCI_printf("IV[mA-V]:\nCH3:CURR:%f@VOLT:%f\n", sample_curr.ch3, sample_volt.ch3);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      SCI_printf("%f_%f\n", sample_curr.ch3, sample_volt.ch3);
       break;
     case 4:
-      SCI_printf("IV[mA-V]:\nCH4:CURR:%f@VOLT:%f\n", sample_curr.ch4, sample_volt.ch4);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      SCI_printf("%f_%f\n", sample_curr.ch4, sample_volt.ch4);
       break;
     case 5:
-      SCI_printf("IV[mA-V]:\nCH5:CURR:%f@VOLT:%f\n", sample_curr.ch5, sample_volt.ch5);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      SCI_printf("I:%f_V:%f\n", sample_curr.ch5, sample_volt.ch5);
       break;
     case 6:
-      SCI_printf("IV[mA-V]:\nCH6:CURR:%f@VOLT:%f\n", sample_curr.ch6, sample_volt.ch6);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      SCI_printf("I:%f_V:%f\n", sample_curr.ch6, sample_volt.ch6);
       break;
     default:
       break;
@@ -311,7 +265,10 @@ void meas_get_voltage(uint8_t channel){
   //check if out of range
   meas_check_out_of_rng_volt(meas, channel);
   //print sample
-  prv_meas_print_volt(meas, channel);
+  prv_meas_print_data_ident_voltage();
+  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(meas.timestamp);
+  prv_meas_print_sample(meas, channel);
 
   t2 = usec_get_timestamp();
   dbg(Debug, "meas_get_voltage() took: %lu usec\n", t2-t1);
@@ -339,7 +296,13 @@ void meas_get_current(uint8_t channel){
   //measure and print
   meas = daq_single_shot_curr_no_autorng(prv_meas_num_avg);
   meas_check_out_of_rng_curr(meas, channel);
-  prv_meas_print_curr(meas, channel);
+
+
+  //print sample
+  prv_meas_print_data_ident_current();
+  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(meas.timestamp);
+  prv_meas_print_sample(meas, channel);
 
   //report shunt config to debug serial
   t2 = usec_get_timestamp();
@@ -534,8 +497,13 @@ void meas_get_voltage_and_current(uint8_t channel){
   //check for overrange
   meas_check_out_of_rng_volt(convd_volt, channel);
   meas_check_out_of_rng_curr(convd_curr, channel);
+
+
   //print voltage and current
-  prv_meas_print_volt_and_curr(convd_volt, convd_curr, channel);
+  prv_meas_print_data_ident_IV_point();
+  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(convd_volt.timestamp);
+  prv_meas_print_IV_point(convd_volt, convd_curr, channel);
 
   t2 = usec_get_timestamp();
 
@@ -551,7 +519,7 @@ void meas_get_voltage_and_current(uint8_t channel){
  * @param voltage voltage to force
  * @param disable_current_when_finished if 1, disables current when finished.
  */
-void meas_get_current_at_forced_voltage(uint8_t channel, float voltage, uint8_t disable_current_when_finished){
+void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished){
   //todo: change delays to RTOS delays
 
   t_daq_sample_raw raw_volt, raw_curr;
@@ -560,7 +528,7 @@ void meas_get_current_at_forced_voltage(uint8_t channel, float voltage, uint8_t 
   uint32_t t1, t2;
   uint8_t iter_cnt;
 
-  dbg(Debug, "MEAS:meas_get_current_at_forced_voltage()\n");
+  dbg(Debug, "MEAS:meas_get_IV_point()\n");
   assert_param(channel <= 6 && channel != 0);
 
   t1 = usec_get_timestamp();
@@ -696,6 +664,9 @@ void meas_get_current_at_forced_voltage(uint8_t channel, float voltage, uint8_t 
   convd_curr = daq_raw_to_curr(raw_curr);
 
   //print to main serial
+  prv_meas_print_data_ident_IV_point();
+  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(convd_volt.timestamp);
   prv_meas_print_IV_point(convd_volt, convd_curr, channel);
 
   //turn off current
@@ -713,6 +684,203 @@ void meas_get_current_at_forced_voltage(uint8_t channel, float voltage, uint8_t 
 
   //evaluate time and print
   t2 = usec_get_timestamp();
-  dbg(Debug, "MEAS:meas_get_current_at_forced_voltage() took: %lu usec\n", t2-t1);
+  dbg(Debug, "MEAS:meas_get_IV_point() took: %lu usec\n", t2-t1);
 
+}
+
+/**
+ * @brief Dumps voltage bufer (converted to V) (num_samples points starting at 0) to main serial in human readable format
+ * - call with channel = 0 to dump all channels
+ * @param channel channel to dump
+ * @param num_samples number of samples to dump
+ *
+ */
+void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num_samples){
+  uint32_t t1, t2;
+  t_daq_sample_raw sample_raw;
+  t_daq_sample_convd sample_convd;
+
+  t1 = usec_get_timestamp();
+
+  dbg(Debug, "prv_meas_dump_from_buffer_human_readable_volt()\n");
+  //check channel number
+  assert_param(channel <= 6);
+
+  //print ident
+  prv_meas_print_data_ident_dump_text_volt();
+  //print timestamp (of first element
+  sample_raw = daq_get_from_buffer_volt(0);
+  prv_meas_print_timestamp(sample_raw.timestamp);
+  //print sample time
+  SCI_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
+  //print channel map
+  prv_meas_print_ch_ident(channel);
+
+  for(uint32_t n = 0 ; n< num_samples ; n++){
+    //get sample from buffer (all channels)
+    sample_raw = daq_get_from_buffer_volt(n);
+    //convert to volts
+    sample_convd = daq_raw_to_volt(sample_raw);
+    //wait for some space in TX buffer
+    while(SCI_get_tx_buffer_remaining() < 128);
+    //print to serial
+    prv_meas_print_sample(sample_convd, channel);
+  }
+
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_volt() took: %lu usec\n", t2-t1);
+}
+
+/**
+ * @brief Dumps current buffer (converted to mA) (num_samples points starting at 0) to main serial in human readable format
+ * - call with channel = 0 to dump all channels
+ * @param channel channel to dump
+ * @param num_samples number of samples to dump
+ *
+ */
+void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num_samples){
+  uint32_t t1, t2;
+  t_daq_sample_raw sample_raw;
+  t_daq_sample_convd sample_convd;
+
+  t1 = usec_get_timestamp();
+
+  dbg(Debug, "prv_meas_dump_from_buffer_human_readable_curr()\n");
+  //check channel number
+  assert_param(channel <= 6);
+
+  //print ident
+  prv_meas_print_data_ident_dump_text_curr();
+  //print timestamp (of first element
+  sample_raw = daq_get_from_buffer_curr(0);
+  prv_meas_print_timestamp(sample_raw.timestamp);
+  //print sample time
+  SCI_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
+  //print channel map
+  prv_meas_print_ch_ident(channel);
+
+  for(uint32_t n = 0 ; n< num_samples ; n++){
+    //get sample from buffer (all channels)
+    sample_raw = daq_get_from_buffer_curr(n);
+    //convert to current mA
+    sample_convd = daq_raw_to_curr(sample_raw);
+    //wait for some space in TX buffer
+    while(SCI_get_tx_buffer_remaining() < 128);
+    //print to serial
+    prv_meas_print_sample(sample_convd, channel);
+  }
+
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_curr() took: %lu usec\n", t2-t1);
+}
+
+/**
+ * @brief Dumps current buffer (converted to mA) (num_samples points starting at 0) to main serial in human readable format
+ * - call with channel = 0 to dump all channels
+ * @param channel channel to dump
+ * @param num_samples number of samples to dump
+ *
+ */
+void prv_meas_dump_from_buffer_human_readable_IV(uint8_t channel, uint32_t num_samples){
+  uint32_t t1, t2;
+  t_daq_sample_raw sample_raw_volt, sample_raw_curr;
+  t_daq_sample_convd sample_convd_volt, sample_convd_curr;
+  float ch_volt;
+
+  t1 = usec_get_timestamp();
+
+  dbg(Debug, "prv_meas_dump_from_buffer_human_readable_curr()\n");
+  //check channel number
+  assert_param(channel <= 6);
+
+  //print ident
+  prv_meas_print_data_ident_dump_text_IV();
+  //print timestamp (of first element
+  sample_raw_volt = daq_get_from_buffer_volt(0);
+  prv_meas_print_timestamp(sample_raw_volt.timestamp);
+  //print sample time
+  SCI_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
+  //print channel map
+  prv_meas_print_ch_ident(channel);
+
+  for(uint32_t n = 0 ; n< num_samples ; n++){
+    //get sample from buffer (all channels)
+    sample_raw_volt = daq_get_from_buffer_volt(n);
+    sample_raw_curr = daq_get_from_buffer_curr(n);
+    //convert to current V/mA
+    sample_convd_volt = daq_raw_to_volt(sample_raw_volt);
+    sample_convd_curr = daq_raw_to_curr(sample_raw_curr);
+    //wait for some space in TX buffer
+    while(SCI_get_tx_buffer_remaining() < 128);
+    //print to serial
+    prv_meas_print_IV_point(sample_convd_volt, sample_convd_curr, channel);
+  }
+
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_curr() took: %lu usec\n", t2-t1);
+}
+
+/**
+ * @brief prints timestamp
+ * @param timestamp timestamp to print
+ */
+void prv_meas_print_timestamp(uint64_t timestamp){
+  SCI_printf("TIME:%llu\n", timestamp);
+}
+
+/**
+ * @brief prints channel identification
+ * - CH1 if single or CH1:CH2:CH3:CH4:CH5:CH6 if all
+ * @param timestamp timestamp to print
+ */
+void prv_meas_print_ch_ident(uint8_t channel){
+  if(channel== 0){
+    SCI_printf("CH1:CH2:CH3:CH4:CH5:CH6\n");
+  }
+  else{
+    SCI_printf("CH%u\n", channel);
+  }
+
+}
+
+/**
+ * @brief prints data identification VOLT
+ */
+void prv_meas_print_data_ident_voltage(void){
+  SCI_printf("VOLT[V]:\n");
+}
+
+/**
+ * @brief prints data identification VOLT
+ */
+void prv_meas_print_data_ident_current(void){
+  SCI_printf("CURR[mA]:\n");
+}
+
+/**
+ * @brief prints data identification IV point
+ */
+void prv_meas_print_data_ident_IV_point(void){
+  SCI_printf("IV[V__mA]:\n");
+}
+
+/**
+ * @brief prints data identification human readable text buffer dump
+ */
+void prv_meas_print_data_ident_dump_text_volt(void){
+  SCI_printf("DUMPVOLT[V]:\n");
+}
+
+/**
+ * @brief prints data identification human readable text buffer dump
+ */
+void prv_meas_print_data_ident_dump_text_curr(void){
+  SCI_printf("DUMPCURR[V]:\n");
+}
+
+/**
+ * @brief prints data identification human readable text buffer dump
+ */
+void prv_meas_print_data_ident_dump_text_IV(void){
+  SCI_printf("DUMPIVPT[V]:\n");
 }

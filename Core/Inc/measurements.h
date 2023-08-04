@@ -35,6 +35,9 @@ void measurements_init(void);
 
 void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples);
 
+//call with 0 for all channels
+void meas_volt_sample_and_dump(uint8_t channel, uint32_t num_samples);
+
 // set/get averaging number
 void meas_set_num_avg(uint32_t num_avg_smpl);
 uint32_t meas_get_num_avg(void);
@@ -51,7 +54,7 @@ void meas_get_current(uint8_t channel);
 void meas_get_voltage_and_current(uint8_t channel);
 
 //only single channel
-void meas_get_current_at_forced_voltage(uint8_t channel, float voltage, uint8_t disable_current_when_finished);
+void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished);
 
 //call with 0 for all channels
 void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt);
@@ -61,13 +64,20 @@ void meas_check_out_of_rng_volt(t_daq_sample_convd sample, uint8_t channel);
 void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
 
 
-void prv_meas_print_volt(t_daq_sample_convd sample, uint8_t channel);
-void prv_meas_print_curr(t_daq_sample_convd sample, uint8_t channel);
-void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
-
-//this kinda replaces prv_meas_print_volt_and_curr(). todo: pick one to use consistently
+//sample printing to main serial functions
+void prv_meas_print_timestamp(uint64_t timestamp);
+void prv_meas_print_ch_ident(uint8_t channel);
+void prv_meas_print_data_ident_voltage(void);
+void prv_meas_print_data_ident_current(void);
+void prv_meas_print_data_ident_IV_point(void);
+void prv_meas_print_data_ident_dump_text_volt(void);
+void prv_meas_print_data_ident_dump_text_curr(void);
+void prv_meas_print_data_ident_dump_text_IV(void);
+void prv_meas_print_sample(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
-//todo: add print volt&curr together for nicer outout
+void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num_samples);
+void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num_samples);
+void prv_meas_dump_from_buffer_human_readable_IV(uint8_t channel, uint32_t num_samples);
 
 
 #endif //LIGHTSOAKFW_STM_MEASUREMENTS_H

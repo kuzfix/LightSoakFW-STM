@@ -186,13 +186,15 @@ int main(void)
 //    meas_basic_volt_test_dump_single_ch(1, 10);
 //    meas_get_voltage_and_current(0);
 
-    meas_get_current_at_forced_voltage(1, 0.12f, 1);
+//    meas_get_IV_point(1, 0.12f, 1);
+    meas_get_voltage(0);
+
+//    prv_meas_dump_from_buffer_human_readable_volt(1, 10);
+    prv_meas_dump_from_buffer_human_readable_IV(0, 10);
+//    meas_get_voltage_and_current(1);
 
     HAL_Delay(3000);
 //    dbg(Warning, "   \n");
-
-
-
 
 
 
