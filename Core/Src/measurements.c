@@ -518,8 +518,9 @@ void meas_get_voltage_and_current(uint8_t channel){
  * @param channel channel to sample.
  * @param voltage voltage to force
  * @param disable_current_when_finished if 1, disables current when finished.
+ * @param noident if 1, does not print identification string and timestamp. usefull if called from iv characteristic funct
  */
-void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished){
+void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident){
   //todo: change delays to RTOS delays
 
   t_daq_sample_raw raw_volt, raw_curr;
@@ -544,6 +545,10 @@ void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_w
 
   //try to approach voltage first at 1x shunt, then 10x, 100x and 1000x
   for(uint8_t i=0 ; i<=3 ; i++){
+    //start with requested voltage as setpoint
+    //reset force setp
+    volt_cmd = voltage;
+    fec_set_force_voltage(channel, volt_cmd);
     //set shunt depending in which phase we are
     switch(i){
       case 0:
@@ -664,9 +669,12 @@ void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_w
   convd_curr = daq_raw_to_curr(raw_curr);
 
   //print to main serial
-  prv_meas_print_data_ident_IV_point();
-  prv_meas_print_ch_ident(channel);
-  prv_meas_print_timestamp(convd_volt.timestamp);
+  if(!noident){
+    //print data identification. usefull if called from iv characteristic neas
+    prv_meas_print_data_ident_IV_point();
+    prv_meas_print_ch_ident(channel);
+    prv_meas_print_timestamp(convd_volt.timestamp);
+  }
   prv_meas_print_IV_point(convd_volt, convd_curr, channel);
 
   //turn off current
@@ -861,7 +869,7 @@ void prv_meas_print_data_ident_current(void){
  * @brief prints data identification IV point
  */
 void prv_meas_print_data_ident_IV_point(void){
-  SCI_printf("IV[V__mA]:\n");
+  SCI_printf("IV[mA__V]:\n");
 }
 
 /**
@@ -883,4 +891,61 @@ void prv_meas_print_data_ident_dump_text_curr(void){
  */
 void prv_meas_print_data_ident_dump_text_IV(void){
   SCI_printf("DUMPIVPT[V]:\n");
+}
+
+/**
+ * @brief prints data identification human readable text buffer dump
+ */
+void prv_meas_print_data_ident_IV_characteristic(void){
+  SCI_printf("IVCHAR[mA__V]:\n");
+}
+
+/**
+ * @brief Measure IV characteristic of DUT. Prints results to main serial
+ * - !!! this is limited to single channel measurements !!!
+ * @param channel channel to measure
+ * @param start_volt start (low) voltage
+ * @param end_volt end (high) voltage
+ * @param step_volt step voltage
+ */
+void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt){
+  uint32_t t1, t2;
+  uint32_t num_iv_points;
+  float setp;
+
+  dbg(Debug, "MEAS:meas_get_iv_characteristic()\n");
+  assert_param(channel <= 6 && channel != 0);
+
+  t1 = usec_get_timestamp();
+
+  //print ident
+  //timestamp is just start of measurements, not for sample points
+  prv_meas_print_data_ident_IV_characteristic();
+  prv_meas_print_timestamp(usec_get_timestamp_64());
+  prv_meas_print_ch_ident(channel);
+
+  //calculate number of points we need to take
+  //divide range by step_volt, add 1 to get all points, add 1 to get precise last point at end_volt
+  num_iv_points = (uint32_t)(((end_volt - start_volt)/step_volt) + 2);
+  dbg(Debug, "IV characteristic num points: %lu\n", num_iv_points);
+
+  for(uint32_t n = 0 ; n < num_iv_points ; n++){
+
+    //determine setpoint
+    if(n == num_iv_points-1){
+      //last point
+      setp = end_volt;
+    }
+    else{
+      //not last point
+      setp = start_volt + n*step_volt;
+    }
+    meas_get_IV_point(channel, setp, 0, 1);
+
+    //todo: maybe turn off current?
+
+    t2 = usec_get_timestamp();
+    dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_curr() took: %lu usec\n", t2-t1);
+
+  }
 }
