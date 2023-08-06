@@ -23,6 +23,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj.d"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main_serial.c.obj"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main_serial.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/measurements.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/measurements.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/micro_sec.c.obj"

@@ -34,6 +34,7 @@
 #include "micro_sec.h"
 #include "daq.h"
 #include "measurements.h"
+#include "main_serial.h"
 
 /* USER CODE END Includes */
 
@@ -123,9 +124,10 @@ int main(void)
 
   fec_init();
   ledctrl_init();
-  SCI_init();
+//  SCI_init();
   usec_init();
   daq_init();
+  mainser_init();
 
   uint32_t t1, t2;
 
@@ -191,10 +193,34 @@ int main(void)
 
 //    prv_meas_dump_from_buffer_human_readable_volt(1, 10);
 //    prv_meas_dump_from_buffer_human_readable_IV(0, 10);
-    meas_get_iv_characteristic(1, 0.06f, 0.2f, 0.01f);
+//    meas_get_iv_characteristic(1, 0.06f, 0.2f, 0.01f);
 //    meas_get_voltage_and_current(1);
 
-    HAL_Delay(30000);
+//    HAL_Delay(30000);
+
+    // write "Hello World!" to the UART
+    const char* message = "Hello World!";
+    for (int i = 0; message[i] != '\0'; i++) {
+      mainser_write(message[i]);
+    }
+
+    // add a delay for the message to be sent
+    HAL_Delay(1000);
+
+    mainser_printf("Hello World with printf!\n");
+    HAL_Delay(1000);
+
+    // echo received data back to the sender
+    while (1) {
+      if (mainser_available() > 0) {
+        uint8_t data = mainser_read();
+        mainser_write(data);
+      }
+    }
+
+
+
+
 //    dbg(Warning, "   \n");
 
 

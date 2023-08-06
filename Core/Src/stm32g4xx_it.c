@@ -22,7 +22,7 @@
 #include "stm32g4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "SCI.h"	// add SCI system functionality to the interrupts
+#include "main_serial.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -282,41 +282,20 @@ void TIM2_IRQHandler(void)
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
-  // Here we must determine the source of the interrupt and
-  // then respond accordingly. We use status register flags to determine the source.
-
-  // We must also consider whether the specific interrupts relating to status flags
-  // are even enabled, so we do not respond to a wrong interrupt source.
-
-
-  // Check for new received data -> RXNE flag (Receive data register not empty)
-
-  // First check if this specific IRQ even enabled,
-  if( LL_USART_IsEnabledIT_RXNE(USART3) )
-  {
-    // then check if the corresponding flag is set.
-    if( LL_USART_IsActiveFlag_RXNE(USART3) )
-    {
-      // If the specific IRQs is enabled and its flag is set, then respond via the callback function.
-      SCI_receive_char_Callback();
-
-      // The RXNE flag will be cleared when RX data register is read.
-    }
+  // Handle RX interrupt
+  if(LL_USART_IsActiveFlag_RXNE(MAINSER_UART) && LL_USART_IsEnabledIT_RXNE(MAINSER_UART)) {
+    mainser_rx_buffer[mainser_rx_write_index++] = LL_USART_ReceiveData8(MAINSER_UART);
+    if(mainser_rx_write_index >= RX_BUFFER_SIZE) mainser_rx_write_index = 0;
   }
 
+  // Handle TX interrupt
+  if(LL_USART_IsActiveFlag_TXE(MAINSER_UART) && LL_USART_IsEnabledIT_TXE(MAINSER_UART)) {
+    LL_USART_TransmitData8(MAINSER_UART, mainser_tx_buffer[mainser_tx_read_index++]);
+    if(mainser_tx_read_index >= TX_BUFFER_SIZE) mainser_tx_read_index = 0;
 
-  // Check if the next character must be transmitted -> TC flag (Transfer Complete)
-
-  // First check if this specific IRQ even enabled,
-  if( LL_USART_IsEnabledIT_TC(USART3) )
-  {
-    // then check if the corresponding flag is set.
-    if( LL_USART_IsActiveFlag_TC(USART3) )
-    {
-      // If the specific IRQs is enabled and its flag is set, then respond via the callback function.
-      SCI_transmit_char_Callback();
-
-      // The RXNE flag will be cleared when RX data register is read.
+    // If all data is sent, disable TXE interrupt
+    if(mainser_tx_read_index == mainser_tx_write_index) {
+      LL_USART_DisableIT_TXE(MAINSER_UART);
     }
   }
 
