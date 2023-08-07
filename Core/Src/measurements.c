@@ -55,15 +55,13 @@ void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
 
   //send data to UART. This will be human-readable for testing
   //start sequence
-  SCI_printf("YEEET\n");
+  mainser_printf("YEEET\n");
   //sent start of sampling timestamp
   //todo: this printf of timestamp not working if close to 1000 samples take. WTF??? maybe? maybe not a prooblem anymore?
   splstrt = daq_get_sampling_start_timestamp();
-  SCI_printf("T:%llu\n", splstrt);
+  mainser_printf("T:%llu\n", splstrt);
   //convert raw and send for one channel
   for(uint32_t i = 0; i < num_samples; i++){
-    //wait if uart buffer is full
-    while(SCI_get_tx_buffer_remaining() < 64);
     //get raw sample
     t_daq_sample_raw raw = daq_get_from_buffer_volt(i);
     //convert to voltage
@@ -91,10 +89,10 @@ void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
         break;
     }
     //send
-    SCI_printf("V:%f\n", volt);
+    mainser_printf("V:%f\n", volt);
   }
   //end sequence
-  SCI_printf("YOOOT\n");
+  mainser_printf("YOOOT\n");
 
 
   t2 = usec_get_timestamp();
@@ -110,25 +108,25 @@ void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples){
 void prv_meas_print_sample(t_daq_sample_convd sample, uint8_t channel){
   switch(channel){
     case 0:
-      SCI_printf("%f:%f:%f:%f:%f:%f\n", sample.ch1,sample.ch2, sample.ch3, sample.ch4, sample.ch5, sample.ch6);
+      mainser_printf("%f:%f:%f:%f:%f:%f\n", sample.ch1,sample.ch2, sample.ch3, sample.ch4, sample.ch5, sample.ch6);
       break;
     case 1:
-      SCI_printf("%f\n", sample.ch1);
+      mainser_printf("%f\n", sample.ch1);
       break;
     case 2:
-      SCI_printf("%f\n", sample.ch2);
+      mainser_printf("%f\n", sample.ch2);
       break;
     case 3:
-      SCI_printf("%f\n", sample.ch3);
+      mainser_printf("%f\n", sample.ch3);
       break;
     case 4:
-      SCI_printf("%f\n", sample.ch4);
+      mainser_printf("%f\n", sample.ch4);
       break;
     case 5:
-      SCI_printf("%f\n", sample.ch5);
+      mainser_printf("%f\n", sample.ch5);
       break;
     case 6:
-      SCI_printf("%f\n", sample.ch6);
+      mainser_printf("%f\n", sample.ch6);
       break;
     default:
       break;
@@ -152,51 +150,51 @@ void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_c
 
   switch(channel){
     case 0:
-      SCI_printf("VOLT[V]:\n");
-      SCI_printf("CH1:%f\n", sample_volt.ch1);
-      SCI_printf("CH2:%f\n", sample_volt.ch2);
-      SCI_printf("CH3:%f\n", sample_volt.ch3);
-      SCI_printf("CH4:%f\n", sample_volt.ch4);
-      SCI_printf("CH5:%f\n", sample_volt.ch5);
-      SCI_printf("CH6:%f\n", sample_volt.ch6);
-      SCI_printf("CURR[mA]:\n");
-      SCI_printf("CH1:%f\n", sample_curr.ch1);
-      SCI_printf("CH2:%f\n", sample_curr.ch2);
-      SCI_printf("CH3:%f\n", sample_curr.ch3);
-      SCI_printf("CH4:%f\n", sample_curr.ch4);
-      SCI_printf("CH5:%f\n", sample_curr.ch5);
-      SCI_printf("CH6:%f\n", sample_curr.ch6);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      mainser_printf("VOLT[V]:\n");
+      mainser_printf("CH1:%f\n", sample_volt.ch1);
+      mainser_printf("CH2:%f\n", sample_volt.ch2);
+      mainser_printf("CH3:%f\n", sample_volt.ch3);
+      mainser_printf("CH4:%f\n", sample_volt.ch4);
+      mainser_printf("CH5:%f\n", sample_volt.ch5);
+      mainser_printf("CH6:%f\n", sample_volt.ch6);
+      mainser_printf("CURR[mA]:\n");
+      mainser_printf("CH1:%f\n", sample_curr.ch1);
+      mainser_printf("CH2:%f\n", sample_curr.ch2);
+      mainser_printf("CH3:%f\n", sample_curr.ch3);
+      mainser_printf("CH4:%f\n", sample_curr.ch4);
+      mainser_printf("CH5:%f\n", sample_curr.ch5);
+      mainser_printf("CH6:%f\n", sample_curr.ch6);
+      mainser_printf("TIME:%llu\n", sample_volt.timestamp);
       break;
     case 1:
-      SCI_printf("VOLT[V]:\nCH1:%f\n", sample_volt.ch1);
-      SCI_printf("CURR[mA]:\nCH1:%f\n", sample_curr.ch1);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      mainser_printf("VOLT[V]:\nCH1:%f\n", sample_volt.ch1);
+      mainser_printf("CURR[mA]:\nCH1:%f\n", sample_curr.ch1);
+      mainser_printf("TIME:%llu\n", sample_volt.timestamp);
       break;
     case 2:
-      SCI_printf("VOLT[V]:\nCH2:%f\n", sample_volt.ch2);
-      SCI_printf("CURR[mA]:\nCH2:%f\n", sample_curr.ch2);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      mainser_printf("VOLT[V]:\nCH2:%f\n", sample_volt.ch2);
+      mainser_printf("CURR[mA]:\nCH2:%f\n", sample_curr.ch2);
+      mainser_printf("TIME:%llu\n", sample_volt.timestamp);
       break;
     case 3:
-      SCI_printf("VOLT[V]:\nCH3:%f\n", sample_volt.ch3);
-      SCI_printf("CURR[mA]:\nCH3:%f\n", sample_curr.ch3);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      mainser_printf("VOLT[V]:\nCH3:%f\n", sample_volt.ch3);
+      mainser_printf("CURR[mA]:\nCH3:%f\n", sample_curr.ch3);
+      mainser_printf("TIME:%llu\n", sample_volt.timestamp);
       break;
     case 4:
-      SCI_printf("VOLT[V]:\nCH4:%f\n", sample_volt.ch4);
-      SCI_printf("CURR[mA]:\nCH4:%f\n", sample_curr.ch4);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      mainser_printf("VOLT[V]:\nCH4:%f\n", sample_volt.ch4);
+      mainser_printf("CURR[mA]:\nCH4:%f\n", sample_curr.ch4);
+      mainser_printf("TIME:%llu\n", sample_volt.timestamp);
       break;
     case 5:
-      SCI_printf("VOLT[V]:\nCH5:%f\n", sample_volt.ch5);
-      SCI_printf("CURR[mA]:\nCH5:%f\n", sample_curr.ch5);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      mainser_printf("VOLT[V]:\nCH5:%f\n", sample_volt.ch5);
+      mainser_printf("CURR[mA]:\nCH5:%f\n", sample_curr.ch5);
+      mainser_printf("TIME:%llu\n", sample_volt.timestamp);
       break;
     case 6:
-      SCI_printf("VOLT[V]:\nCH6:%f\n", sample_volt.ch6);
-      SCI_printf("CURR[mA]:\nCH6:%f\n", sample_curr.ch6);
-      SCI_printf("TIME:%llu\n", sample_volt.timestamp);
+      mainser_printf("VOLT[V]:\nCH6:%f\n", sample_volt.ch6);
+      mainser_printf("CURR[mA]:\nCH6:%f\n", sample_curr.ch6);
+      mainser_printf("TIME:%llu\n", sample_volt.timestamp);
       break;
     default:
       break;
@@ -220,30 +218,30 @@ void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd 
 
   switch(channel){
     case 0:
-      SCI_printf("%f_%f:", sample_curr.ch1, sample_volt.ch1);
-      SCI_printf("%f_%f:", sample_curr.ch2, sample_volt.ch2);
-      SCI_printf("%f_%f:", sample_curr.ch3, sample_volt.ch3);
-      SCI_printf("%f_%f:", sample_curr.ch4, sample_volt.ch4);
-      SCI_printf("%f_%f:", sample_curr.ch5, sample_volt.ch5);
-      SCI_printf("%f_%f\n", sample_curr.ch6, sample_volt.ch6);
+      mainser_printf("%f_%f:", sample_curr.ch1, sample_volt.ch1);
+      mainser_printf("%f_%f:", sample_curr.ch2, sample_volt.ch2);
+      mainser_printf("%f_%f:", sample_curr.ch3, sample_volt.ch3);
+      mainser_printf("%f_%f:", sample_curr.ch4, sample_volt.ch4);
+      mainser_printf("%f_%f:", sample_curr.ch5, sample_volt.ch5);
+      mainser_printf("%f_%f\n", sample_curr.ch6, sample_volt.ch6);
       break;
     case 1:
-      SCI_printf("%f_%f\n", sample_curr.ch1, sample_volt.ch1);
+      mainser_printf("%f_%f\n", sample_curr.ch1, sample_volt.ch1);
       break;
     case 2:
-      SCI_printf("%f_%f\n", sample_curr.ch2, sample_volt.ch2);
+      mainser_printf("%f_%f\n", sample_curr.ch2, sample_volt.ch2);
       break;
     case 3:
-      SCI_printf("%f_%f\n", sample_curr.ch3, sample_volt.ch3);
+      mainser_printf("%f_%f\n", sample_curr.ch3, sample_volt.ch3);
       break;
     case 4:
-      SCI_printf("%f_%f\n", sample_curr.ch4, sample_volt.ch4);
+      mainser_printf("%f_%f\n", sample_curr.ch4, sample_volt.ch4);
       break;
     case 5:
-      SCI_printf("I:%f_V:%f\n", sample_curr.ch5, sample_volt.ch5);
+      mainser_printf("I:%f_V:%f\n", sample_curr.ch5, sample_volt.ch5);
       break;
     case 6:
-      SCI_printf("I:%f_V:%f\n", sample_curr.ch6, sample_volt.ch6);
+      mainser_printf("I:%f_V:%f\n", sample_curr.ch6, sample_volt.ch6);
       break;
     default:
       break;
@@ -319,63 +317,63 @@ void meas_check_out_of_rng_volt(t_daq_sample_convd sample, uint8_t channel){
   switch(channel){
     case 0:
       if(sample.ch1 > FEC_VOLT_OVRNG || sample.ch1 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH1:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH1:VOLT:OUT_OF_RANGE\n");
       }
 
       if(sample.ch2 > FEC_VOLT_OVRNG || sample.ch2 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH2:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH2:VOLT:OUT_OF_RANGE\n");
       }
 
       if(sample.ch3 > FEC_VOLT_OVRNG || sample.ch3 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH3:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH3:VOLT:OUT_OF_RANGE\n");
       }
 
       if(sample.ch4 > FEC_VOLT_OVRNG || sample.ch4 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH4:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH4:VOLT:OUT_OF_RANGE\n");
       }
 
       if(sample.ch5 > FEC_VOLT_OVRNG || sample.ch5 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH5:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH5:VOLT:OUT_OF_RANGE\n");
       }
 
       if(sample.ch6 > FEC_VOLT_OVRNG || sample.ch6 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH6:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH6:VOLT:OUT_OF_RANGE\n");
       }
       break;
 
     case 1:
       if(sample.ch1 > FEC_VOLT_OVRNG || sample.ch1 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH1:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH1:VOLT:OUT_OF_RANGE\n");
       }
       break;
 
     case 2:
       if(sample.ch2 > FEC_VOLT_OVRNG || sample.ch2 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH2:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH2:VOLT:OUT_OF_RANGE\n");
       }
       break;
 
     case 3:
       if(sample.ch3 > FEC_VOLT_OVRNG || sample.ch3 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH3:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH3:VOLT:OUT_OF_RANGE\n");
       }
       break;
 
     case 4:
       if(sample.ch4 > FEC_VOLT_OVRNG || sample.ch4 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH4:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH4:VOLT:OUT_OF_RANGE\n");
       }
       break;
 
     case 5:
       if(sample.ch5 > FEC_VOLT_OVRNG || sample.ch5 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH5:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH5:VOLT:OUT_OF_RANGE\n");
       }
       break;
 
     case 6:
       if(sample.ch6 > FEC_VOLT_OVRNG || sample.ch6 < FEC_VOLT_UNDRNG){
-        SCI_printf("CH6:VOLT:OUT_OF_RANGE\n");
+        mainser_printf("CH6:VOLT:OUT_OF_RANGE\n");
       }
       break;
 
@@ -397,63 +395,63 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel){
   switch(channel){
     case 0:
       if(sample.ch1 > FEC_CURR_OVRNG || sample.ch1 < FEC_CURR_UNDRNG){
-        SCI_printf("CH1:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH1:CURR:OUT_OF_RANGE\n");
       }
 
       if(sample.ch2 > FEC_CURR_OVRNG || sample.ch2 < FEC_CURR_UNDRNG){
-        SCI_printf("CH2:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH2:CURR:OUT_OF_RANGE\n");
       }
 
       if(sample.ch3 > FEC_CURR_OVRNG || sample.ch3 < FEC_CURR_UNDRNG){
-        SCI_printf("CH3:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH3:CURR:OUT_OF_RANGE\n");
       }
 
       if(sample.ch4 > FEC_CURR_OVRNG || sample.ch4 < FEC_CURR_UNDRNG){
-        SCI_printf("CH4:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH4:CURR:OUT_OF_RANGE\n");
       }
 
       if(sample.ch5 > FEC_CURR_OVRNG || sample.ch5 < FEC_CURR_UNDRNG){
-        SCI_printf("CH5:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH5:CURR:OUT_OF_RANGE\n");
       }
 
       if(sample.ch6 > FEC_CURR_OVRNG || sample.ch6 < FEC_CURR_UNDRNG){
-        SCI_printf("CH6:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH6:CURR:OUT_OF_RANGE\n");
       }
       break;
 
     case 1:
       if(sample.ch1 > FEC_CURR_OVRNG || sample.ch1 < FEC_CURR_UNDRNG){
-        SCI_printf("CH1:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH1:CURR:OUT_OF_RANGE\n");
       }
       break;
 
     case 2:
       if(sample.ch2 > FEC_CURR_OVRNG || sample.ch2 < FEC_CURR_UNDRNG){
-        SCI_printf("CH2:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH2:CURR:OUT_OF_RANGE\n");
       }
       break;
 
     case 3:
       if(sample.ch3 > FEC_CURR_OVRNG || sample.ch3 < FEC_CURR_UNDRNG){
-        SCI_printf("CH3:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH3:CURR:OUT_OF_RANGE\n");
       }
       break;
 
     case 4:
       if(sample.ch4 > FEC_CURR_OVRNG || sample.ch4 < FEC_CURR_UNDRNG){
-        SCI_printf("CH4:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH4:CURR:OUT_OF_RANGE\n");
       }
       break;
 
     case 5:
       if(sample.ch5 > FEC_CURR_OVRNG || sample.ch5 < FEC_CURR_UNDRNG){
-        SCI_printf("CH5:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH5:CURR:OUT_OF_RANGE\n");
       }
       break;
 
     case 6:
       if(sample.ch6 > FEC_CURR_OVRNG || sample.ch6 < FEC_CURR_UNDRNG){
-        SCI_printf("CH6:CURR:OUT_OF_RANGE\n");
+        mainser_printf("CH6:CURR:OUT_OF_RANGE\n");
       }
       break;
 
@@ -611,7 +609,7 @@ void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_w
       if(iter_cnt > MEAS_FORCE_VOLT_ITER_MAX){
         //approach iteration limit reached
         dbg(Warning, "Voltage approach did not converge!!\n");
-        SCI_printf("NOCONVERGE\n");
+        mainser_printf("NOCONVERGE\n");
         //break out of for loop
         break;
       }
@@ -720,7 +718,7 @@ void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num
   sample_raw = daq_get_from_buffer_volt(0);
   prv_meas_print_timestamp(sample_raw.timestamp);
   //print sample time
-  SCI_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
+  mainser_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
   //print channel map
   prv_meas_print_ch_ident(channel);
 
@@ -729,11 +727,12 @@ void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num
     sample_raw = daq_get_from_buffer_volt(n);
     //convert to volts
     sample_convd = daq_raw_to_volt(sample_raw);
-    //wait for some space in TX buffer
-    while(SCI_get_tx_buffer_remaining() < 128);
     //print to serial
+    mainser_printf("[%lu]", n);
     prv_meas_print_sample(sample_convd, channel);
   }
+  //print END_DUMP
+  prv_meas_print_dump_end();
 
   t2 = usec_get_timestamp();
   dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_volt() took: %lu usec\n", t2-t1);
@@ -763,7 +762,7 @@ void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num
   sample_raw = daq_get_from_buffer_curr(0);
   prv_meas_print_timestamp(sample_raw.timestamp);
   //print sample time
-  SCI_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
+  mainser_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
   //print channel map
   prv_meas_print_ch_ident(channel);
 
@@ -772,11 +771,12 @@ void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num
     sample_raw = daq_get_from_buffer_curr(n);
     //convert to current mA
     sample_convd = daq_raw_to_curr(sample_raw);
-    //wait for some space in TX buffer
-    while(SCI_get_tx_buffer_remaining() < 128);
     //print to serial
+    mainser_printf("[%lu]", n);
     prv_meas_print_sample(sample_convd, channel);
   }
+  //print END_DUMP
+  prv_meas_print_dump_end();
 
   t2 = usec_get_timestamp();
   dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_curr() took: %lu usec\n", t2-t1);
@@ -807,7 +807,7 @@ void prv_meas_dump_from_buffer_human_readable_IV(uint8_t channel, uint32_t num_s
   sample_raw_volt = daq_get_from_buffer_volt(0);
   prv_meas_print_timestamp(sample_raw_volt.timestamp);
   //print sample time
-  SCI_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
+  mainser_printf("TS[us]:%f\n", (float)DAQ_SAMPLE_TIME_100KSPS);
   //print channel map
   prv_meas_print_ch_ident(channel);
 
@@ -818,11 +818,12 @@ void prv_meas_dump_from_buffer_human_readable_IV(uint8_t channel, uint32_t num_s
     //convert to current V/mA
     sample_convd_volt = daq_raw_to_volt(sample_raw_volt);
     sample_convd_curr = daq_raw_to_curr(sample_raw_curr);
-    //wait for some space in TX buffer
-    while(SCI_get_tx_buffer_remaining() < 128);
     //print to serial
+    mainser_printf("[%lu]", n);
     prv_meas_print_IV_point(sample_convd_volt, sample_convd_curr, channel);
   }
+  //print END_DUMP
+  prv_meas_print_dump_end();
 
   t2 = usec_get_timestamp();
   dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_curr() took: %lu usec\n", t2-t1);
@@ -833,7 +834,7 @@ void prv_meas_dump_from_buffer_human_readable_IV(uint8_t channel, uint32_t num_s
  * @param timestamp timestamp to print
  */
 void prv_meas_print_timestamp(uint64_t timestamp){
-  SCI_printf("TIME:%llu\n", timestamp);
+  mainser_printf("TIME:%llu\n", timestamp);
 }
 
 /**
@@ -843,10 +844,10 @@ void prv_meas_print_timestamp(uint64_t timestamp){
  */
 void prv_meas_print_ch_ident(uint8_t channel){
   if(channel== 0){
-    SCI_printf("CH1:CH2:CH3:CH4:CH5:CH6\n");
+    mainser_printf("CH1:CH2:CH3:CH4:CH5:CH6\n");
   }
   else{
-    SCI_printf("CH%u\n", channel);
+    mainser_printf("CH%u\n", channel);
   }
 
 }
@@ -855,49 +856,49 @@ void prv_meas_print_ch_ident(uint8_t channel){
  * @brief prints data identification VOLT
  */
 void prv_meas_print_data_ident_voltage(void){
-  SCI_printf("VOLT[V]:\n");
+  mainser_printf("VOLT[V]:\n");
 }
 
 /**
  * @brief prints data identification VOLT
  */
 void prv_meas_print_data_ident_current(void){
-  SCI_printf("CURR[mA]:\n");
+  mainser_printf("CURR[mA]:\n");
 }
 
 /**
  * @brief prints data identification IV point
  */
 void prv_meas_print_data_ident_IV_point(void){
-  SCI_printf("IV[mA__V]:\n");
+  mainser_printf("IV[mA__V]:\n");
 }
 
 /**
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_dump_text_volt(void){
-  SCI_printf("DUMPVOLT[V]:\n");
+  mainser_printf("DUMPVOLT[V]:\n");
 }
 
 /**
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_dump_text_curr(void){
-  SCI_printf("DUMPCURR[V]:\n");
+  mainser_printf("DUMPCURR[V]:\n");
 }
 
 /**
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_dump_text_IV(void){
-  SCI_printf("DUMPIVPT[V]:\n");
+  mainser_printf("DUMPIVPT[V]:\n");
 }
 
 /**
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_IV_characteristic(void){
-  SCI_printf("IVCHAR[mA__V]:\n");
+  mainser_printf("IVCHAR[mA__V]:\n");
 }
 
 /**
@@ -948,4 +949,11 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
     dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_curr() took: %lu usec\n", t2-t1);
 
   }
+}
+
+/**
+ * @brief prints end dump identificator
+ */
+void prv_meas_print_dump_end(void){
+  mainser_printf("END_DUMP\n");
 }

@@ -30,7 +30,6 @@
 #include "front_end_control.h"
 #include "debug.h"
 #include "led_control.h"
-#include "SCI.h"
 #include "micro_sec.h"
 #include "daq.h"
 #include "measurements.h"
@@ -121,13 +120,11 @@ int main(void)
 
   dbg(Warning, "Booting LighSoak V1...\n");
 
-
+  mainser_init();
   fec_init();
   ledctrl_init();
-//  SCI_init();
   usec_init();
   daq_init();
-  mainser_init();
 
   uint32_t t1, t2;
 
@@ -189,62 +186,21 @@ int main(void)
 //    meas_get_voltage_and_current(0);
 
 //    meas_get_IV_point(1, 0.12f, 1);
-//    meas_get_voltage(0);
+    meas_get_voltage(0);
 
-//    prv_meas_dump_from_buffer_human_readable_volt(1, 10);
-//    prv_meas_dump_from_buffer_human_readable_IV(0, 10);
+//    prv_meas_dump_from_buffer_human_readable_volt(0, 32);
+    prv_meas_dump_from_buffer_human_readable_volt(1, 1000);
 //    meas_get_iv_characteristic(1, 0.06f, 0.2f, 0.01f);
 //    meas_get_voltage_and_current(1);
 
-//    HAL_Delay(30000);
+    HAL_Delay(30000);
 
-    // write "Hello World!" to the UART
-    const char* message = "Hello World!\n";
-    for (int i = 0; message[i] != '\0'; i++) {
-      mainser_write(message[i]);
-    }
-
-    // add a delay for the message to be sent
-    HAL_Delay(1000);
-    uint64_t ts = usec_get_timestamp_64();
-    uint64_t ts2 = ts + (uint64_t)849305;
-    mainser_printf("1Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
-    mainser_printf("2Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
-    mainser_printf("3Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
-    mainser_printf("4Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
-    mainser_printf("5Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
-    mainser_printf("6Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
-    mainser_printf("7Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
-    mainser_printf("8Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
-
-    mainser_printf("1Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
-    mainser_printf("2Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
-    mainser_printf("3Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
-    mainser_printf("4Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
-    mainser_printf("5Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
-    mainser_printf("6Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
-    mainser_printf("7Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
-    mainser_printf("8Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
-
-//    const char* message1 = "1Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n";
-//    mainser_write_multi((uint8_t*)message1, strlen(message1));
-//    const char* message2 = "1Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n";
-//    mainser_write_multi((uint8_t*)message2, strlen(message2));
-
-    HAL_Delay(1000);
-
-    // echo received data back to the sender
-    while (1) {
-      if (mainser_available() > 0) {
-        uint8_t data = mainser_read();
-        mainser_write(data);
-      }
-    }
+    //
 
 
 
 
-//    dbg(Warning, "   \n");
+    dbg(Warning, "   \n");
 
 
 

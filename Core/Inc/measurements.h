@@ -18,7 +18,7 @@
 #include "micro_sec.h"
 #include "daq.h"
 #include "led_control.h"
-#include "SCI.h"
+#include "main_serial.h"
 
 #define MEAS_NUM_AVG_DEFAULT 32
 
@@ -74,6 +74,7 @@ void prv_meas_print_data_ident_dump_text_volt(void);
 void prv_meas_print_data_ident_dump_text_curr(void);
 void prv_meas_print_data_ident_dump_text_IV(void);
 void prv_meas_print_data_ident_IV_characteristic(void);
+void prv_meas_print_dump_end(void);
 void prv_meas_print_sample(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
 void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num_samples);
