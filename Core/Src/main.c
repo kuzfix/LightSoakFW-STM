@@ -186,10 +186,11 @@ int main(void)
 //    meas_get_voltage_and_current(0);
 
 //    meas_get_IV_point(1, 0.12f, 1);
-    meas_get_voltage(0);
+//    meas_get_voltage(0);
 
 //    prv_meas_dump_from_buffer_human_readable_volt(0, 32);
-    prv_meas_dump_from_buffer_human_readable_volt(1, 1000);
+//    prv_meas_dump_from_buffer_human_readable_volt(1, 1000);
+    meas_iv_sample_and_dump(1, 12);
 //    meas_get_iv_characteristic(1, 0.06f, 0.2f, 0.01f);
 //    meas_get_voltage_and_current(1);
 

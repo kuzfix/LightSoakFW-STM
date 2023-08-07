@@ -33,10 +33,11 @@
 
 void measurements_init(void);
 
-void meas_basic_volt_test_dump_single_ch(uint8_t channel, uint32_t num_samples);
 
 //call with 0 for all channels
 void meas_volt_sample_and_dump(uint8_t channel, uint32_t num_samples);
+void meas_curr_sample_and_dump(uint8_t channel, uint32_t num_samples);
+void meas_iv_sample_and_dump(uint8_t channel, uint32_t num_samples);
 
 // set/get averaging number
 void meas_set_num_avg(uint32_t num_avg_smpl);
@@ -79,7 +80,7 @@ void prv_meas_print_sample(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
 void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num_samples);
 void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num_samples);
-void prv_meas_dump_from_buffer_human_readable_IV(uint8_t channel, uint32_t num_samples);
+void prv_meas_dump_from_buffer_human_readable_iv(uint8_t channel, uint32_t num_samples);
 
 
 #endif //LIGHTSOAKFW_STM_MEASUREMENTS_H
