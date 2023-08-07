@@ -25,13 +25,22 @@ void mainser_init(void) {
  *
  * This function reads one byte of data from the receiver buffer and updates the read index.
  * If the read index exceeds the buffer size, it is reset to zero.
+ * Returns 0 if no data to read. Check mainser_available() first.
  *
  * @return The read data.
  */
 uint8_t mainser_read(void) {
-  uint8_t data = mainser_rx_buffer[mainser_rx_read_index++];
-  if(mainser_rx_read_index >= RX_BUFFER_SIZE) mainser_rx_read_index = 0;
-  return data;
+  uint8_t data;
+  if(mainser_available()){
+    data = mainser_rx_buffer[mainser_rx_read_index++];
+    if(mainser_rx_read_index >= RX_BUFFER_SIZE) mainser_rx_read_index = 0;
+    return data;
+  }
+  else{
+    //there is no data in buffer
+    return 0;
+  }
+
 }
 
 /**

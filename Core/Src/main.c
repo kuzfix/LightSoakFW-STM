@@ -190,7 +190,7 @@ int main(void)
 
 //    prv_meas_dump_from_buffer_human_readable_volt(0, 32);
 //    prv_meas_dump_from_buffer_human_readable_volt(1, 1000);
-    meas_iv_sample_and_dump(1, 12);
+    meas_volt_sample_and_dump(1, 500);
 //    meas_get_iv_characteristic(1, 0.06f, 0.2f, 0.01f);
 //    meas_get_voltage_and_current(1);
 
