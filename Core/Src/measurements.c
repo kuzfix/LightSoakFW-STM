@@ -212,7 +212,7 @@ void meas_get_voltage(uint8_t channel){
 /**
  * @brief Measures current on one or all (param=0) channels. Prints to main serial
  * Not that usefull to measure jut current - more for testing
- * - does shunt autoranging
+ * !!! Does not change current enable, shunts, force voltage or do any autoranging !!!
  * - Enabling current and setting the voltage setpoint should be done before this.
  * This function just autoranges and measures current
  * @param channel channel to measure
@@ -224,9 +224,6 @@ void meas_get_current(uint8_t channel){
   t1= usec_get_timestamp();
 
   dbg(Debug, "MEAS:meas_get_current()\n");
-
-  //autorange shunts
-  daq_autorange();
 
   //measure and print
   meas = daq_single_shot_curr_no_autorng(prv_meas_num_avg);
@@ -401,7 +398,7 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel){
 
 /**
  * @brief Measures current and voltage at the exact same time. on one or all (param=0) channels. Prints to main serial
- * - autoranges current before making a final measurement
+ * !!! Does not change current enable, shunts, force voltage or do any autoranging !!!
  * - does not manipulate enable current and voltage force setpoint
  * does not check for propperly selected shunt !!!
  * @param channel channel to sample. 0 for all channels
@@ -415,8 +412,6 @@ void meas_get_voltage_and_current(uint8_t channel){
 
   dbg(Debug, "MEAS:meas_get_voltage_and_current()\n");
 
-  //autorange shunts
-  daq_autorange();
   //prepare for sampling
   daq_prepare_for_sampling(MEAS_NUM_AVG_DEFAULT);
   //start sampling
@@ -880,7 +875,10 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
     }
     meas_get_IV_point(channel, setp, 0, 1);
 
-    //todo: maybe turn off current?
+    //turn off current stuff
+    fec_disable_current(channel);
+    fec_set_force_voltage(channel, 0);
+    fec_set_shunt_1000x(channel);
 
     t2 = usec_get_timestamp();
     dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_curr() took: %lu usec\n", t2-t1);
@@ -898,6 +896,7 @@ void prv_meas_print_dump_end(void){
 /**
  * @brief measures num_samples samples of voltage and dumps in human-readable format to main serial
  * call with channel=0 for all channels at once
+ * !!! Does not change current enable, shunts, force voltage or do any autoranging !!!
  * @param channel channel to measure
  * @param num_samples number of samples to measure
  */
@@ -915,6 +914,7 @@ void meas_volt_sample_and_dump(uint8_t channel, uint32_t num_samples){
 /**
  * @brief measures num_samples samples of current and dumps in human-readable format to main serial
  * call with channel=0 for all channels at once
+ * !!! Does not change current enable, shunts, force voltage or do any autoranging !!!
  * @param channel channel to measure
  * @param num_samples number of samples to measure
  */
