@@ -132,7 +132,15 @@ void mainser_printf(const char* format, ...){
   msg_len_cnt = vsnprintf(mainser_printf_buffer, MAINSER_PRINTF_BUF_LEN, format, args);
   va_end(args);
   va_end(args);
+  //max length check
+  if(msg_len_cnt >= TX_BUFFER_SIZE){
+    //message will never fit in tx buffer, even if empty. abort
+    dbg(Error, "mainser_printf: msg_len_cnt > TX_BUFFER_SIZE");
+    return;
+  }
   //wait for space in tx buffer
   // WARNING: this blocks code until there is space
-  while(mainser_write_multi( (uint8_t*)mainser_printf_buffer, msg_len_cnt) == 0);
+  while(mainser_write_multi( (uint8_t*)mainser_printf_buffer, msg_len_cnt) == 0){
+    //wait for space
+  }
 }

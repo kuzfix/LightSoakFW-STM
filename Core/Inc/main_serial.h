@@ -5,10 +5,11 @@
 #include "stm32g4xx_ll_usart.h"
 #include <stdarg.h>
 #include <stdio.h>
+#include "debug.h"
 
 #define MAINSER_UART USART3  // change this to the USART instance you are using
 #define RX_BUFFER_SIZE 128  // adjust this as needed
-#define TX_BUFFER_SIZE 128  // adjust this as needed
+#define TX_BUFFER_SIZE 512  // adjust this as needed
 
 //buffer size for mainser_printf
 #define MAINSER_PRINTF_BUF_LEN 256

@@ -199,15 +199,38 @@ int main(void)
 //    HAL_Delay(30000);
 
     // write "Hello World!" to the UART
-    const char* message = "Hello World!";
+    const char* message = "Hello World!\n";
     for (int i = 0; message[i] != '\0'; i++) {
       mainser_write(message[i]);
     }
 
     // add a delay for the message to be sent
     HAL_Delay(1000);
+    uint64_t ts = usec_get_timestamp_64();
+    uint64_t ts2 = ts + (uint64_t)849305;
+    mainser_printf("1Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
+    mainser_printf("2Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
+    mainser_printf("3Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
+    mainser_printf("4Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
+    mainser_printf("5Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
+    mainser_printf("6Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
+    mainser_printf("7Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
+    mainser_printf("8Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n");
 
-    mainser_printf("Hello World with printf!\n");
+    mainser_printf("1Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
+    mainser_printf("2Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
+    mainser_printf("3Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
+    mainser_printf("4Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
+    mainser_printf("5Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
+    mainser_printf("6Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
+    mainser_printf("7Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
+    mainser_printf("8Hello World with printf!Hello World with printf!Hello World with printf! ts is %llu and ts2 is 4851304. Bye\n", ts);
+
+//    const char* message1 = "1Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n";
+//    mainser_write_multi((uint8_t*)message1, strlen(message1));
+//    const char* message2 = "1Hello World with printf!Hello World with printf!Hello World with printf! ts is 4001999 and ts2 is 4851304. Bye\n";
+//    mainser_write_multi((uint8_t*)message2, strlen(message2));
+
     HAL_Delay(1000);
 
     // echo received data back to the sender
