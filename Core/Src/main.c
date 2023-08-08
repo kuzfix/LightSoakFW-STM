@@ -35,7 +35,6 @@
 #include "measurements.h"
 #include "main_serial.h"
 #include "lwshell/lwshell.h"
-#include "cmd_line_support.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,6 +66,30 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+volatile uint16_t adcBuf[600] = {0};
+uint8_t adcCpltFlag = 0;
+
+uint64_t test = 0xFFFFFF;
+
+/* Command to get called */
+int32_t mycmd_fn(int32_t argc, char** argv) {
+  mainser_printf("mycmd_fn called. Number of argv: %d\r\n", (int)argc);
+  for (int32_t i = 0; i < argc; ++i) {
+    mainser_printf("ARG[%d]: %s\r\n", (int)i, argv[i]);
+  }
+
+  /* Successful execution */
+  return 0;
+}
+
+
+void outfn(const char* str, struct lwshell* lwobj) {
+  mainser_send_string(str);
+}
+
+
+
 /* USER CODE END 0 */
 
 /**
@@ -123,8 +146,6 @@ int main(void)
 
   //turn on active LED
   HAL_GPIO_WritePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin, GPIO_PIN_SET);
-
-  cmdsprt_setup_cli();
 
 //  fec_set_shunt_10x(1);
 //  fec_set_force_voltage(1, 0.1f);
@@ -189,6 +210,16 @@ int main(void)
 
 
 
+    const char* input_str = "mycmd param1 \"param 2 with space\"\n";
+
+    /* Init library */
+
+    lwshellr_t status = lwshell_init();
+    lwshell_set_output_fn(outfn);
+    /* Define shell commands */
+    status = lwshell_register_cmd("mycmd", mycmd_fn, "Adds 2 integer numbers and prints them");
+    /* User input to process every character */
+
     while(1) {
       if (mainser_available()) {
         char c = mainser_read();
@@ -207,7 +238,7 @@ int main(void)
 
 
 
-    dbg(Warning, "   \n");
+//    dbg(Warning, "   \n");
 
 
 
