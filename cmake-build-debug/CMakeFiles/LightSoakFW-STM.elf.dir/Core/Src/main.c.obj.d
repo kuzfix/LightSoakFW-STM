@@ -94,4 +94,10 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/led_control.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main_serial.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main_serial.h
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main_serial.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/lwshell/lwshell.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/stdlib.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/machine/stdlib.h \
+ /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/alloca.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/lwshell/lwshell_opt.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/lwshell/lwshell_opts.h

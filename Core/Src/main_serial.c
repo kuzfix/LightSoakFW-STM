@@ -153,3 +153,18 @@ void mainser_printf(const char* format, ...){
     //wait for space
   }
 }
+
+/**
+ * @brief Send null-terminated string
+ *
+ * @param str string pointer
+ */
+void mainser_send_string(const char* str){
+  uint32_t n = 0;
+  // send bytes up to null termination
+  while(str[n] != 0){
+    // wait for space in tx buffer
+    while(mainser_write(str[n])==0);
+    n++;
+  }
+}

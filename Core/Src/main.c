@@ -34,7 +34,7 @@
 #include "daq.h"
 #include "measurements.h"
 #include "main_serial.h"
-
+#include "lwshell/lwshell.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -72,7 +72,21 @@ uint8_t adcCpltFlag = 0;
 
 uint64_t test = 0xFFFFFF;
 
+/* Command to get called */
+int32_t mycmd_fn(int32_t argc, char** argv) {
+  mainser_printf("mycmd_fn called. Number of argv: %d\r\n", (int)argc);
+  for (int32_t i = 0; i < argc; ++i) {
+    mainser_printf("ARG[%d]: %s\r\n", (int)i, argv[i]);
+  }
 
+  /* Successful execution */
+  return 0;
+}
+
+
+void outfn(const char* str, struct lwshell* lwobj) {
+  mainser_send_string(str);
+}
 
 
 
@@ -190,18 +204,41 @@ int main(void)
 
 //    prv_meas_dump_from_buffer_human_readable_volt(0, 32);
 //    prv_meas_dump_from_buffer_human_readable_volt(1, 1000);
-    meas_volt_sample_and_dump(1, 500);
+//    meas_volt_sample_and_dump(1, 500);
 //    meas_get_iv_characteristic(1, 0.06f, 0.2f, 0.01f);
 //    meas_get_voltage_and_current(1);
 
-    HAL_Delay(30000);
+
+
+    const char* input_str = "mycmd param1 \"param 2 with space\"\n";
+
+    /* Init library */
+
+    lwshellr_t status = lwshell_init();
+    lwshell_set_output_fn(outfn);
+    /* Define shell commands */
+    status = lwshell_register_cmd("mycmd", mycmd_fn, "Adds 2 integer numbers and prints them");
+    /* User input to process every character */
+
+    while(1) {
+      if (mainser_available()) {
+        char c = mainser_read();
+        lwshell_input(&c, 1);
+
+      }
+    }
+
+//    HAL_Delay(30000);
+
+
+
 
     //
 
 
 
 
-    dbg(Warning, "   \n");
+//    dbg(Warning, "   \n");
 
 
 

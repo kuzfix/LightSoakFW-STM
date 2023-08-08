@@ -369,6 +369,30 @@ Core/Src/led_control.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.s
 .PHONY : Core/Src/led_control.c.s
 
+Core/Src/lwshell.obj: Core/Src/lwshell.c.obj
+.PHONY : Core/Src/lwshell.obj
+
+# target to build an object file
+Core/Src/lwshell.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/lwshell.c.obj
+.PHONY : Core/Src/lwshell.c.obj
+
+Core/Src/lwshell.i: Core/Src/lwshell.c.i
+.PHONY : Core/Src/lwshell.i
+
+# target to preprocess a source file
+Core/Src/lwshell.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/lwshell.c.i
+.PHONY : Core/Src/lwshell.c.i
+
+Core/Src/lwshell.s: Core/Src/lwshell.c.s
+.PHONY : Core/Src/lwshell.s
+
+# target to generate assembly for a file
+Core/Src/lwshell.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/lwshell.c.s
+.PHONY : Core/Src/lwshell.c.s
+
 Core/Src/main.obj: Core/Src/main.c.obj
 .PHONY : Core/Src/main.obj
 
@@ -1352,6 +1376,9 @@ help:
 	@echo "... Core/Src/led_control.obj"
 	@echo "... Core/Src/led_control.i"
 	@echo "... Core/Src/led_control.s"
+	@echo "... Core/Src/lwshell.obj"
+	@echo "... Core/Src/lwshell.i"
+	@echo "... Core/Src/lwshell.s"
 	@echo "... Core/Src/main.obj"
 	@echo "... Core/Src/main.i"
 	@echo "... Core/Src/main.s"
