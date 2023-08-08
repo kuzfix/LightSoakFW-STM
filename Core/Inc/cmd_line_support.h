@@ -1,0 +1,43 @@
+//
+// Created by Matej Planinšek on 08/08/2023.
+//
+
+/**
+ * @brief Includes support functions for the command line interface
+ * such as cmd callbacks cmd registrations, etc.
+ *
+ */
+
+#ifndef LIGHTSOAKFW_STM_CMD_LINE_SUPPORT_H
+#define LIGHTSOAKFW_STM_CMD_LINE_SUPPORT_H
+
+#include "stm32g4xx_hal.h"
+#include "lwshell/lwshell.h"
+#include "main_serial.h"
+#include <string.h>
+#include "measurements.h"
+
+void cmdsprt_setup_cli(void);
+
+// cmd callback functions (callback for every command)
+int32_t cli_cmd_getvolt_fn(int32_t argc, char** argv);
+int32_t cli_cmd_getcurr_fn(int32_t argc, char** argv);
+int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv);
+int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv);
+int32_t cli_cmd_dump_fn(int32_t argc, char** argv);
+
+//todo:
+//enable current
+//set force voltage
+//get set num average
+
+
+//parser
+int8_t cmdsprt_parse_float(const char* arg_str, float* float_out, int32_t argc, char** argv);
+int8_t cmdsprt_parse_uint32(const char* arg_str, uint32_t* uint_out, int32_t argc, char** argv);
+
+
+//lwshell out callback
+void cmdsprt_lwshell_out_callback(const char* str, struct lwshell* lwobj);
+
+#endif //LIGHTSOAKFW_STM_CMD_LINE_SUPPORT_H

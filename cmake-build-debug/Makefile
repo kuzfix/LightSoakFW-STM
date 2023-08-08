@@ -177,6 +177,30 @@ Core/Src/buf.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.s
 .PHONY : Core/Src/buf.c.s
 
+Core/Src/cmd_line_support.obj: Core/Src/cmd_line_support.c.obj
+.PHONY : Core/Src/cmd_line_support.obj
+
+# target to build an object file
+Core/Src/cmd_line_support.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.obj
+.PHONY : Core/Src/cmd_line_support.c.obj
+
+Core/Src/cmd_line_support.i: Core/Src/cmd_line_support.c.i
+.PHONY : Core/Src/cmd_line_support.i
+
+# target to preprocess a source file
+Core/Src/cmd_line_support.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.i
+.PHONY : Core/Src/cmd_line_support.c.i
+
+Core/Src/cmd_line_support.s: Core/Src/cmd_line_support.c.s
+.PHONY : Core/Src/cmd_line_support.s
+
+# target to generate assembly for a file
+Core/Src/cmd_line_support.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.s
+.PHONY : Core/Src/cmd_line_support.c.s
+
 Core/Src/dac.obj: Core/Src/dac.c.obj
 .PHONY : Core/Src/dac.obj
 
@@ -1352,6 +1376,9 @@ help:
 	@echo "... Core/Src/buf.obj"
 	@echo "... Core/Src/buf.i"
 	@echo "... Core/Src/buf.s"
+	@echo "... Core/Src/cmd_line_support.obj"
+	@echo "... Core/Src/cmd_line_support.i"
+	@echo "... Core/Src/cmd_line_support.s"
 	@echo "... Core/Src/dac.obj"
 	@echo "... Core/Src/dac.i"
 	@echo "... Core/Src/dac.s"
