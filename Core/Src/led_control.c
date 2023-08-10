@@ -48,6 +48,7 @@ uint32_t ledctrl_get_raw_from_current(float current){
 
   // Calculate control voltage
   float control_voltage = (current * LEDCTRL_CURRENT_GAIN) + LEDCTRL_ZERO_CURRENT_CTRL;
+  control_voltage /= LEDCTRL_PULLDOWN_FACTOR;
 
   // Calculate corresponding raw value
   uint32_t dac_raw_val = (uint32_t) ((control_voltage / LEDCTRL_VREF) * LEDCTRL_DAC_MAX_RAW);
@@ -76,4 +77,12 @@ void ledctrl_set_current(float current){
   ledctrl_set_dac_raw(dac_raw_val);
 }
 
-
+/**
+ * @brief Converts illumination value to LED current Compensated for temperature. normalized to 0-1 suns.
+ * Do not use if timing is critical.
+ * @param current current in A
+ */
+float ledctrl_illumination_to_current(float illumination){
+  //todo: not yet implemented
+  return illumination;
+}
