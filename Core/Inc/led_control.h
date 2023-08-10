@@ -15,6 +15,8 @@
 #define LEDCTRL_DAC_MAX_RAW 4095
 #define LEDCTRL_VREF 3.0f
 #define LEDCTRL_ZERO_CURRENT_CTRL 0.0927f
+//pull down factor: internal DAC output impedance 12k and 1M pulldown resistor make a voltage divider
+#define LEDCTRL_PULLDOWN_FACTOR 0.98814f
 //current gain in V/A starting from 92.7mV offset
 #define LEDCTRL_CURRENT_GAIN 1.88f
 #define LED_CURRENT_MAX 1.5f
@@ -25,7 +27,7 @@ uint32_t ledctrl_get_raw_from_current(float current);
 void ledctrl_set_current(float current);
 
 float ledctrl_get_temperature(void);
-float ledctrl_set_illumination(float illumination);
+float ledctrl_illumination_to_current(float illumination);
 
 
 #endif //LIGHTSOAKFW_STM_LED_CONTROL_H

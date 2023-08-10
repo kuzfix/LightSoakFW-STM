@@ -25,6 +25,8 @@
 #define MEAS_DUT_SETTLING_TIME_MS 1 //ms
 #define MEAS_FORCE_VOLT_CLOSE_ENOUGH 0.002f //V
 #define MEAS_FORCE_VOLT_ITER_MAX 10
+//sampling for MEAS_FLASH_DUMP_SAMPLEBORDER_US before and after led is turned on and off
+#define MEAS_FLASH_DUMP_SAMPLEBORDER_US 2000
 
 //each approach iteration, shunt voltage is calculated and compensated
 //for better stability we can compensate a bit less
@@ -59,6 +61,12 @@ void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_w
 
 //call with 0 for all channels
 void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt);
+
+//flash measurements (measures Vf as quickly as possible)
+//call with 0 for all channels
+void meas_flashmeasure_singlesample(uint8_t channel, float illum, uint32_t flash_dur_us, uint32_t measure_at_us, uint32_t numavg);
+void meas_flashmeasure_dumpbuffer(uint8_t channel, float illum, uint32_t flash_dur_us);
+
 
 //checks sample for over/under range, reports to main serial
 void meas_check_out_of_rng_volt(t_daq_sample_convd sample, uint8_t channel);

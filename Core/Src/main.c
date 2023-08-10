@@ -190,11 +190,20 @@ int main(void)
 
 //    prv_meas_dump_from_buffer_human_readable_volt(0, 32);
 //    prv_meas_dump_from_buffer_human_readable_volt(1, 1000);
-    meas_volt_sample_and_dump(1, 500);
+//    meas_volt_sample_and_dump(1, 500);
 //    meas_get_iv_characteristic(1, 0.06f, 0.2f, 0.01f);
 //    meas_get_voltage_and_current(1);
 
-    HAL_Delay(30000);
+
+//    meas_flashmeasure_singlesample(0, 1.1f, 5000, 4000, 10);
+
+    meas_flashmeasure_dumpbuffer(3, 0.9f, 1000);
+
+//    ledctrl_set_current(1.0f);
+//    HAL_Delay(100000);
+//    ledctrl_set_current(0.0f);
+
+    HAL_Delay(10000);
 
     //
 
