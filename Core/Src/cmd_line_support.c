@@ -23,6 +23,9 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("getiv_point", cli_cmd_getiv_point_fn, "Measures IV point. -c #ch# to select channel. -v #volt# to set voltage");
   lwshell_register_cmd("getiv_char", cli_cmd_getiv_char_fn, "Measures IV characteristic. -c #ch# to select channel. -vs #volt# start volt, -ve #volt# end volt, -s #volt# step");
   lwshell_register_cmd("measure_dump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
+  lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
+
+  lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time.");
 }
 
 
@@ -200,4 +203,23 @@ int8_t cmdsprt_parse_uint32(const char* arg_str, uint32_t* uint_out, int32_t arg
     }
   }
   return -1;
+}
+
+int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv){
+  float current;
+  cmdsprt_parse_float("-i", &current, argc, argv);
+  ledctrl_set_current(current);
+  return 0;
+}
+
+//todo: just for testing
+int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
+  float current;
+  uint32_t dur;
+  cmdsprt_parse_float("-i", &current, argc, argv);
+  cmdsprt_parse_uint32("-t", &dur, argc, argv);
+  ledctrl_set_current(current);
+  usec_delay(dur);
+  ledctrl_set_current(0.0f);
+  return 0;
 }
