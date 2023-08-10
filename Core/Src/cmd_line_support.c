@@ -205,6 +205,39 @@ int8_t cmdsprt_parse_uint32(const char* arg_str, uint32_t* uint_out, int32_t arg
   return -1;
 }
 
+int8_t cmdsprt_parse_uint64(const char* arg_str, uint64_t* uint_out, int32_t argc, char** argv) {
+  for (int i = 0; i < argc - 1; i++) {  // -1 because we are looking for the next arg after match
+    if (strcmp(argv[i], arg_str) == 0) {
+      char *endptr;
+      unsigned long long value = strtoull(argv[i + 1], &endptr, 10); // Using base 10 for decimal conversion
+
+      // Checking if there was any conversion, no extra characters left after conversion, and value is within range
+      if (endptr == argv[i + 1] || *endptr != '\0') {
+        return -1;
+      }
+
+      *uint_out = (uint64_t)value;
+      return 0;
+    }
+  }
+  return -1;
+}
+
+//checks if the number of arguments is correct
+uint8_t cmdsprt_check_argnum( int32_t argnum, int32_t argc){
+  return (argc == argnum);
+}
+
+//checks if the argument is present in the argument list
+uint8_t cmdsprt_is_arg(const char* arg_str, int32_t argc, char** argv) {
+  for (int i = 0; i < argc; i++) {
+    if (strcmp(argv[i], arg_str) == 0) {
+      return 1;  // Argument found
+    }
+  }
+  return 0;  // Argument not found
+}
+
 int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv){
   float current;
   cmdsprt_parse_float("-i", &current, argc, argv);

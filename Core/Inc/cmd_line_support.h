@@ -26,19 +26,22 @@ int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv);
 int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv);
 int32_t cli_cmd_dump_fn(int32_t argc, char** argv);
 int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv);
-
-//todo: just for testing
 int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv);
 
 //todo:
 //enable current
 //set force voltage
 //get set num average
+//reset timestamp
+//flash measure
 
 
 //parser
 int8_t cmdsprt_parse_float(const char* arg_str, float* float_out, int32_t argc, char** argv);
 int8_t cmdsprt_parse_uint32(const char* arg_str, uint32_t* uint_out, int32_t argc, char** argv);
+int8_t cmdsprt_parse_uint64(const char* arg_str, uint64_t* uint_out, int32_t argc, char** argv);
+uint8_t cmdsprt_check_argnum( int32_t argnum, int32_t argc);
+uint8_t cmdsprt_is_arg(const char* arg_str, int32_t argc, char** argv);
 
 
 //lwshell out callback
