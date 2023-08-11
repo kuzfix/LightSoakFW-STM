@@ -17,6 +17,8 @@ void cmdsprt_setup_cli(void){
   //welcome message
   mainser_printf("LightSoak CLI started.\n");
   mainser_printf("Type help to list all commands.\n");
+  mainser_printf("Type <cmd> -h to get help for a specific command.\n");
+  mainser_printf("Add -sched ### argument to schedule command at specific time\n");
   //register commands
   lwshell_register_cmd("getvolt", cli_cmd_getvolt_fn, "Measures voltage. -c #ch# to select channel. No param for all channels");
   lwshell_register_cmd("getcurr", cli_cmd_getcurr_fn, "Measures current. -c #ch# to select channel. No param for all channels");
@@ -24,143 +26,301 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("getiv_char", cli_cmd_getiv_char_fn, "Measures IV characteristic. -c #ch# to select channel. -vs #volt# start volt, -ve #volt# end volt, -s #volt# step");
   lwshell_register_cmd("measure_dump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
   lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
-
   lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time.");
 }
 
 
 int32_t cli_cmd_getvolt_fn(int32_t argc, char** argv){
-  if(argc == 3){
-    uint32_t ch = 0;
+  uint32_t ch;
+
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
     cmdsprt_parse_uint32("-c", &ch, argc, argv);
-    if(ch > 6 || ch < 0){
-      mainser_printf("Wrong channel index!\n");
-      return 0;
-    }
-    meas_get_voltage(ch);
-    return 0;
   }
-  else if(argc == 1){
-    //measure all channels if no argument
-    meas_get_voltage(0);
-    return 0;
+  else{
+    ch = 0;
   }
 
-  //if not 0 or 1 arguments (+cmd name), print error
-  mainser_printf("Wrong number of arguments. Use -h for help.\n");
-  return -1;
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+    //todo
+  }
+  else{
+    //immediate command
+    meas_get_voltage(ch);
+  }
+  return 0;
 }
 
 int32_t cli_cmd_getcurr_fn(int32_t argc, char** argv){
-  if(argc == 3){
-    uint32_t ch = 0;
+  uint32_t ch;
+
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
     cmdsprt_parse_uint32("-c", &ch, argc, argv);
-    if(ch > 6 || ch < 0){
-      mainser_printf("Wrong channel index!\n");
-      return 0;
-    }
-    meas_get_current(ch);
-    return 0;
   }
-  else if(argc == 1){
-    //measure all channels if no argument
-    meas_get_current(0);
-    return 0;
+  else{
+    ch = 0;
   }
 
-  //if not 0 or 1 arguments (+cmd name), print error
-  mainser_printf("Wrong number of arguments. Use -h for help.\n");
-  return -1;
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+    //todo
+  }
+  else{
+    //immediate command
+    meas_get_current(ch);
+  }
+  return 0;
 }
 
 int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv){
-  if(argc == 5){
-    uint32_t ch = 0;
-    float volt = 0.0f;
+  uint32_t ch;
+  float cmdvolt;
+
+  //parse ch
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
     cmdsprt_parse_uint32("-c", &ch, argc, argv);
-    cmdsprt_parse_float("-v", &volt, argc, argv);
-    if(ch > 6 || ch < 0){
-      mainser_printf("Wrong channel index!\n");
-      return 0;
-    }
-    meas_get_IV_point(ch, volt, 1, 0);
-    return 0;
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+  //parse voltage setpoint
+  if(cmdsprt_is_arg("-v", argc, argv)){
+    //voltage argument present, parse
+    cmdsprt_parse_float("-v", &cmdvolt, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
   }
 
-  //if not 0 or 1 arguments (+cmd name), print error
-  mainser_printf("Wrong number of arguments. Use -h for help.\n");
-  return -1;
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+    //todo
+  }
+  else{
+    //immediate command
+    meas_get_IV_point(ch, cmdvolt, 1, 0);
+  }
+  return 0;
 }
 
 int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
-  if(argc == 9){
-    uint32_t ch = 0;
-    float start = 0.0f;
-    float end = 0.0f;
-    float step = 0.0f;
+  uint32_t ch;
+  float start, end, step;
+  //parse ch
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
     cmdsprt_parse_uint32("-c", &ch, argc, argv);
-    cmdsprt_parse_float("-vs", &start, argc, argv);
-    cmdsprt_parse_float("-ve", &end, argc, argv);
-    cmdsprt_parse_float("-s", &step, argc, argv);
-    if(ch > 6 || ch < 0){
-      mainser_printf("Wrong channel index!\n");
-      return 0;
-    }
-    meas_get_iv_characteristic(ch, start, end, step);
-    return 0;
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
   }
 
-  //if not 0 or 1 arguments (+cmd name), print error
-  mainser_printf("Wrong number of arguments. Use -h for help.\n");
-  return -1;
+  //parse v_start
+  if(cmdsprt_is_arg("-vs", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-vs", &start, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+
+  //parse v_end
+  if(cmdsprt_is_arg("-ve", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-ve", &end, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+
+  //parse v_step
+  if(cmdsprt_is_arg("-s", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-s", &step, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+    //todo
+  }
+  else{
+    //immediate command
+    meas_get_iv_characteristic(ch, start, end, step);
+  }
+  return 0;
 }
 
 int32_t cli_cmd_dump_fn(int32_t argc, char** argv){
-  uint32_t ch = 0;
-  uint32_t num_samples = 0;
-  uint8_t arg_voltcurriv_idx = 4;
+  uint32_t ch;
+  uint32_t num_samples;
 
-  //parse num samples
-  cmdsprt_parse_uint32("-n", &num_samples, argc, argv);
-
-  if(argc == 6 || argc == 4){
-    //all arguments or no channel argument
-    if(argc == 6) {
-      cmdsprt_parse_uint32("-c", &ch, argc, argv);
-      if(ch > 6 || ch < 0){
-        mainser_printf("Wrong channel index!\n");
-        return 0;
-      }
-      arg_voltcurriv_idx = 5;
-    }
-    else{
-      arg_voltcurriv_idx = 3;
-    }
-    //parse -VOLT/-CURR/-IV
-    if(strcmp(argv[arg_voltcurriv_idx], "-VOLT") == 0){
-      meas_volt_sample_and_dump(ch, num_samples);
-      return 0;
-    }
-    else if(strcmp(argv[arg_voltcurriv_idx], "-CURR") == 0){
-      meas_curr_sample_and_dump(ch, num_samples);
-      return 0;
-    }
-    else if(strcmp(argv[arg_voltcurriv_idx], "-IV") == 0){
-      meas_iv_sample_and_dump(ch, num_samples);
-      return 0;
-    }
-    else{
-      mainser_printf("Wrong argument. Use -h for help.\n");
-      return 0;
-    }
+  //parse ch
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+  else{
+    ch = 0;
   }
 
+  //parse num samples
+  if(cmdsprt_is_arg("-n", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-n", &num_samples, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
 
-  mainser_printf("Wrong number of arguments. Use -h for help.\n");
-  return -1;
+  //parse -VOLT/-CURR/-IV
+  if(cmdsprt_is_arg("-VOLT", argc, argv)){
+    //scheduled or immediate
+    if(cmdsprt_is_arg("-sched", argc, argv)){
+      //scheduled command
+      uint64_t sched_time;
+      cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+      //todo
+    }
+    else{
+      //immediate command
+      meas_volt_sample_and_dump(ch, num_samples);
+    }
+  }
+  else if(cmdsprt_is_arg("-CURR", argc, argv)){
+    //scheduled or immediate
+    if(cmdsprt_is_arg("-sched", argc, argv)){
+      //scheduled command
+      uint64_t sched_time;
+      cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+      //todo
+    }
+    else{
+      //immediate command
+      meas_curr_sample_and_dump(ch, num_samples);
+    }
+  }
+  else if(cmdsprt_is_arg("-IV", argc, argv)){
+    //scheduled or immediate
+    if(cmdsprt_is_arg("-sched", argc, argv)){
+      //scheduled command
+      uint64_t sched_time;
+      cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+      //todo
+    }
+    else{
+      //immediate command
+      meas_iv_sample_and_dump(ch, num_samples);
+    }
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+  return 0;
+}
+
+int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv){
+  float current;
+
+  //parse current
+  if(cmdsprt_is_arg("-i", argc, argv)){
+    cmdsprt_parse_float("-i", &current, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+    //todo
+  }
+  else{
+    //immediate command
+    ledctrl_set_current(current);
+  }
+  return 0;
 }
 
 
+int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
+  float current;
+  uint32_t dur;
+  //parse current
+  if(cmdsprt_is_arg("-i", argc, argv)){
+    cmdsprt_parse_float("-i", &current, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+//parse duration
+  if(cmdsprt_is_arg("-t", argc, argv)){
+    cmdsprt_parse_uint32("-t", &dur, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+
+  //scheduled or immediate
+  // THIS DOES NOT SUPPORT SCHEDULING
+  // THIS CMD IS FOR TESTING ONLY
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    dbg(Error, "CMD does not support scheduling\n");
+    return -1;
+  }
+
+  ledctrl_set_current(current);
+  usec_delay(dur);
+  ledctrl_set_current(0.0f);
+
+  return 0;
+}
 
 
 
@@ -238,21 +398,3 @@ uint8_t cmdsprt_is_arg(const char* arg_str, int32_t argc, char** argv) {
   return 0;  // Argument not found
 }
 
-int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv){
-  float current;
-  cmdsprt_parse_float("-i", &current, argc, argv);
-  ledctrl_set_current(current);
-  return 0;
-}
-
-//todo: just for testing
-int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
-  float current;
-  uint32_t dur;
-  cmdsprt_parse_float("-i", &current, argc, argv);
-  cmdsprt_parse_uint32("-t", &dur, argc, argv);
-  ledctrl_set_current(current);
-  usec_delay(dur);
-  ledctrl_set_current(0.0f);
-  return 0;
-}
