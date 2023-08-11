@@ -30,6 +30,12 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("reset_timestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0.");
   lwshell_register_cmd("get_timestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value.");
   lwshell_register_cmd("flashmeasure", cli_cmd_flash_measure_fn, "Flash voltage measurement. -c #ch# to select channel. -illum #illum[sun]# to set illumination. -t #time[us]# to set flash duration. <<-m #time[us]# to set measurement time. -n #num# to set number of averages>> or <<-DUMP to dump buffer>>.");
+  lwshell_register_cmd("enable_current", cli_cmd_enable_current_fn, "Enable current. -c #ch# to select channel. No param for all channels");
+  lwshell_register_cmd("disable_current", cli_cmd_disable_current_fn, "Disable current. -c #ch# to select channel. No param for all channels");
+  lwshell_register_cmd("setforcevolt", cli_cmd_setforcevolt_fn, "Set force voltage. -c #ch# to select channel. No param for all channels. -v #volt# to set voltage");
+  lwshell_register_cmd("autorange", cli_cmd_autorange_fn, "Autorange current shunts on all channels");
+  lwshell_register_cmd("reboot", cli_cmd_reboot_fn, "Reboot the device");
+  lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
 }
 
 
@@ -424,8 +430,78 @@ int32_t cli_cmd_get_timestamp_fn(int32_t argc, char** argv){
   return 0;
 }
 
+int32_t cli_cmd_enable_current_fn(int32_t argc, char** argv){
+  uint32_t ch;
+  //parse ch
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+  else{
+    ch = 0;
+  }
+  fec_enable_current(ch);
+  return 0;
+}
 
+int32_t cli_cmd_disable_current_fn(int32_t argc, char** argv){
+  uint32_t ch;
+  //parse ch
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+  else{
+    ch = 0;
+  }
+  fec_disable_current(ch);
+  return 0;
+}
 
+int32_t cli_cmd_setforcevolt_fn(int32_t argc, char** argv){
+  uint32_t ch;
+  float volt;
+  //parse ch
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+  else{
+    ch = 0;
+  }
+  //parse volt
+  if(cmdsprt_is_arg("-v", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-v", &volt, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+  fec_set_force_voltage(ch, volt);
+  return 0;
+}
+
+int32_t cli_cmd_autorange_fn(int32_t argc, char** argv){
+  daq_autorange();
+  return 0;
+}
+
+int32_t cli_cmd_reboot_fn(int32_t argc, char** argv){
+  NVIC_SystemReset();
+  return 0;
+}
+
+int32_t cli_cmd_yeet_fn(int32_t argc, char** argv){
+  for(int i = 0; i < 20; i++){
+    mainser_printf("Y E E E E E T\n");
+    ledctrl_set_current(1.5f);
+    usec_delay(40000);
+    ledctrl_set_current(0.0f);
+    usec_delay(60000);
+  }
+  return 0;
+}
 
 
 

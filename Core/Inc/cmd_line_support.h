@@ -37,16 +37,18 @@ int32_t cli_cmd_enable_current_fn(int32_t argc, char** argv);
 int32_t cli_cmd_disable_current_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_setforcevolt_fn(int32_t argc, char** argv);
+int32_t cli_cmd_autorange_fn(int32_t argc, char** argv);
 
+int32_t cli_cmd_yeet_fn(int32_t argc, char** argv);
+
+int32_t cli_cmd_reboot_fn(int32_t argc, char** argv);
+
+//todo: implement
 int32_t cli_cmd_setnumavg_fn(int32_t argc, char** argv);
 int32_t cli_cmd_getnumavg_fn(int32_t argc, char** argv);
 
 //todo:
-//enable current
-//set force voltage
-//get set num average
-//reset timestamp
-//flash measure
+//reboot
 
 
 //parser
