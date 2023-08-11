@@ -27,7 +27,8 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("measure_dump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
   lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
   lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time.");
-//  lwshell_register_cmd("reset_timestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0.");
+  lwshell_register_cmd("reset_timestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0.");
+  lwshell_register_cmd("get_timestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value.");
   lwshell_register_cmd("flashmeasure", cli_cmd_flash_measure_fn, "Flash voltage measurement. -c #ch# to select channel. -illum #illum[sun]# to set illumination. -t #time[us]# to set flash duration. <<-m #time[us]# to set measurement time. -n #num# to set number of averages>> or <<-DUMP to dump buffer>>.");
 }
 
@@ -413,6 +414,13 @@ int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv){
 }
 
 int32_t cli_cmd_reset_timestamp_fn(int32_t argc, char** argv){
+  usec_reset_timestamp();
+  return 0;
+}
+
+int32_t cli_cmd_get_timestamp_fn(int32_t argc, char** argv){
+  uint64_t timestamp = usec_get_timestamp_64();
+  mainser_printf("TIMESTAMP:%llu\n", timestamp);
   return 0;
 }
 
