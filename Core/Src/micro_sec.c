@@ -38,6 +38,16 @@ uint32_t usec_get_timestamp(void){
 }
 
 /**
+ * @brief resets timer counter value and overflow counter
+ */
+void usec_reset_timestamp(void){
+  __disable_irq();
+  g_usec_overflow_count = 0;
+  __HAL_TIM_SET_COUNTER(MICRO_SEC_TIM_HANDLE, 0);
+  __enable_irq();
+}
+
+/**
  * @brief call this from period elapsed callback to cout timer overflows
  */
 void prv_usec_overflow_callback(void){
