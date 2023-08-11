@@ -198,7 +198,7 @@ prv_parse_input(lwshell_t* lwobj) {
                     c->fn(lwobj->argc, lwobj->argv);
                 }
 #if LWSHELL_CFG_USE_LIST_CMD
-            } else if (strncmp(lwobj->argv[0], "listcmd", 7) == 0) {
+            } else if (strncmp(lwobj->argv[0], "help", 7) == 0) {
                 LWSHELL_OUTPUT(lwobj, "List of registered commands\r\n");
 #if LWSHELL_CFG_USE_DYNAMIC_COMMANDS
                 for (size_t i = 0; i < lwobj->dynamic_cmds_cnt; ++i) {
