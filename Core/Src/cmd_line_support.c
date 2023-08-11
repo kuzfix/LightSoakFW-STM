@@ -27,6 +27,8 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("measure_dump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
   lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
   lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time.");
+//  lwshell_register_cmd("reset_timestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0.");
+  lwshell_register_cmd("flashmeasure", cli_cmd_flash_measure_fn, "Flash voltage measurement. -c #ch# to select channel. -illum #illum[sun]# to set illumination. -t #time[us]# to set flash duration. <<-m #time[us]# to set measurement time. -n #num# to set number of averages>> or <<-DUMP to dump buffer>>.");
 }
 
 
@@ -321,6 +323,99 @@ int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
 
   return 0;
 }
+
+int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv){
+  float illum;
+  uint32_t flash_dur;
+  uint32_t measure_at;
+  uint32_t numavg;
+  uint32_t ch;
+
+  //parse channel
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+  else{
+    ch = 0;
+  }
+
+  //parse illum
+  if(cmdsprt_is_arg("-illum", argc, argv)){
+    cmdsprt_parse_float("-illum", &illum, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+
+  //parse flash_dur
+  if(cmdsprt_is_arg("-t", argc, argv)){
+    cmdsprt_parse_uint32("-t", &flash_dur, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\n");
+    return -1;
+  }
+
+  //check if dump
+  if(cmdsprt_is_arg("-DUMP", argc, argv)){
+    //dump measurement
+    //scheduled or immediate
+
+    if(cmdsprt_is_arg("-sched", argc, argv)){
+      //scheduled command
+      uint64_t sched_time;
+      cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+      //todo
+    }
+    else{
+      //immediate command
+      meas_flashmeasure_dumpbuffer(ch, illum, flash_dur);
+    }
+
+  }
+  else{
+    //singleshot measurement
+    //parse measure_at
+    if(cmdsprt_is_arg("-m", argc, argv)){
+      cmdsprt_parse_uint32("-m", &measure_at, argc, argv);
+    }
+    else{
+      dbg(Warning, "CLI CMD Error\n");
+      return -1;
+    }
+    //parse numavg
+    if(cmdsprt_is_arg("-n", argc, argv)){
+      cmdsprt_parse_uint32("-n", &numavg, argc, argv);
+    }
+    else{
+      dbg(Warning, "CLI CMD Error\n");
+      return -1;
+    }
+
+    //scheduled or immediate
+
+    if(cmdsprt_is_arg("-sched", argc, argv)){
+      //scheduled command
+      uint64_t sched_time;
+      cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
+      //todo
+    }
+    else{
+      //immediate command
+      meas_flashmeasure_singlesample(ch, illum, flash_dur, measure_at, numavg);
+    }
+
+  }
+  return 0;
+}
+
+int32_t cli_cmd_reset_timestamp_fn(int32_t argc, char** argv){
+  return 0;
+}
+
 
 
 

@@ -28,6 +28,18 @@ int32_t cli_cmd_dump_fn(int32_t argc, char** argv);
 int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv);
 int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv);
 
+
+int32_t cli_cmd_reset_timestamp_fn(int32_t argc, char** argv);
+int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv);
+
+int32_t cli_cmd_enable_current_fn(int32_t argc, char** argv);
+int32_t cli_cmd_disable_current_fn(int32_t argc, char** argv);
+
+int32_t cli_cmd_setforcevolt_fn(int32_t argc, char** argv);
+
+int32_t cli_cmd_setnumavg_fn(int32_t argc, char** argv);
+int32_t cli_cmd_getnumavg_fn(int32_t argc, char** argv);
+
 //todo:
 //enable current
 //set force voltage

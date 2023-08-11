@@ -4,6 +4,12 @@
  */
 
 /*
+ * @Matej Planinsek
+ * This file is part of LwSHELL - Lightweight shell library. It is a work of Tilen MAJERLE (Github: https://github.com/MaJerle/lwshell)
+ * I do not claim to be the author of this file. I have only modified it to suit my needs, as allowed by the license below.
+ */
+
+/*
  * Copyright (c) 2023 Tilen MAJERLE
  *
  * Permission is hereby granted, free of charge, to any person
@@ -40,5 +46,8 @@
  * Open "include/lwshell/lwshell_opt.h" and
  * copy & replace here settings you want to change values
  */
+
+#define LWSHELL_CFG_USE_LIST_CMD 1
+#define LWSHELL_CFG_MAX_CMD_ARGS 16
 
 #endif /* LWSHELL_OPTS_HDR_H */
