@@ -23,6 +23,7 @@ extern volatile uint32_t g_usec_overflow_count;
 void usec_init(void);
 void usec_delay(uint32_t delay_us);
 uint32_t usec_get_timestamp(void);
+void usec_reset_timestamp(void);
 
 uint64_t usec_get_timestamp_64(void);
 uint32_t usec_get_overflow_count(void);
