@@ -28,5 +28,6 @@ uint32_t mainser_write_multi(uint8_t* data, uint32_t length);
 void mainser_printf(const char* format, ...);
 uint32_t mainser_available(void);
 uint32_t mainser_tx_space(void);
+void mainser_send_string(const char* str);
 
 #endif //LIGHTSOAKFW_STM_MAIN_SERIAL_H

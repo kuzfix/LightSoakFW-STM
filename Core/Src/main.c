@@ -34,7 +34,8 @@
 #include "daq.h"
 #include "measurements.h"
 #include "main_serial.h"
-
+#include "lwshell/lwshell.h"
+#include "cmd_line_support.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,16 +67,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-volatile uint16_t adcBuf[600] = {0};
-uint8_t adcCpltFlag = 0;
-
-uint64_t test = 0xFFFFFF;
-
-
-
-
-
 /* USER CODE END 0 */
 
 /**
@@ -126,9 +117,11 @@ int main(void)
   usec_init();
   daq_init();
 
-  uint32_t t1, t2;
 
   HAL_Delay(3000);
+
+  //enable CLI
+  cmdsprt_setup_cli();
 
   //turn on active LED
   HAL_GPIO_WritePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin, GPIO_PIN_SET);
@@ -195,22 +188,25 @@ int main(void)
 //    meas_get_voltage_and_current(1);
 
 
-//    meas_flashmeasure_singlesample(0, 1.1f, 5000, 4000, 10);
+    while(1) {
+      if (mainser_available()) {
+        char c = mainser_read();
+        lwshell_input(&c, 1);
 
-    meas_flashmeasure_dumpbuffer(3, 0.9f, 1000);
+      }
+    }
 
-//    ledctrl_set_current(1.0f);
-//    HAL_Delay(100000);
-//    ledctrl_set_current(0.0f);
+//    HAL_Delay(30000);
 
-    HAL_Delay(10000);
+
+
 
     //
 
 
 
 
-    dbg(Warning, "   \n");
+//    dbg(Warning, "   \n");
 
 
 

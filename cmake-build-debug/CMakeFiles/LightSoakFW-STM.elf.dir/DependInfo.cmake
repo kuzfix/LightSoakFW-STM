@@ -33,6 +33,7 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/adc.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/buf.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj.d"
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/cmd_line_support.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dac.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/daq.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/daq.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/daq.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/debug.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj.d"
@@ -41,6 +42,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/global_callbacks.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/global_callbacks.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/global_callbacks.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/led_control.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/led_control.c.obj.d"
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/lwshell.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/lwshell.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/lwshell.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/main.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/main_serial.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main_serial.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main_serial.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/measurements.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/measurements.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/measurements.c.obj.d"
