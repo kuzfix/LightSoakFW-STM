@@ -199,13 +199,6 @@ int main(void)
 //    HAL_Delay(30000);
 
 
-
-
-    //
-
-
-
-
 //    dbg(Warning, "   \n");
 
 
