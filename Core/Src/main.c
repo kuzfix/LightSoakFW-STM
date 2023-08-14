@@ -205,7 +205,7 @@ int main(void)
       if(HAL_GetTick()-temptime > 1000){
         temptime = HAL_GetTick();
         ds18b20_handler();
-        mainser_printf("temp: %f\n", ds18b20_get_temp());
+//        mainser_printf("temp: %f\n", ds18b20_get_temp());
       }
     }
 

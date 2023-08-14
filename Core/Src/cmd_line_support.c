@@ -26,15 +26,16 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("getiv_char", cli_cmd_getiv_char_fn, "Measures IV characteristic. -c #ch# to select channel. -vs #volt# start volt, -ve #volt# end volt, -s #volt# step");
   lwshell_register_cmd("measure_dump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
   lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
-  lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time.");
-  lwshell_register_cmd("reset_timestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0.");
-  lwshell_register_cmd("get_timestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value.");
+  lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time. No scheduling.");
+  lwshell_register_cmd("reset_timestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0. No scheduling.");
+  lwshell_register_cmd("get_timestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value. No scheduling.");
   lwshell_register_cmd("flashmeasure", cli_cmd_flash_measure_fn, "Flash voltage measurement. -c #ch# to select channel. -illum #illum[sun]# to set illumination. -t #time[us]# to set flash duration. <<-m #time[us]# to set measurement time. -n #num# to set number of averages>> or <<-DUMP to dump buffer>>.");
-  lwshell_register_cmd("enable_current", cli_cmd_enable_current_fn, "Enable current. -c #ch# to select channel. No param for all channels");
-  lwshell_register_cmd("disable_current", cli_cmd_disable_current_fn, "Disable current. -c #ch# to select channel. No param for all channels");
-  lwshell_register_cmd("setforcevolt", cli_cmd_setforcevolt_fn, "Set force voltage. -c #ch# to select channel. No param for all channels. -v #volt# to set voltage");
-  lwshell_register_cmd("autorange", cli_cmd_autorange_fn, "Autorange current shunts on all channels");
-  lwshell_register_cmd("reboot", cli_cmd_reboot_fn, "Reboot the device");
+  lwshell_register_cmd("enable_current", cli_cmd_enable_current_fn, "Enable current. -c #ch# to select channel. No param for all channels. No scheduling.");
+  lwshell_register_cmd("disable_current", cli_cmd_disable_current_fn, "Disable current. -c #ch# to select channel. No param for all channels. No scheduling.");
+  lwshell_register_cmd("setforcevolt", cli_cmd_setforcevolt_fn, "Set force voltage. -c #ch# to select channel. No param for all channels. -v #volt# to set voltage. No scheduling.");
+  lwshell_register_cmd("autorange", cli_cmd_autorange_fn, "Autorange current shunts on all channels. No scheduling.");
+  lwshell_register_cmd("reboot", cli_cmd_reboot_fn, "Reboot the device. No scheduling.");
+  lwshell_register_cmd("getledtemp", cli_cmd_getledtemp_fn, "Get LED temperature. No scheduling.");
   lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
 }
 
@@ -503,6 +504,12 @@ int32_t cli_cmd_yeet_fn(int32_t argc, char** argv){
   return 0;
 }
 
+int32_t cli_cmd_getledtemp_fn(int32_t argc, char** argv){
+  float temp = ds18b20_get_temp();
+  prv_meas_print_timestamp(usec_get_timestamp_64());
+  mainser_printf("LEDTEMP:%f\n", temp);
+  return 0;
+}
 
 
 

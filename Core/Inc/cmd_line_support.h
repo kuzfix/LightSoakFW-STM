@@ -16,6 +16,7 @@
 #include "main_serial.h"
 #include <string.h>
 #include "measurements.h"
+#include "ds18b20.h"
 
 void cmdsprt_setup_cli(void);
 
@@ -38,6 +39,8 @@ int32_t cli_cmd_disable_current_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_setforcevolt_fn(int32_t argc, char** argv);
 int32_t cli_cmd_autorange_fn(int32_t argc, char** argv);
+
+int32_t cli_cmd_getledtemp_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_yeet_fn(int32_t argc, char** argv);
 
