@@ -297,6 +297,30 @@ Core/Src/dma.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.s
 .PHONY : Core/Src/dma.c.s
 
+Core/Src/ds18b20.obj: Core/Src/ds18b20.c.obj
+.PHONY : Core/Src/ds18b20.obj
+
+# target to build an object file
+Core/Src/ds18b20.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/ds18b20.c.obj
+.PHONY : Core/Src/ds18b20.c.obj
+
+Core/Src/ds18b20.i: Core/Src/ds18b20.c.i
+.PHONY : Core/Src/ds18b20.i
+
+# target to preprocess a source file
+Core/Src/ds18b20.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/ds18b20.c.i
+.PHONY : Core/Src/ds18b20.c.i
+
+Core/Src/ds18b20.s: Core/Src/ds18b20.c.s
+.PHONY : Core/Src/ds18b20.s
+
+# target to generate assembly for a file
+Core/Src/ds18b20.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/ds18b20.c.s
+.PHONY : Core/Src/ds18b20.c.s
+
 Core/Src/front_end_control.obj: Core/Src/front_end_control.c.obj
 .PHONY : Core/Src/front_end_control.obj
 
@@ -1391,6 +1415,9 @@ help:
 	@echo "... Core/Src/dma.obj"
 	@echo "... Core/Src/dma.i"
 	@echo "... Core/Src/dma.s"
+	@echo "... Core/Src/ds18b20.obj"
+	@echo "... Core/Src/ds18b20.i"
+	@echo "... Core/Src/ds18b20.s"
 	@echo "... Core/Src/front_end_control.obj"
 	@echo "... Core/Src/front_end_control.i"
 	@echo "... Core/Src/front_end_control.s"

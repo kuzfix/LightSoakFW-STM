@@ -36,6 +36,7 @@
 #include "main_serial.h"
 #include "lwshell/lwshell.h"
 #include "cmd_line_support.h"
+#include "ds18b20.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,6 +57,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+uint32_t temptime = 0;
 
 /* USER CODE END PV */
 
@@ -116,6 +118,7 @@ int main(void)
   ledctrl_init();
   usec_init();
   daq_init();
+  ds18b20_init();
 
 
   HAL_Delay(3000);
@@ -188,11 +191,21 @@ int main(void)
 //    meas_get_voltage_and_current(1);
 
 
+
+
+
+
     while(1) {
       if (mainser_available()) {
         char c = mainser_read();
         lwshell_input(&c, 1);
 
+      }
+
+      if(HAL_GetTick()-temptime > 1000){
+        temptime = HAL_GetTick();
+        ds18b20_handler();
+        mainser_printf("temp: %f\n", ds18b20_get_temp());
       }
     }
 

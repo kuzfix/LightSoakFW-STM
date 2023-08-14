@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj.d"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/ds18b20.c.obj"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/ds18b20.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/global_callbacks.c.obj"

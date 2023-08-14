@@ -38,6 +38,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/daq.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/daq.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/daq.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/debug.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/debug.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/dma.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dma.c.obj.d"
+  "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/ds18b20.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/ds18b20.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/ds18b20.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/front_end_control.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/global_callbacks.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/global_callbacks.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/global_callbacks.c.obj.d"
   "/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/gpio.c" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj" "gcc" "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/gpio.c.obj.d"
