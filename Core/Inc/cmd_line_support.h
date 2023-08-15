@@ -17,6 +17,7 @@
 #include <string.h>
 #include "measurements.h"
 #include "ds18b20.h"
+#include "cmd_scheduler.h"
 
 void cmdsprt_setup_cli(void);
 
@@ -45,6 +46,8 @@ int32_t cli_cmd_getledtemp_fn(int32_t argc, char** argv);
 int32_t cli_cmd_yeet_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_reboot_fn(int32_t argc, char** argv);
+
+
 
 //todo: implement
 int32_t cli_cmd_setnumavg_fn(int32_t argc, char** argv);

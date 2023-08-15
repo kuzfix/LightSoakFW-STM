@@ -207,6 +207,8 @@ int main(void)
         ds18b20_handler();
 //        mainser_printf("temp: %f\n", ds18b20_get_temp());
       }
+
+      cmdsched_handler();
     }
 
 //    HAL_Delay(30000);

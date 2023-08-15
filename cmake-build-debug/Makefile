@@ -201,6 +201,30 @@ Core/Src/cmd_line_support.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.s
 .PHONY : Core/Src/cmd_line_support.c.s
 
+Core/Src/cmd_scheduler.obj: Core/Src/cmd_scheduler.c.obj
+.PHONY : Core/Src/cmd_scheduler.obj
+
+# target to build an object file
+Core/Src/cmd_scheduler.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_scheduler.c.obj
+.PHONY : Core/Src/cmd_scheduler.c.obj
+
+Core/Src/cmd_scheduler.i: Core/Src/cmd_scheduler.c.i
+.PHONY : Core/Src/cmd_scheduler.i
+
+# target to preprocess a source file
+Core/Src/cmd_scheduler.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_scheduler.c.i
+.PHONY : Core/Src/cmd_scheduler.c.i
+
+Core/Src/cmd_scheduler.s: Core/Src/cmd_scheduler.c.s
+.PHONY : Core/Src/cmd_scheduler.s
+
+# target to generate assembly for a file
+Core/Src/cmd_scheduler.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LightSoakFW-STM.elf.dir/build.make CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_scheduler.c.s
+.PHONY : Core/Src/cmd_scheduler.c.s
+
 Core/Src/dac.obj: Core/Src/dac.c.obj
 .PHONY : Core/Src/dac.obj
 
@@ -1403,6 +1427,9 @@ help:
 	@echo "... Core/Src/cmd_line_support.obj"
 	@echo "... Core/Src/cmd_line_support.i"
 	@echo "... Core/Src/cmd_line_support.s"
+	@echo "... Core/Src/cmd_scheduler.obj"
+	@echo "... Core/Src/cmd_scheduler.i"
+	@echo "... Core/Src/cmd_scheduler.s"
 	@echo "... Core/Src/dac.obj"
 	@echo "... Core/Src/dac.i"
 	@echo "... Core/Src/dac.s"

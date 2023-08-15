@@ -20,7 +20,7 @@
 #include "led_control.h"
 #include "main_serial.h"
 
-#define MEAS_NUM_AVG_DEFAULT 32
+#define MEAS_NUM_AVG_DEFAULT 16
 
 #define MEAS_DUT_SETTLING_TIME_MS 1 //ms
 #define MEAS_FORCE_VOLT_CLOSE_ENOUGH 0.002f //V
@@ -89,6 +89,76 @@ void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd 
 void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num_samples);
 void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num_samples);
 void prv_meas_dump_from_buffer_human_readable_iv(uint8_t channel, uint32_t num_samples);
+
+
+
+//parameter structures for all functions that can be scheduled
+//meas_get_voltage
+typedef struct{
+    uint8_t channel;
+} meas_get_voltage_param_t;
+
+//meas_get_current
+typedef struct{
+    uint8_t channel;
+} meas_get_current_param_t;
+
+//meas_get_IV_point
+typedef struct{
+    uint8_t channel;
+    float voltage;
+    uint8_t disable_current_when_finished;
+    uint8_t noident;
+} meas_get_IV_point_param_t;
+
+//meas_get_iv_characteristic
+typedef struct{
+    uint8_t channel;
+    float start_volt;
+    float end_volt;
+    float step_volt;
+} meas_get_iv_characteristic_param_t;
+
+//meas_##_sample_and_dump (for v i and iv)
+typedef struct{
+    uint8_t channel;
+    uint32_t num_samples;
+} meas_sample_and_dump_param_t;
+
+//ledctrl_set_current
+typedef struct{
+    float current;
+} ledctrl_set_current_param_t;
+
+//meas_flashmeasure_dumpbuffer
+typedef struct{
+    uint8_t channel;
+    float illum;
+    uint32_t flash_dur_us;
+} meas_flashmeasure_dumpbuffer_param_t;
+
+//meas_flashmeasure_singlesample
+typedef struct{
+    uint8_t channel;
+    float illum;
+    uint32_t flash_dur_us;
+    uint32_t measure_at_us;
+    uint32_t numavg;
+} meas_flashmeasure_singlesample_param_t;
+
+
+//typedef enum for cmd ids. IDs needed for cmd scheduling
+typedef enum {
+    meas_get_voltage_id,
+    meas_get_current_id,
+    meas_get_IV_point_id,
+    meas_get_iv_characteristic_id,
+    meas_sample_and_dump_id,
+    ledctrl_set_current_id,
+    meas_flashmeasure_dumpbuffer_id,
+    meas_flashmeasure_singlesample_id
+} meas_funct_id;
+
 
 
 #endif //LIGHTSOAKFW_STM_MEASUREMENTS_H

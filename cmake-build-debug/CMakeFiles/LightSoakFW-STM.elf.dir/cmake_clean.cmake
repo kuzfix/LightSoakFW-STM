@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.obj.d"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_scheduler.c.obj"
+  "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_scheduler.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/dac.c.obj.d"
   "CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/daq.c.obj"

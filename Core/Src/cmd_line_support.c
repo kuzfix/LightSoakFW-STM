@@ -57,8 +57,13 @@ int32_t cli_cmd_getvolt_fn(int32_t argc, char** argv){
     //scheduled command
     uint64_t sched_time;
     cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-    //todo
+
+    // schedule command ##########
+    meas_get_voltage_param_t param;
+    param.channel = ch;
+    cmdsched_encode_and_add(sched_time, meas_get_voltage_id, &param, sizeof(meas_get_voltage_param_t));
+    // END schedule command ##########
+
   }
   else{
     //immediate command
