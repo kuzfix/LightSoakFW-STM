@@ -153,7 +153,9 @@ typedef enum {
     meas_get_current_id,
     meas_get_IV_point_id,
     meas_get_iv_characteristic_id,
-    meas_sample_and_dump_id,
+    meas_volt_sample_and_dump_id,
+    meas_curr_sample_and_dump_id,
+    meas_iv_sample_and_dump_id,
     ledctrl_set_current_id,
     meas_flashmeasure_dumpbuffer_id,
     meas_flashmeasure_singlesample_id

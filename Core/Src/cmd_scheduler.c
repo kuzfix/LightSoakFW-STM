@@ -105,52 +105,75 @@ void cmdsched_handler(void){
       break;
     }
     case meas_get_current_id: {
-      // Declare local variables for this case
-      int current;
-      // Add your code to handle this case
-      printf("meas_get_current_id\n");
+      meas_get_current_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_get_current_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_get_current(param.channel);
       break;
     }
     case meas_get_IV_point_id: {
-      // Declare local variables for this case
-      int iv_point;
-      // Add your code to handle this case
-      printf("meas_get_IV_point_id\n");
+      meas_get_IV_point_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_get_IV_point_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_get_IV_point(param.channel, param.voltage, param.disable_current_when_finished, param.noident);
       break;
     }
     case meas_get_iv_characteristic_id: {
-      // Declare local variables for this case
-      int iv_characteristic;
-      // Add your code to handle this case
-      printf("meas_get_iv_characteristic_id\n");
+      meas_get_iv_characteristic_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_get_iv_characteristic_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_get_iv_characteristic(param.channel, param.start_volt, param.end_volt, param.step_volt);
       break;
     }
-    case meas_sample_and_dump_id: {
-      // Declare local variables for this case
-      int sample, dump;
-      // Add your code to handle this case
-      printf("meas_sample_and_dump_id\n");
+    case meas_volt_sample_and_dump_id: {
+      meas_sample_and_dump_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_sample_and_dump_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_volt_sample_and_dump(param.channel, param.num_samples);
+      break;
+    }
+    case meas_curr_sample_and_dump_id: {
+      meas_sample_and_dump_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_sample_and_dump_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_curr_sample_and_dump(param.channel, param.num_samples);
+      break;
+    }
+    case meas_iv_sample_and_dump_id: {
+      meas_sample_and_dump_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_sample_and_dump_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_iv_sample_and_dump(param.channel, param.num_samples);
       break;
     }
     case ledctrl_set_current_id: {
-      // Declare local variables for this case
-      int led_current;
-      // Add your code to handle this case
-      printf("ledctrl_set_current_id\n");
+      ledctrl_set_current_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(ledctrl_set_current_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      ledctrl_set_current(param.current);
       break;
     }
     case meas_flashmeasure_dumpbuffer_id: {
-      // Declare local variables for this case
-      int buffer;
-      // Add your code to handle this case
-      printf("meas_flashmeasure_dumpbuffer_id\n");
+      meas_flashmeasure_dumpbuffer_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_flashmeasure_dumpbuffer_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_flashmeasure_dumpbuffer(param.channel, param.illum, param.flash_dur_us);
       break;
     }
     case meas_flashmeasure_singlesample_id: {
-      // Declare local variables for this case
-      int single_sample;
-      // Add your code to handle this case
-      printf("meas_flashmeasure_singlesample_id\n");
+      meas_flashmeasure_singlesample_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_flashmeasure_singlesample_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_flashmeasure_singlesample(param.channel, param.illum, param.flash_dur_us, param.measure_at_us, param.numavg);
       break;
     }
     default: {

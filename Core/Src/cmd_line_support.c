@@ -89,8 +89,12 @@ int32_t cli_cmd_getcurr_fn(int32_t argc, char** argv){
     //scheduled command
     uint64_t sched_time;
     cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-    //todo
+    // schedule command ##########
+    meas_get_current_param_t param;
+    param.channel = ch;
+    cmdsched_encode_and_add(sched_time, meas_get_current_id, &param, sizeof(meas_get_current_param_t));
+    // END schedule command ##########
+
   }
   else{
     //immediate command
@@ -128,8 +132,14 @@ int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv){
     //scheduled command
     uint64_t sched_time;
     cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-    //todo
+    // schedule command ##########
+    meas_get_IV_point_param_t param;
+    param.channel = ch;
+    param.voltage = cmdvolt;
+    param.disable_current_when_finished = 1;
+    param.noident = 0;
+    cmdsched_encode_and_add(sched_time, meas_get_IV_point_id, &param, sizeof(meas_get_IV_point_param_t));
+    // END schedule command ##########
   }
   else{
     //immediate command
@@ -188,8 +198,14 @@ int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
     //scheduled command
     uint64_t sched_time;
     cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-    //todo
+    // schedule command ##########
+    meas_get_iv_characteristic_param_t param;
+    param.channel = ch;
+    param.start_volt = start;
+    param.end_volt = end;
+    param.step_volt = step;
+    cmdsched_encode_and_add(sched_time, meas_get_iv_characteristic_id, &param, sizeof(meas_get_iv_characteristic_param_t));
+    // END schedule command ##########
   }
   else{
     //immediate command
@@ -228,8 +244,12 @@ int32_t cli_cmd_dump_fn(int32_t argc, char** argv){
       //scheduled command
       uint64_t sched_time;
       cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-      //todo
+      // schedule command ##########
+      meas_sample_and_dump_param_t param;
+      param.channel = ch;
+      param.num_samples = num_samples;
+      cmdsched_encode_and_add(sched_time, meas_volt_sample_and_dump_id, &param, sizeof(meas_sample_and_dump_param_t));
+      // END schedule command ##########
     }
     else{
       //immediate command
@@ -242,8 +262,12 @@ int32_t cli_cmd_dump_fn(int32_t argc, char** argv){
       //scheduled command
       uint64_t sched_time;
       cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-      //todo
+      // schedule command ##########
+      meas_sample_and_dump_param_t param;
+      param.channel = ch;
+      param.num_samples = num_samples;
+      cmdsched_encode_and_add(sched_time, meas_curr_sample_and_dump_id, &param, sizeof(meas_sample_and_dump_param_t));
+      // END schedule command ##########
     }
     else{
       //immediate command
@@ -256,8 +280,12 @@ int32_t cli_cmd_dump_fn(int32_t argc, char** argv){
       //scheduled command
       uint64_t sched_time;
       cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-      //todo
+      // schedule command ##########
+      meas_sample_and_dump_param_t param;
+      param.channel = ch;
+      param.num_samples = num_samples;
+      cmdsched_encode_and_add(sched_time, meas_iv_sample_and_dump_id, &param, sizeof(meas_sample_and_dump_param_t));
+      // END schedule command ##########
     }
     else{
       //immediate command
@@ -289,8 +317,11 @@ int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv){
     //scheduled command
     uint64_t sched_time;
     cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-    dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-    //todo
+    // schedule command ##########
+    ledctrl_set_current_param_t param;
+    param.current = current;
+    cmdsched_encode_and_add(sched_time, ledctrl_set_current_id, &param, sizeof(ledctrl_set_current_param_t));
+    // END schedule command ##########
   }
   else{
     //immediate command
@@ -379,8 +410,13 @@ int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv){
       //scheduled command
       uint64_t sched_time;
       cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-      //todo
+      // schedule command ##########
+      meas_flashmeasure_dumpbuffer_param_t param;
+      param.channel = ch;
+      param.illum = illum;
+      param.flash_dur_us = flash_dur;
+      cmdsched_encode_and_add(sched_time, meas_flashmeasure_dumpbuffer_id, &param, sizeof(meas_flashmeasure_dumpbuffer_param_t));
+      // END schedule command ##########
     }
     else{
       //immediate command
@@ -413,8 +449,15 @@ int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv){
       //scheduled command
       uint64_t sched_time;
       cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
-      dbg(Debug, "cmd scheduled for %llu\n", sched_time);
-      //todo
+      // schedule command ##########
+      meas_flashmeasure_singlesample_param_t param;
+      param.channel = ch;
+      param.illum = illum;
+      param.flash_dur_us = flash_dur;
+      param.measure_at_us = measure_at;
+      param.numavg = numavg;
+      cmdsched_encode_and_add(sched_time, meas_flashmeasure_singlesample_id, &param, sizeof(meas_flashmeasure_singlesample_param_t));
+      // END schedule command ##########
     }
     else{
       //immediate command
