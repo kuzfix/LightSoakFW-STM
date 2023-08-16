@@ -111,7 +111,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  dbg(Warning, "Booting LighSoak V1...\n");
+  dbg(Warning, "Booting LighSoak V1...\r\n");
 
   mainser_init();
   fec_init();
@@ -144,32 +144,32 @@ int main(void)
   while (1)
   {
 
-//////    dbg(Debug, "prepare for sample\n");
+//////    dbg(Debug, "prepare for sample\r\n");
 ////    daq_prepare_for_sampling(1000);
-//////    dbg(Debug, "prepare done\n");
+//////    dbg(Debug, "prepare done\r\n");
 ////    HAL_Delay(10);
-//////    dbg(Debug, "start sampling\n");
+//////    dbg(Debug, "start sampling\r\n");
 ////    t1 = usec_get_timestamp_64();
 ////    daq_start_sampling();
-//////    dbg(Debug, "sampling started\n");
+//////    dbg(Debug, "sampling started\r\n");
 ////    while(!daq_is_sampling_done());
 ////    t2 = usec_get_timestamp_64();
-//////    dbg(Debug, "sampling done. took: %d\n", t2-t1);
-//////    dbg(Debug, "started sampling at: %llu\n", t1);
+//////    dbg(Debug, "sampling done. took: %d\r\n", t2-t1);
+//////    dbg(Debug, "started sampling at: %llu\r\n", t1);
 ////
 ////    t_daq_sample_raw avg = daq_volt_raw_get_average(1000);
-////    dbg(Debug, "avg voltage ch1: %d, at timestamp: %llu\n", avg.ch1, avg.timestamp);
+////    dbg(Debug, "avg voltage ch1: %d, at timestamp: %llu\r\n", avg.ch1, avg.timestamp);
 ////
 ////    t_daq_sample_raw avgcur = daq_curr_raw_get_average(1000);
-////    dbg(Debug, "avg current ch1: %d, at timestamp: %llu\n", avgcur.ch1, avgcur.timestamp);
+////    dbg(Debug, "avg current ch1: %d, at timestamp: %llu\r\n", avgcur.ch1, avgcur.timestamp);
 ////
-////    dbg(Debug, "preforming single shot measures...\n");
+////    dbg(Debug, "preforming single shot measures...\r\n");
 //
 //    t_daq_sample_convd single_volt = daq_single_shot_volt(100);
 //    t_daq_sample_convd single_curr = daq_single_shot_curr_no_autorng(100);
 //
-//    dbg(Warning, "single shot voltage: %f\n", single_volt.ch1);
-//    dbg(Warning, "single shot current: %f\n", single_curr.ch1);
+//    dbg(Warning, "single shot voltage: %f\r\n", single_volt.ch1);
+//    dbg(Warning, "single shot current: %f\r\n", single_curr.ch1);
 
 
 
@@ -205,7 +205,7 @@ int main(void)
       if(HAL_GetTick()-temptime > 1000){
         temptime = HAL_GetTick();
         ds18b20_handler();
-//        mainser_printf("temp: %f\n", ds18b20_get_temp());
+//        mainser_printf("temp: %f\r\n", ds18b20_get_temp());
       }
 
       cmdsched_handler();
@@ -214,7 +214,7 @@ int main(void)
 //    HAL_Delay(30000);
 
 
-//    dbg(Warning, "   \n");
+//    dbg(Warning, "   \r\n");
 
 
 

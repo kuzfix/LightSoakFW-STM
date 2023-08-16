@@ -16,6 +16,8 @@ char mainser_printf_buffer[MAINSER_PRINTF_BUF_LEN];
  * This function enables the RX interrupt for the USART.
  */
 void mainser_init(void) {
+  //set default baud rate
+  mainser_set_baudrate(MAINSER_DEFAULT_BAUD);
   // Enable RX interrupt
   LL_USART_EnableIT_RXNE(MAINSER_UART);
 }
@@ -167,4 +169,12 @@ void mainser_send_string(const char* str){
     while(mainser_write(str[n])==0);
     n++;
   }
+}
+
+void mainser_set_baudrate(uint32_t baudrate){
+  LL_USART_Disable(MAINSER_UART);
+  LL_USART_SetBaudRate(MAINSER_UART, SystemCoreClock, LL_USART_GetPrescaler(MAINSER_UART),LL_USART_OVERSAMPLING_8, baudrate);
+  LL_USART_Enable(MAINSER_UART);
+  mainser_printf("SETBAUD:OK\r\n");
+  dbg(Warning, "mainser_set_baudrate: baudrate set to %lu\r\n", baudrate);
 }

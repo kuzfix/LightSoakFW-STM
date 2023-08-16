@@ -14,6 +14,8 @@
 //buffer size for mainser_printf
 #define MAINSER_PRINTF_BUF_LEN 256
 
+#define MAINSER_DEFAULT_BAUD 115200
+
 extern volatile uint8_t mainser_rx_buffer[RX_BUFFER_SIZE];
 extern volatile uint8_t mainser_tx_buffer[TX_BUFFER_SIZE];
 extern volatile uint32_t mainser_rx_read_index;
@@ -29,5 +31,6 @@ void mainser_printf(const char* format, ...);
 uint32_t mainser_available(void);
 uint32_t mainser_tx_space(void);
 void mainser_send_string(const char* str);
+void mainser_set_baudrate(uint32_t baudrate);
 
 #endif //LIGHTSOAKFW_STM_MAIN_SERIAL_H

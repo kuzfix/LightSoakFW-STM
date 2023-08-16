@@ -45,6 +45,7 @@
 /* Default characters */
 #define LWSHELL_ASCII_NULL      0x00 /*!< Null character */
 #define LWSHELL_ASCII_BACKSPACE 0x08 /*!< Backspace */
+#define LWSHELL_ASCII_BACKSPACE_ALT 0x7F /*!< Backspace */
 #define LWSHELL_ASCII_LF        0x0A /*!< Line feed */
 #define LWSHELL_ASCII_CR        0x0D /*!< Carriage return */
 #define LWSHELL_ASCII_DEL       0x7F /*!< Delete character */
@@ -327,7 +328,7 @@ lwshell_input_ex(lwshell_t* lwobj, const void* in_data, size_t len) {
     for (size_t i = 0; i < len; ++i) {
         switch (d[i]) {
             case LWSHELL_ASCII_CR: {
-                LWSHELL_OUTPUT(lwobj, "\r");
+                LWSHELL_OUTPUT(lwobj, "\r\n");
                 prv_parse_input(lwobj);
                 LWSHELL_RESET_BUFF(lwobj);
                 break;
@@ -347,6 +348,17 @@ lwshell_input_ex(lwshell_t* lwobj, const void* in_data, size_t len) {
                 }
                 break;
             }
+            // mac sends 0x7F for backspace
+            case LWSHELL_ASCII_BACKSPACE_ALT: {
+              /* Try to delete character from buffer */
+              if (lwobj->buff_ptr > 0) {
+                --lwobj->buff_ptr;
+                lwobj->buff[lwobj->buff_ptr] = '\0';
+                LWSHELL_OUTPUT(lwobj, "\b \b");
+              }
+              break;
+            }
+
             default: {
                 char str[2] = {d[i]};
                 LWSHELL_OUTPUT(lwobj, str);

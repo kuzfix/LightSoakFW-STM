@@ -15,10 +15,10 @@ void cmdsprt_setup_cli(void){
   //set lwshel output callback
   lwshell_set_output_fn(cmdsprt_lwshell_out_callback);
   //welcome message
-  mainser_printf("LightSoak CLI started.\n");
-  mainser_printf("Type help to list all commands.\n");
-  mainser_printf("Type <cmd> -h to get help for a specific command.\n");
-  mainser_printf("Add -sched ### argument to schedule command at specific time\n");
+  mainser_printf("LightSoak CLI started.\r\n");
+  mainser_printf("Type help to list all commands.\r\n");
+  mainser_printf("Type <cmd> -h to get help for a specific command.\r\n");
+  mainser_printf("Add -sched ### argument to schedule command at specific time\r\n");
   //register commands
   lwshell_register_cmd("getvolt", cli_cmd_getvolt_fn, "Measures voltage. -c #ch# to select channel. No param for all channels");
   lwshell_register_cmd("getcurr", cli_cmd_getcurr_fn, "Measures current. -c #ch# to select channel. No param for all channels");
@@ -37,6 +37,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("reboot", cli_cmd_reboot_fn, "Reboot the device. No scheduling.");
   lwshell_register_cmd("getledtemp", cli_cmd_getledtemp_fn, "Get LED temperature. No scheduling.");
   lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
+  lwshell_register_cmd("setbaud", cli_cmd_setbaud_fn, "sets baud rate. -b #baud# to set baud rate. No scheduling.");
 }
 
 
@@ -113,7 +114,7 @@ int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv){
     cmdsprt_parse_uint32("-c", &ch, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
   //parse voltage setpoint
@@ -122,7 +123,7 @@ int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv){
     cmdsprt_parse_float("-v", &cmdvolt, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -157,7 +158,7 @@ int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
     cmdsprt_parse_uint32("-c", &ch, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -167,7 +168,7 @@ int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
     cmdsprt_parse_float("-vs", &start, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -177,7 +178,7 @@ int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
     cmdsprt_parse_float("-ve", &end, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -187,7 +188,7 @@ int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
     cmdsprt_parse_float("-s", &step, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -233,7 +234,7 @@ int32_t cli_cmd_dump_fn(int32_t argc, char** argv){
     cmdsprt_parse_uint32("-n", &num_samples, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -293,7 +294,7 @@ int32_t cli_cmd_dump_fn(int32_t argc, char** argv){
     }
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
   return 0;
@@ -307,7 +308,7 @@ int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv){
     cmdsprt_parse_float("-i", &current, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -339,7 +340,7 @@ int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
     cmdsprt_parse_float("-i", &current, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 //parse duration
@@ -347,7 +348,7 @@ int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
     cmdsprt_parse_uint32("-t", &dur, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -357,7 +358,7 @@ int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
 
   if(cmdsprt_is_arg("-sched", argc, argv)){
     //scheduled command
-    dbg(Error, "CMD does not support scheduling\n");
+    dbg(Error, "CMD does not support scheduling\r\n");
     return -1;
   }
 
@@ -388,7 +389,7 @@ int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv){
     cmdsprt_parse_float("-illum", &illum, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -397,7 +398,7 @@ int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv){
     cmdsprt_parse_uint32("-t", &flash_dur, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
 
@@ -431,7 +432,7 @@ int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv){
       cmdsprt_parse_uint32("-m", &measure_at, argc, argv);
     }
     else{
-      dbg(Warning, "CLI CMD Error\n");
+      dbg(Warning, "CLI CMD Error\r\n");
       return -1;
     }
     //parse numavg
@@ -439,7 +440,7 @@ int32_t cli_cmd_flash_measure_fn(int32_t argc, char** argv){
       cmdsprt_parse_uint32("-n", &numavg, argc, argv);
     }
     else{
-      dbg(Warning, "CLI CMD Error\n");
+      dbg(Warning, "CLI CMD Error\r\n");
       return -1;
     }
 
@@ -475,7 +476,7 @@ int32_t cli_cmd_reset_timestamp_fn(int32_t argc, char** argv){
 
 int32_t cli_cmd_get_timestamp_fn(int32_t argc, char** argv){
   uint64_t timestamp = usec_get_timestamp_64();
-  mainser_printf("TIMESTAMP:%llu\n", timestamp);
+  mainser_printf("TIMESTAMP:%llu\r\n", timestamp);
   return 0;
 }
 
@@ -524,7 +525,7 @@ int32_t cli_cmd_setforcevolt_fn(int32_t argc, char** argv){
     cmdsprt_parse_float("-v", &volt, argc, argv);
   }
   else{
-    dbg(Warning, "CLI CMD Error\n");
+    dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
   fec_set_force_voltage(ch, volt);
@@ -543,7 +544,7 @@ int32_t cli_cmd_reboot_fn(int32_t argc, char** argv){
 
 int32_t cli_cmd_yeet_fn(int32_t argc, char** argv){
   for(int i = 0; i < 20; i++){
-    mainser_printf("Y E E E E E T\n");
+    mainser_printf("Y E E E E E T\r\n");
     ledctrl_set_current(1.5f);
     usec_delay(40000);
     ledctrl_set_current(0.0f);
@@ -555,9 +556,28 @@ int32_t cli_cmd_yeet_fn(int32_t argc, char** argv){
 int32_t cli_cmd_getledtemp_fn(int32_t argc, char** argv){
   float temp = ds18b20_get_temp();
   prv_meas_print_timestamp(usec_get_timestamp_64());
-  mainser_printf("LEDTEMP:%f\n", temp);
+  mainser_printf("LEDTEMP:%f\r\n", temp);
   return 0;
 }
+
+
+int32_t cli_cmd_setbaud_fn(int32_t argc, char** argv){
+  uint32_t baud;
+  //parse baud
+  if(cmdsprt_is_arg("-b", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-b", &baud, argc, argv);
+    mainser_set_baudrate(baud);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\r\n");
+    return -1;
+  }
+  return 0;
+}
+
+
+
 
 
 
