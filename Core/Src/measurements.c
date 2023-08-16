@@ -834,6 +834,20 @@ void prv_meas_print_data_ident_IV_characteristic(void){
 }
 
 /**
+ * @brief prints data identification
+ */
+void prv_meas_print_data_ident_flashmeasure_single(void){
+  mainser_printf("FLASHMEAS_SINGLE:\r\n");
+}
+
+/**
+ * @brief prints data identification
+ */
+void prv_meas_print_data_ident_flashmeasure_dump(void){
+  mainser_printf("FLASHMEAS_DUMP:\r\n");
+}
+
+/**
  * @brief Measure IV characteristic of DUT. Prints results to main serial
  * - !!! this is limited to single channel measurements !!!
  * @param channel channel to measure
@@ -993,7 +1007,7 @@ void meas_flashmeasure_singlesample(uint8_t channel, float illum, uint32_t flash
   //check if out of range
   meas_check_out_of_rng_volt(avg_convd, channel);
   //print sample
-  prv_meas_print_data_ident_voltage();
+  prv_meas_print_data_ident_flashmeasure_single();
   prv_meas_print_ch_ident(channel);
   prv_meas_print_timestamp(avg_convd.timestamp);
   prv_meas_print_sample(avg_convd, channel);
@@ -1035,5 +1049,6 @@ void meas_flashmeasure_dumpbuffer(uint8_t channel, float illum, uint32_t flash_d
   while(!daq_is_sampling_done());
 
   //dump data
+  prv_meas_print_data_ident_flashmeasure_dump();
   prv_meas_dump_from_buffer_human_readable_volt(channel, num_samples);
 }

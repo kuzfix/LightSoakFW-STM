@@ -83,6 +83,8 @@ void prv_meas_print_data_ident_dump_text_volt(void);
 void prv_meas_print_data_ident_dump_text_curr(void);
 void prv_meas_print_data_ident_dump_text_IV(void);
 void prv_meas_print_data_ident_IV_characteristic(void);
+void prv_meas_print_data_ident_flashmeasure_single(void);
+void prv_meas_print_data_ident_flashmeasure_dump(void);
 void prv_meas_print_dump_end(void);
 void prv_meas_print_sample(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
