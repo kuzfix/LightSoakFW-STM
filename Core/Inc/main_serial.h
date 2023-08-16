@@ -14,7 +14,8 @@
 //buffer size for mainser_printf
 #define MAINSER_PRINTF_BUF_LEN 256
 
-#define MAINSER_DEFAULT_BAUD 115200
+#define MAINSER_DEFAULT_BAUD 230400
+
 
 extern volatile uint8_t mainser_rx_buffer[RX_BUFFER_SIZE];
 extern volatile uint8_t mainser_tx_buffer[TX_BUFFER_SIZE];

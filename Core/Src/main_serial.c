@@ -1,5 +1,6 @@
 #include "main_serial.h"
 
+
 volatile uint8_t mainser_rx_buffer[RX_BUFFER_SIZE];
 volatile uint8_t mainser_tx_buffer[TX_BUFFER_SIZE];
 volatile uint32_t mainser_rx_read_index = 0;
@@ -118,11 +119,15 @@ uint32_t mainser_available(void) {
  */
 uint32_t mainser_tx_space(void) {
   uint32_t diff;
+  //disable irq for thread safety. This was actually a problem
+  __disable_irq();
   if(mainser_tx_write_index >= mainser_tx_read_index) {
     diff = TX_BUFFER_SIZE - mainser_tx_write_index + mainser_tx_read_index - 1;
   } else {
     diff = mainser_tx_read_index - mainser_tx_write_index - 1;
   }
+  //re-enable irq
+  __enable_irq();
   return diff;
 }
 

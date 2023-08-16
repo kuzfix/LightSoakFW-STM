@@ -662,6 +662,7 @@ void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num
     //print to serial
     mainser_printf("[%lu]", n);
     prv_meas_print_sample(sample_convd, channel);
+
   }
   //print END_DUMP
   prv_meas_print_dump_end();
