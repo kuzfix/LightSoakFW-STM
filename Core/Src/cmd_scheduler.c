@@ -42,7 +42,11 @@ uint8_t cmdsched_q_count() {
 }
 
 uint8_t cmdsched_q_free_spaces() {
-  return CMDSCHED_QUEUE_SIZE - cmdsched_q_count();
+  //todo: is -1 needed?
+  if(cmdsched_q_count() < CMDSCHED_QUEUE_SIZE-1){
+    return CMDSCHED_QUEUE_SIZE - cmdsched_q_count();
+  }
+  return 0;
 }
 
 cmd_sched_t cmdsched_q_peek() {
