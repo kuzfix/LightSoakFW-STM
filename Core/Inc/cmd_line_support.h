@@ -50,6 +50,8 @@ int32_t cli_cmd_reboot_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_setbaud_fn(int32_t argc, char** argv);
 
+int32_t cli_cmd_ready_fn(int32_t argc, char** argv);
+
 
 
 //todo: implement

@@ -121,7 +121,7 @@ int main(void)
   ds18b20_init();
 
 
-  HAL_Delay(3000);
+  HAL_Delay(1000);
 
   //enable CLI
   cmdsprt_setup_cli();

@@ -19,6 +19,7 @@ void cmdsprt_setup_cli(void){
   mainser_printf("Type help to list all commands.\r\n");
   mainser_printf("Type <cmd> -h to get help for a specific command.\r\n");
   mainser_printf("Add -sched ### argument to schedule command at specific time\r\n");
+  mainser_printf("READY\r\n");
   //register commands
   lwshell_register_cmd("getvolt", cli_cmd_getvolt_fn, "Measures voltage. -c #ch# to select channel. No param for all channels");
   lwshell_register_cmd("getcurr", cli_cmd_getcurr_fn, "Measures current. -c #ch# to select channel. No param for all channels");
@@ -38,6 +39,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("getledtemp", cli_cmd_getledtemp_fn, "Get LED temperature. No scheduling.");
   lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
   lwshell_register_cmd("setbaud", cli_cmd_setbaud_fn, "sets baud rate. -b #baud# to set baud rate. No scheduling.");
+  lwshell_register_cmd("ready?", cli_cmd_ready_fn, "Call to check if ready.");
 }
 
 
@@ -575,6 +577,14 @@ int32_t cli_cmd_setbaud_fn(int32_t argc, char** argv){
   }
   return 0;
 }
+
+int32_t cli_cmd_ready_fn(int32_t argc, char** argv){
+  mainser_printf("READY\r\n");
+  return 0;
+}
+
+
+
 
 
 
