@@ -817,14 +817,14 @@ void prv_meas_print_data_ident_dump_text_volt(void){
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_dump_text_curr(void){
-  mainser_printf("DUMPCURR[V]:\r\n");
+  mainser_printf("DUMPCURR[mA]:\r\n");
 }
 
 /**
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_dump_text_IV(void){
-  mainser_printf("DUMPIVPT[V]:\r\n");
+  mainser_printf("DUMPIVPT[mA__V]:\r\n");
 }
 
 /**
