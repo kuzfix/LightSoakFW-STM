@@ -23,16 +23,17 @@ void cmdsprt_setup_cli(void){
   //register commands
   lwshell_register_cmd("getvolt", cli_cmd_getvolt_fn, "Measures voltage. -c #ch# to select channel. No param for all channels");
   lwshell_register_cmd("getcurr", cli_cmd_getcurr_fn, "Measures current. -c #ch# to select channel. No param for all channels");
-  lwshell_register_cmd("getiv_point", cli_cmd_getiv_point_fn, "Measures IV point. -c #ch# to select channel. -v #volt# to set voltage");
-  lwshell_register_cmd("getiv_char", cli_cmd_getiv_char_fn, "Measures IV characteristic. -c #ch# to select channel. -vs #volt# start volt, -ve #volt# end volt, -s #volt# step");
+  lwshell_register_cmd("getivpoint", cli_cmd_getiv_point_fn, "Measures IV point. -c #ch# to select channel. -v #volt# to set voltage");
+  lwshell_register_cmd("getivchar", cli_cmd_getiv_char_fn, "Measures IV characteristic. -c #ch# to select channel. -vs #volt# start volt, -ve #volt# end volt, -s #volt# step");
   lwshell_register_cmd("measure_dump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
   lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
   lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time. No scheduling.");
-  lwshell_register_cmd("reset_timestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0. No scheduling.");
-  lwshell_register_cmd("get_timestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value. No scheduling.");
+  lwshell_register_cmd("resettimestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0. No scheduling.");
+  lwshell_register_cmd("gettimestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value. No scheduling.");
   lwshell_register_cmd("flashmeasure", cli_cmd_flash_measure_fn, "Flash voltage measurement. -c #ch# to select channel. -illum #illum[sun]# to set illumination. -t #time[us]# to set flash duration. <<-m #time[us]# to set measurement time. -n #num# to set number of averages>> or <<-DUMP to dump buffer>>.");
   lwshell_register_cmd("enable_current", cli_cmd_enable_current_fn, "Enable current. -c #ch# to select channel. No param for all channels. No scheduling.");
   lwshell_register_cmd("disable_current", cli_cmd_disable_current_fn, "Disable current. -c #ch# to select channel. No param for all channels. No scheduling.");
+  lwshell_register_cmd("setshunt", cli_cmd_set_shunt_fn, "Set current shunt range. -c #ch# to select channel. No param for all channels. -1x/-10x/-100x/-100x to set range. No scheduling.");
   lwshell_register_cmd("setforcevolt", cli_cmd_setforcevolt_fn, "Set force voltage. -c #ch# to select channel. No param for all channels. -v #volt# to set voltage. No scheduling.");
   lwshell_register_cmd("autorange", cli_cmd_autorange_fn, "Autorange current shunts on all channels. No scheduling.");
   lwshell_register_cmd("reboot", cli_cmd_reboot_fn, "Reboot the device. No scheduling.");
@@ -583,6 +584,36 @@ int32_t cli_cmd_ready_fn(int32_t argc, char** argv){
   return 0;
 }
 
+int32_t cli_cmd_set_shunt_fn(int32_t argc, char** argv){
+  uint32_t ch;
+  uint32_t shunt;
+  //parse ch
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+  else{
+    ch = 0;
+  }
+  //parse shunt
+  if(cmdsprt_is_arg("-1x", argc, argv)){
+    fec_set_shunt_1x(ch);
+  }
+  else if(cmdsprt_is_arg("-10x", argc, argv)){
+    fec_set_shunt_10x(ch);
+  }
+  else if(cmdsprt_is_arg("-100x", argc, argv)){
+    fec_set_shunt_100x(ch);
+  }
+  else if(cmdsprt_is_arg("-1000x", argc, argv)){
+    fec_set_shunt_1000x(ch);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\r\n");
+    return -1;
+  }
+  return 0;
+}
 
 
 
