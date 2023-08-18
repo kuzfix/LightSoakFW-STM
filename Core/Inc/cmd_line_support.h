@@ -29,6 +29,7 @@ int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv);
 int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv);
 int32_t cli_cmd_dump_fn(int32_t argc, char** argv);
 int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv);
+int32_t cli_cmd_setledillum_fn(int32_t argc, char** argv);
 int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv);
 
 

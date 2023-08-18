@@ -132,6 +132,11 @@ typedef struct{
     float current;
 } ledctrl_set_current_param_t;
 
+//ledctrl_set_illum
+typedef struct{
+    float illum;
+} ledctrl_set_illum_param_t;
+
 //meas_flashmeasure_dumpbuffer
 typedef struct{
     uint8_t channel;
@@ -159,6 +164,7 @@ typedef enum {
     meas_curr_sample_and_dump_id,
     meas_iv_sample_and_dump_id,
     ledctrl_set_current_id,
+    ledctrl_set_illum_id,
     meas_flashmeasure_dumpbuffer_id,
     meas_flashmeasure_singlesample_id
 } meas_funct_id;

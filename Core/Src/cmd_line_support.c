@@ -27,6 +27,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("getivchar", cli_cmd_getiv_char_fn, "Measures IV characteristic. -c #ch# to select channel. -vs #volt# start volt, -ve #volt# end volt, -s #volt# step");
   lwshell_register_cmd("measure_dump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
   lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
+  lwshell_register_cmd("setledillum", cli_cmd_setledillum_fn, "Set LED illumination. -i #illumination[sun]# to set led.");
   lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time. No scheduling.");
   lwshell_register_cmd("resettimestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0. No scheduling.");
   lwshell_register_cmd("gettimestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value. No scheduling.");
@@ -330,6 +331,37 @@ int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv){
   else{
     //immediate command
     ledctrl_set_current(current);
+  }
+  return 0;
+}
+
+int32_t cli_cmd_setledillum_fn(int32_t argc, char** argv){
+  float illum;
+
+  //parse current
+  if(cmdsprt_is_arg("-i", argc, argv)){
+    cmdsprt_parse_float("-i", &illum, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\r\n");
+    return -1;
+  }
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    // schedule command ##########
+    ledctrl_set_illum_param_t param;
+    param.illum = illum;
+    cmdsched_encode_and_add(sched_time, ledctrl_set_illum_id, &param, sizeof(ledctrl_set_illum_param_t));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    ledctrl_set_illum(illum);
   }
   return 0;
 }

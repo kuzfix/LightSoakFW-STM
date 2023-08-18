@@ -25,6 +25,7 @@ void ledctrl_init(void);
 void ledctrl_set_dac_raw(uint32_t dac_value);
 uint32_t ledctrl_get_raw_from_current(float current);
 void ledctrl_set_current(float current);
+void ledctrl_set_illum(float illum);
 
 float ledctrl_get_temperature(void);
 float ledctrl_illumination_to_current(float illumination);

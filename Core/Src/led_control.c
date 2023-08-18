@@ -78,6 +78,15 @@ void ledctrl_set_current(float current){
 }
 
 /**
+ * @brief Set LED illumination.
+ * Do not use if timing is critical.
+ * @param current current in A
+ */
+void ledctrl_set_illum(float illum){
+  ledctrl_set_current(ledctrl_illumination_to_current(illum));
+}
+
+/**
  * @brief Converts illumination value to LED current Compensated for temperature. normalized to 0-1 suns.
  * Do not use if timing is critical.
  * @param current current in A

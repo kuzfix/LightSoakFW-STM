@@ -164,6 +164,14 @@ void cmdsched_handler(void){
       ledctrl_set_current(param.current);
       break;
     }
+    case ledctrl_set_illum_id: {
+      ledctrl_set_illum_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(ledctrl_set_illum_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      ledctrl_set_illum(param.illum);
+      break;
+    }
     case meas_flashmeasure_dumpbuffer_id: {
       meas_flashmeasure_dumpbuffer_param_t param;
       cmdsched_decode(cmd, &param, sizeof(meas_flashmeasure_dumpbuffer_param_t));
