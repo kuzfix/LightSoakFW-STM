@@ -25,15 +25,15 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("getcurr", cli_cmd_getcurr_fn, "Measures current. -c #ch# to select channel. No param for all channels");
   lwshell_register_cmd("getivpoint", cli_cmd_getiv_point_fn, "Measures IV point. -c #ch# to select channel. -v #volt# to set voltage");
   lwshell_register_cmd("getivchar", cli_cmd_getiv_char_fn, "Measures IV characteristic. -c #ch# to select channel. -vs #volt# start volt, -ve #volt# end volt, -s #volt# step");
-  lwshell_register_cmd("measure_dump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
+  lwshell_register_cmd("measuredump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
   lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
   lwshell_register_cmd("setledillum", cli_cmd_setledillum_fn, "Set LED illumination. -i #illumination[sun]# to set led.");
   lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time. No scheduling.");
   lwshell_register_cmd("resettimestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0. No scheduling.");
   lwshell_register_cmd("gettimestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value. No scheduling.");
   lwshell_register_cmd("flashmeasure", cli_cmd_flash_measure_fn, "Flash voltage measurement. -c #ch# to select channel. -illum #illum[sun]# to set illumination. -t #time[us]# to set flash duration. <<-m #time[us]# to set measurement time. -n #num# to set number of averages>> or <<-DUMP to dump buffer>>.");
-  lwshell_register_cmd("enable_current", cli_cmd_enable_current_fn, "Enable current. -c #ch# to select channel. No param for all channels. No scheduling.");
-  lwshell_register_cmd("disable_current", cli_cmd_disable_current_fn, "Disable current. -c #ch# to select channel. No param for all channels. No scheduling.");
+  lwshell_register_cmd("enablecurrent", cli_cmd_enable_current_fn, "Enable current. -c #ch# to select channel. No param for all channels. No scheduling.");
+  lwshell_register_cmd("disablecurrent", cli_cmd_disable_current_fn, "Disable current. -c #ch# to select channel. No param for all channels. No scheduling.");
   lwshell_register_cmd("setshunt", cli_cmd_set_shunt_fn, "Set current shunt range. -c #ch# to select channel. No param for all channels. -1x/-10x/-100x/-100x to set range. No scheduling.");
   lwshell_register_cmd("setforcevolt", cli_cmd_setforcevolt_fn, "Set force voltage. -c #ch# to select channel. No param for all channels. -v #volt# to set voltage. No scheduling.");
   lwshell_register_cmd("autorange", cli_cmd_autorange_fn, "Autorange current shunts on all channels. No scheduling.");
