@@ -649,8 +649,20 @@ int32_t cli_cmd_set_shunt_fn(int32_t argc, char** argv){
 }
 
 int32_t cli_cmd_endseq_fn(int32_t argc, char** argv){
-  //todo: delete scheduled cmds, clean up stuff
-  mainser_printf("END_OF_SEQUENCE\r\n");
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, end_of_sequence_id, 0, 0);
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    meas_end_of_sequence();
+  }
   return 0;
 }
 
@@ -731,3 +743,6 @@ uint8_t cmdsprt_is_arg(const char* arg_str, int32_t argc, char** argv) {
   return 0;  // Argument not found
 }
 
+void cmdsprt_request_new_cmds(void){
+  mainser_printf("REQ_SCHED_CMD\r\n");
+}

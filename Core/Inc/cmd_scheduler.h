@@ -10,7 +10,7 @@
 
 //todo: determine size
 #define CMDSCHED_PARAM_BUFF_LEN 32
-#define CMDSCHED_QUEUE_SIZE 10
+#define CMDSCHED_QUEUE_SIZE 128
 //cmds are poped from the queue and parsed some time before execution.
 //When this happens, code waits in blocking until the time of execution.
 #define CMDSCHED_POP_BEFORE_EXEC_US 1000
@@ -35,6 +35,6 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
 
 void cmdsched_decode(cmd_sched_t cmd, void *params, uint8_t params_len);
 
-void cmdsched_handler(void);
+uint64_t cmdsched_handler(void);
 
 #endif //LIGHTSOAKFW_STM_CMD_SCHEDULER_H

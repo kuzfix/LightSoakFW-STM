@@ -72,6 +72,8 @@ void meas_flashmeasure_dumpbuffer(uint8_t channel, float illum, uint32_t flash_d
 void meas_check_out_of_rng_volt(t_daq_sample_convd sample, uint8_t channel);
 void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
 
+void meas_end_of_sequence(void);
+
 
 //sample printing to main serial functions
 void prv_meas_print_timestamp(uint64_t timestamp);
@@ -166,7 +168,8 @@ typedef enum {
     ledctrl_set_current_id,
     ledctrl_set_illum_id,
     meas_flashmeasure_dumpbuffer_id,
-    meas_flashmeasure_singlesample_id
+    meas_flashmeasure_singlesample_id,
+    end_of_sequence_id
 } meas_funct_id;
 
 

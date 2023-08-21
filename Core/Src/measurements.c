@@ -1053,3 +1053,11 @@ void meas_flashmeasure_dumpbuffer(uint8_t channel, float illum, uint32_t flash_d
   prv_meas_print_data_ident_flashmeasure_dump();
   prv_meas_dump_from_buffer_human_readable_volt(channel, num_samples);
 }
+
+/**
+ * @brief end of test sequence
+ * todo: implement
+ */
+void meas_end_of_sequence(void){
+  mainser_printf("END_OF_SEQUENCE\r\n");
+}

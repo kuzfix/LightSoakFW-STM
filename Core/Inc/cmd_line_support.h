@@ -19,8 +19,14 @@
 #include "ds18b20.h"
 #include "cmd_scheduler.h"
 
+#define MIN_TIME_TO_CMD_TO_REQ_CMDS_US 50000
+
 
 void cmdsprt_setup_cli(void);
+
+//request new cmds
+void cmdsprt_request_new_cmds(void);
+
 
 // cmd callback functions (callback for every command)
 int32_t cli_cmd_getvolt_fn(int32_t argc, char** argv);
@@ -64,7 +70,7 @@ int32_t cli_cmd_setnumavg_fn(int32_t argc, char** argv);
 int32_t cli_cmd_getnumavg_fn(int32_t argc, char** argv);
 
 //todo:
-//reboot
+
 
 
 //parser
