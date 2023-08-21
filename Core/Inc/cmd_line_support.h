@@ -55,6 +55,8 @@ int32_t cli_cmd_ready_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_set_shunt_fn(int32_t argc, char** argv);
 
+int32_t cli_cmd_endseq_fn(int32_t argc, char** argv);
+
 
 
 //todo: implement

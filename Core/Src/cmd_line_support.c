@@ -42,6 +42,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
   lwshell_register_cmd("setbaud", cli_cmd_setbaud_fn, "sets baud rate. -b #baud# to set baud rate. No scheduling.");
   lwshell_register_cmd("ready?", cli_cmd_ready_fn, "Call to check if ready.");
+  lwshell_register_cmd("ENDSEQUENCE", cli_cmd_endseq_fn, "End of sequence signal. deletes any scheduled cmds. prints out END_OF_SEQUENCE");
 }
 
 
@@ -647,6 +648,11 @@ int32_t cli_cmd_set_shunt_fn(int32_t argc, char** argv){
   return 0;
 }
 
+int32_t cli_cmd_endseq_fn(int32_t argc, char** argv){
+  //todo: delete scheduled cmds, clean up stuff
+  mainser_printf("END_OF_SEQUENCE\r\n");
+  return 0;
+}
 
 
 
