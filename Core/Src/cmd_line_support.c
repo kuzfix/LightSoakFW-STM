@@ -341,7 +341,7 @@ int32_t cli_cmd_setledillum_fn(int32_t argc, char** argv){
 
   //parse current
   if(cmdsprt_is_arg("-illum", argc, argv)){
-    cmdsprt_parse_float("-i", &illum, argc, argv);
+    cmdsprt_parse_float("-illum", &illum, argc, argv);
   }
   else{
     dbg(Warning, "CLI CMD Error\r\n");
