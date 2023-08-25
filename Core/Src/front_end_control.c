@@ -165,7 +165,7 @@ void fec_enable_current(uint8_t channel){
       //set enable pin low
       HAL_GPIO_WritePin(fec_ch_params[i].cur_en_gpio_port,
                         fec_ch_params[i].cur_en_gpio_pin,
-                        GPIO_PIN_RESET);
+                        GPIO_PIN_SET);
     }
   }
   else{
@@ -414,6 +414,12 @@ void fec_set_shunt_1000x(uint8_t channel){
  * @param voltage voltage in V
  */
 void fec_set_force_voltage(uint8_t channel, float voltage){
+
+  //DUT cell has negative terminal offset, compensate for this
+  voltage += FEC_CELL_NEG_OFFSET;
+
+  //todo: check if this voltage makes sense
+
   if(channel == 0){
     for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
       //voltage request check
@@ -423,8 +429,6 @@ void fec_set_force_voltage(uint8_t channel, float voltage){
         return;
       }
 
-      //DUT cell has negative terminal offset, compensate for this
-      voltage += FEC_CELL_NEG_OFFSET;
 
       __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[i].pwm_timer),
                             fec_ch_params[i].pwm_tim_channel,
@@ -442,9 +446,6 @@ void fec_set_force_voltage(uint8_t channel, float voltage){
       dbg(Error, "FEC: force voltage request out of range\n");
       return;
     }
-
-    //DUT cell has negative terminal offset, compensate for this
-    voltage += FEC_CELL_NEG_OFFSET;
 
     __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[param_idx].pwm_timer),
                           fec_ch_params[param_idx].pwm_tim_channel,

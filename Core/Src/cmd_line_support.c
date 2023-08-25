@@ -32,13 +32,13 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("resettimestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0. No scheduling.");
   lwshell_register_cmd("gettimestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value. No scheduling.");
   lwshell_register_cmd("flashmeasure", cli_cmd_flash_measure_fn, "Flash voltage measurement. -c #ch# to select channel. -illum #illum[sun]# to set illumination. -t #time[us]# to set flash duration. <<-m #time[us]# to set measurement time. -n #num# to set number of averages>> or <<-DUMP to dump buffer>>.");
-  lwshell_register_cmd("enablecurrent", cli_cmd_enable_current_fn, "Enable current. -c #ch# to select channel. No param for all channels. No scheduling.");
-  lwshell_register_cmd("disablecurrent", cli_cmd_disable_current_fn, "Disable current. -c #ch# to select channel. No param for all channels. No scheduling.");
-  lwshell_register_cmd("setshunt", cli_cmd_set_shunt_fn, "Set current shunt range. -c #ch# to select channel. No param for all channels. -1x/-10x/-100x/-100x to set range. No scheduling.");
-  lwshell_register_cmd("setforcevolt", cli_cmd_setforcevolt_fn, "Set force voltage. -c #ch# to select channel. No param for all channels. -v #volt# to set voltage. No scheduling.");
+  lwshell_register_cmd("enablecurrent", cli_cmd_enable_current_fn, "Enable current. -c #ch# to select channel. No param for all channels.");
+  lwshell_register_cmd("disablecurrent", cli_cmd_disable_current_fn, "Disable current. -c #ch# to select channel. No param for all channels.");
+  lwshell_register_cmd("setshunt", cli_cmd_set_shunt_fn, "Set current shunt range. -c #ch# to select channel. No param for all channels. -1x/-10x/-100x/-100x to set range.");
+  lwshell_register_cmd("setforcevolt", cli_cmd_setforcevolt_fn, "Set force voltage. -c #ch# to select channel. No param for all channels. -v #volt# to set voltage.");
   lwshell_register_cmd("autorange", cli_cmd_autorange_fn, "Autorange current shunts on all channels. No scheduling.");
   lwshell_register_cmd("reboot", cli_cmd_reboot_fn, "Reboot the device. No scheduling.");
-  lwshell_register_cmd("getledtemp", cli_cmd_getledtemp_fn, "Get LED temperature. No scheduling.");
+  lwshell_register_cmd("getledtemp", cli_cmd_getledtemp_fn, "Get LED temperature.");
   lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
   lwshell_register_cmd("setbaud", cli_cmd_setbaud_fn, "sets baud rate. -b #baud# to set baud rate. No scheduling.");
   lwshell_register_cmd("ready?", cli_cmd_ready_fn, "Call to check if ready.");
@@ -555,7 +555,22 @@ int32_t cli_cmd_disable_current_fn(int32_t argc, char** argv){
   else{
     ch = 0;
   }
-  fec_disable_current(ch);
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    // schedule command ##########
+    fec_enable_disable_current_param_t param;
+    param.channel = ch;
+    cmdsched_encode_and_add(sched_time, fec_disable_current_id, &param, sizeof(fec_enable_disable_current_param_t));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    fec_disable_current(ch);
+  }
   return 0;
 }
 
@@ -579,12 +594,42 @@ int32_t cli_cmd_setforcevolt_fn(int32_t argc, char** argv){
     dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
-  fec_set_force_voltage(ch, volt);
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    // schedule command ##########
+    fec_setforcevolt_param_t param;
+    param.channel = ch;
+    param.volt = volt;
+    cmdsched_encode_and_add(sched_time, setforcevolt_id, &param, sizeof(fec_setforcevolt_param_t));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    fec_set_force_voltage(ch, volt);
+  }
+
+
   return 0;
 }
 
 int32_t cli_cmd_autorange_fn(int32_t argc, char** argv){
-  daq_autorange();
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, autorange_id, 0, 0);
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    daq_autorange();
+  }
   return 0;
 }
 
@@ -605,9 +650,23 @@ int32_t cli_cmd_yeet_fn(int32_t argc, char** argv){
 }
 
 int32_t cli_cmd_getledtemp_fn(int32_t argc, char** argv){
-  float temp = ds18b20_get_temp();
-  prv_meas_print_timestamp(usec_get_timestamp_64());
-  mainser_printf("LEDTEMP:%f\r\n", temp);
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, getledtemp_id, 0, 0);
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    float temp = ds18b20_get_temp();
+    prv_meas_print_timestamp(usec_get_timestamp_64());
+    mainser_printf("LEDTEMP:%f\r\n", temp);
+  }
+
   return 0;
 }
 
@@ -645,21 +704,62 @@ int32_t cli_cmd_set_shunt_fn(int32_t argc, char** argv){
   }
   //parse shunt
   if(cmdsprt_is_arg("-1x", argc, argv)){
+    shunt = 1;
     fec_set_shunt_1x(ch);
   }
   else if(cmdsprt_is_arg("-10x", argc, argv)){
+    shunt = 10;
     fec_set_shunt_10x(ch);
   }
   else if(cmdsprt_is_arg("-100x", argc, argv)){
+    shunt = 100;
     fec_set_shunt_100x(ch);
   }
   else if(cmdsprt_is_arg("-1000x", argc, argv)){
+    shunt = 1000;
     fec_set_shunt_1000x(ch);
   }
   else{
     dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    // save params
+    // schedule command ##########
+    fec_setshunt_param_t param;
+    param.channel = ch;
+    param.shunt = shunt;
+    cmdsched_encode_and_add(sched_time, setshunt_id, &param, sizeof(fec_setshunt_param_t));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    switch(shunt){
+      case 1:
+        fec_set_shunt_1x(ch);
+        break;
+      case 10:
+        fec_set_shunt_10x(ch);
+        break;
+      case 100:
+        fec_set_shunt_100x(ch);
+        break;
+      case 1000:
+        fec_set_shunt_1000x(ch);
+        break;
+      default:
+        dbg(Warning, "CLI CMD Error\r\n");
+    }
+  }
+
+
+
   return 0;
 }
 

@@ -214,10 +214,55 @@ uint64_t cmdsched_handler(void){
     }
     case fec_disable_current_id: {
       fec_enable_disable_current_param_t param;
-      cmdsched_decode(cmd, &param, sizeof(fec_enable_disable_current_param_t));
+      cmdsched_decode(cmd, &param, sizeof(fec_setshunt_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
       fec_disable_current(param.channel);
+      break;
+    }
+    case setshunt_id: {
+      fec_setshunt_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(fec_enable_disable_current_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+
+      switch(param.shunt){
+        case 1:
+          fec_set_shunt_1x(param.channel);
+          break;
+        case 10:
+          fec_set_shunt_10x(param.channel);
+          break;
+        case 100:
+          fec_set_shunt_100x(param.channel);
+          break;
+        case 1000:
+          fec_set_shunt_1000x(param.channel);
+          break;
+        default:
+          break;
+      }
+    }
+    case setforcevolt_id: {
+      fec_setforcevolt_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(fec_setforcevolt_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      fec_set_force_voltage(param.channel, param.volt);
+      break;
+    }
+    case autorange_id: {
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      daq_autorange();
+      break;
+    }
+    case getledtemp_id: {
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      float temp = ds18b20_get_temp();
+      prv_meas_print_timestamp(usec_get_timestamp_64());
+      mainser_printf("LEDTEMP:%f\r\n", temp);
       break;
     }
 

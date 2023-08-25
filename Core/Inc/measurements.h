@@ -160,6 +160,18 @@ typedef struct{
     uint8_t channel;
 } fec_enable_disable_current_param_t;
 
+// setshunt
+typedef struct{
+    uint8_t channel;
+    uint32_t shunt;
+} fec_setshunt_param_t;
+
+// setforcevolt
+typedef struct{
+    uint8_t channel;
+    float volt;
+} fec_setforcevolt_param_t;
+
 
 
 //typedef enum for cmd ids. IDs needed for cmd scheduling
@@ -177,7 +189,11 @@ typedef enum {
     meas_flashmeasure_singlesample_id,
     end_of_sequence_id,
     fec_enable_current_id,
-    fec_disable_current_id
+    fec_disable_current_id,
+    setshunt_id,
+    setforcevolt_id,
+    autorange_id,
+    getledtemp_id
 } meas_funct_id;
 
 
