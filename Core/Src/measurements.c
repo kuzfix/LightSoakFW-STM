@@ -175,10 +175,10 @@ void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd 
       mainser_printf("%f_%f\r\n", sample_curr.ch4, sample_volt.ch4);
       break;
     case 5:
-      mainser_printf("I:%f_V:%f\r\n", sample_curr.ch5, sample_volt.ch5);
+      mainser_printf("%f_%f\r\n", sample_curr.ch5, sample_volt.ch5);
       break;
     case 6:
-      mainser_printf("I:%f_V:%f\r\n", sample_curr.ch6, sample_volt.ch6);
+      mainser_printf("%f_%f\r\n", sample_curr.ch6, sample_volt.ch6);
       break;
     default:
       break;
