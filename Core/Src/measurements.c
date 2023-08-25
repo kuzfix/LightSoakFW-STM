@@ -889,16 +889,15 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
       setp = start_volt + n*step_volt;
     }
     meas_get_IV_point(channel, setp, 0, 1);
-
-    //turn off current stuff
-    fec_disable_current(channel);
-    fec_set_force_voltage(channel, 0);
-    fec_set_shunt_1000x(channel);
-
-    t2 = usec_get_timestamp();
-    dbg(Debug, "MEAS:prv_meas_dump_from_buffer_human_readable_curr() took: %lu usec\r\n", t2-t1);
-
   }
+  mainser_printf("END_IVCHAR\r\n");
+  //turn off current stuff
+  fec_disable_current(channel);
+  fec_set_force_voltage(channel, 0);
+  fec_set_shunt_1000x(channel);
+
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MEAS:meas_get_iv_characteristic() took: %lu usec\r\n", t2-t1);
 }
 
 /**
