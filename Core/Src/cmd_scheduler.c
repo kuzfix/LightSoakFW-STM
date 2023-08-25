@@ -204,6 +204,24 @@ uint64_t cmdsched_handler(void){
       meas_end_of_sequence();
       break;
     }
+    case fec_enable_current_id: {
+      fec_enable_disable_current_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(fec_enable_disable_current_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      fec_enable_current(param.channel);
+      break;
+    }
+    case fec_disable_current_id: {
+      fec_enable_disable_current_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(fec_enable_disable_current_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      fec_disable_current(param.channel);
+      break;
+    }
+
+
     default: {
       // Handle other cases or errors
       printf("Unknown command id\n");

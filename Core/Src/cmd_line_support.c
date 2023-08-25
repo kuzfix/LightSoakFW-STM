@@ -526,7 +526,22 @@ int32_t cli_cmd_enable_current_fn(int32_t argc, char** argv){
   else{
     ch = 0;
   }
-  fec_enable_current(ch);
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    // schedule command ##########
+    fec_enable_disable_current_param_t param;
+    param.channel = ch;
+    cmdsched_encode_and_add(sched_time, fec_enable_current_id, &param, sizeof(fec_enable_disable_current_param_t));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    fec_enable_current(ch);
+  }
   return 0;
 }
 

@@ -1,6 +1,10 @@
 //
 // Created by Matej Planinšek on 14/08/2023.
 //
+// How to add scheduling to a command:
+// - Add parsing for -sched option in cmd function (see other cmd functions for examples)
+// - add a structure for parameters and a function ID (currently in measurements.h)
+// add a case in cmdsched_handler to parse and call the function at the right time. (see other cases for examples)
 
 #ifndef LIGHTSOAKFW_STM_CMD_SCHEDULER_H
 #define LIGHTSOAKFW_STM_CMD_SCHEDULER_H

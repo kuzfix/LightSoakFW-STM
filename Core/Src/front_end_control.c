@@ -157,118 +157,202 @@ void fec_init(void){
 
 /**
  * @brief enable current for channel
- * @param channel Channel
+ * @param channel Channel. 0 for all channels
  */
 void fec_enable_current(uint8_t channel){
-  uint8_t param_idx = channel - 1;
+  if(channel == 0){
+    for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
+      //set enable pin low
+      HAL_GPIO_WritePin(fec_ch_params[i].cur_en_gpio_port,
+                        fec_ch_params[i].cur_en_gpio_pin,
+                        GPIO_PIN_RESET);
+    }
+  }
+  else{
+    uint8_t param_idx = channel - 1;
+    //invalid channel number check
+    assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
 
-  //invalid channel number check
-  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
-
-  //set enable pin high
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].cur_en_gpio_port,
-                    fec_ch_params[param_idx].cur_en_gpio_pin,
-                    GPIO_PIN_SET);
+    //set enable pin low
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].cur_en_gpio_port,
+                      fec_ch_params[param_idx].cur_en_gpio_pin,
+                      GPIO_PIN_SET);
+  }
 }
 
 /**
  * @brief disable current for channel
- * @param channel Channel
+ * @param channel Channel. 0 for all channels
  */
 void fec_disable_current(uint8_t channel){
-  uint8_t param_idx = channel - 1;
+  if(channel == 0){
+    for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
+      //set enable pin low
+      HAL_GPIO_WritePin(fec_ch_params[i].cur_en_gpio_port,
+                        fec_ch_params[i].cur_en_gpio_pin,
+                        GPIO_PIN_RESET);
+    }
+  }
+  else{
+    uint8_t param_idx = channel - 1;
+    //invalid channel number check
+    assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
 
-  //invalid channel number check
-  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
-
-  //set enable pin low
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].cur_en_gpio_port,
-                    fec_ch_params[param_idx].cur_en_gpio_pin,
-                    GPIO_PIN_RESET);
+    //set enable pin low
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].cur_en_gpio_port,
+                      fec_ch_params[param_idx].cur_en_gpio_pin,
+                      GPIO_PIN_RESET);
+  }
 }
 
 /**
  * @brief sets shunt range to 1x (all shunt resistors parallel)
- * @param channel Channel
+ * @param channel Channel. 0 for all channels
  */
 void fec_set_shunt_1x(uint8_t channel){
-  uint8_t param_idx = channel - 1;
+  if(channel == 0){
+    for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
+      //save shunt state
+      prv_fec_shunt_state[i] = shnt_1X;
 
-  //invalid channel number check
-  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+      //1000x is hardwired on
+      //100x on
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_100_gpio_port,
+                        fec_ch_params[i].shnt_100_gpio_pin,
+                        GPIO_PIN_SET);
+      //10x on
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_10_gpio_port,
+                        fec_ch_params[i].shnt_10_gpio_pin,
+                        GPIO_PIN_SET);
+      //1x on
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_1_gpio_port,
+                        fec_ch_params[i].shnt_1_gpio_pin,
+                        GPIO_PIN_SET);
+    }
+  }
+  else{
+    uint8_t param_idx = channel - 1;
 
-  //save shunt state
-  prv_fec_shunt_state[param_idx] = shnt_1X;
+    //invalid channel number check
+    assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
 
-  //1000x is hardwired on
-  //100x on
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
-                    fec_ch_params[param_idx].shnt_100_gpio_pin,
-                    GPIO_PIN_SET);
-  //10x on
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_10_gpio_port,
-                    fec_ch_params[param_idx].shnt_10_gpio_pin,
-                    GPIO_PIN_SET);
-  //1x on
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_1_gpio_port,
-                    fec_ch_params[param_idx].shnt_1_gpio_pin,
-                    GPIO_PIN_SET);
+    //save shunt state
+    prv_fec_shunt_state[param_idx] = shnt_1X;
+
+    //1000x is hardwired on
+    //100x on
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
+                      fec_ch_params[param_idx].shnt_100_gpio_pin,
+                      GPIO_PIN_SET);
+    //10x on
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_10_gpio_port,
+                      fec_ch_params[param_idx].shnt_10_gpio_pin,
+                      GPIO_PIN_SET);
+    //1x on
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_1_gpio_port,
+                      fec_ch_params[param_idx].shnt_1_gpio_pin,
+                      GPIO_PIN_SET);
+  }
 }
 
 /**
  * @brief sets shunt range to 10x (1000x, 100x, 10x shunts in parallel)
- * @param channel Channel
+ * @param channel Channel. 0 for all channels
  */
 void fec_set_shunt_10x(uint8_t channel){
-  uint8_t param_idx = channel - 1;
+  if(channel == 0){
+    for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
+      //save shunt state
+      prv_fec_shunt_state[i] = shnt_10X;
 
-  //invalid channel number check
-  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+      //1000x is hardwired on
+      //100x on
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_100_gpio_port,
+                        fec_ch_params[i].shnt_100_gpio_pin,
+                        GPIO_PIN_SET);
+      //10x on
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_10_gpio_port,
+                        fec_ch_params[i].shnt_10_gpio_pin,
+                        GPIO_PIN_SET);
+      //1x off
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_1_gpio_port,
+                        fec_ch_params[i].shnt_1_gpio_pin,
+                        GPIO_PIN_RESET);
+    }
+  }
+  else{
+    uint8_t param_idx = channel - 1;
 
-  //save shunt state
-  prv_fec_shunt_state[param_idx] = shnt_10X;
+    //invalid channel number check
+    assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
 
-  //1000x is hardwired on
-  //100x on
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
-                    fec_ch_params[param_idx].shnt_100_gpio_pin,
-                    GPIO_PIN_SET);
-  //10x on
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_10_gpio_port,
-                    fec_ch_params[param_idx].shnt_10_gpio_pin,
-                    GPIO_PIN_SET);
-  //1x off
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_1_gpio_port,
-                    fec_ch_params[param_idx].shnt_1_gpio_pin,
-                    GPIO_PIN_RESET);
+    //save shunt state
+    prv_fec_shunt_state[param_idx] = shnt_10X;
+
+    //1000x is hardwired on
+    //100x on
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
+                      fec_ch_params[param_idx].shnt_100_gpio_pin,
+                      GPIO_PIN_SET);
+    //10x on
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_10_gpio_port,
+                      fec_ch_params[param_idx].shnt_10_gpio_pin,
+                      GPIO_PIN_SET);
+    //1x off
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_1_gpio_port,
+                      fec_ch_params[param_idx].shnt_1_gpio_pin,
+                      GPIO_PIN_RESET);
+  }
 }
 
 /**
  * @brief sets shunt range to 100x (1000x, 100x shunts in parallel)
- * @param channel Channel
+ * @param channel Channel. 0 for all channels
  */
 void fec_set_shunt_100x(uint8_t channel){
-  uint8_t param_idx = channel - 1;
+  if(channel == 0){
+    for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
+      //save shunt state
+      prv_fec_shunt_state[i] = shnt_100X;
 
-  //invalid channel number check
-  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+      //1000x is hardwired on
+      //100x on
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_100_gpio_port,
+                        fec_ch_params[i].shnt_100_gpio_pin,
+                        GPIO_PIN_SET);
+      //10x off
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_10_gpio_port,
+                        fec_ch_params[i].shnt_10_gpio_pin,
+                        GPIO_PIN_RESET);
+      //1x off
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_1_gpio_port,
+                        fec_ch_params[i].shnt_1_gpio_pin,
+                        GPIO_PIN_RESET);
+    }
+  }
+  else{
+    uint8_t param_idx = channel - 1;
 
-  //save shunt state
-  prv_fec_shunt_state[param_idx] = shnt_100X;
+    //invalid channel number check
+    assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
 
-  //1000x is hardwired on
-  //100x on
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
-                    fec_ch_params[param_idx].shnt_100_gpio_pin,
-                    GPIO_PIN_SET);
-  //10x off
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_10_gpio_port,
-                    fec_ch_params[param_idx].shnt_10_gpio_pin,
-                    GPIO_PIN_RESET);
-  //1x off
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_1_gpio_port,
-                    fec_ch_params[param_idx].shnt_1_gpio_pin,
-                    GPIO_PIN_RESET);
+    //save shunt state
+    prv_fec_shunt_state[param_idx] = shnt_100X;
+
+    //1000x is hardwired on
+    //100x on
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
+                      fec_ch_params[param_idx].shnt_100_gpio_pin,
+                      GPIO_PIN_SET);
+    //10x off
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_10_gpio_port,
+                      fec_ch_params[param_idx].shnt_10_gpio_pin,
+                      GPIO_PIN_RESET);
+    //1x off
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_1_gpio_port,
+                      fec_ch_params[param_idx].shnt_1_gpio_pin,
+                      GPIO_PIN_RESET);
+  }
 }
 
 /**
@@ -276,27 +360,49 @@ void fec_set_shunt_100x(uint8_t channel){
  * @param channel Channel
  */
 void fec_set_shunt_1000x(uint8_t channel){
-  uint8_t param_idx = channel - 1;
+  if(channel == 0){
+    for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
+      //save shunt state
+      prv_fec_shunt_state[i] = shnt_1000X;
 
-  //invalid channel number check
-  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+      //1000x is hardwired on
+      //100x off
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_100_gpio_port,
+                        fec_ch_params[i].shnt_100_gpio_pin,
+                        GPIO_PIN_RESET);
+      //10x off
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_10_gpio_port,
+                        fec_ch_params[i].shnt_10_gpio_pin,
+                        GPIO_PIN_RESET);
+      //1x off
+      HAL_GPIO_WritePin(fec_ch_params[i].shnt_1_gpio_port,
+                        fec_ch_params[i].shnt_1_gpio_pin,
+                        GPIO_PIN_RESET);
+    }
+  }
+  else{
+    uint8_t param_idx = channel - 1;
 
-  //save shunt state
-  prv_fec_shunt_state[param_idx] = shnt_1000X;
+    //invalid channel number check
+    assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
 
-  //1000x is hardwired on
-  //100x off
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
-                    fec_ch_params[param_idx].shnt_100_gpio_pin,
-                    GPIO_PIN_RESET);
-  //10x off
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_10_gpio_port,
-                    fec_ch_params[param_idx].shnt_10_gpio_pin,
-                    GPIO_PIN_RESET);
-  //1x off
-  HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_1_gpio_port,
-                    fec_ch_params[param_idx].shnt_1_gpio_pin,
-                    GPIO_PIN_RESET);
+    //save shunt state
+    prv_fec_shunt_state[param_idx] = shnt_1000X;
+
+    //1000x is hardwired on
+    //100x off
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_100_gpio_port,
+                      fec_ch_params[param_idx].shnt_100_gpio_pin,
+                      GPIO_PIN_RESET);
+    //10x off
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_10_gpio_port,
+                      fec_ch_params[param_idx].shnt_10_gpio_pin,
+                      GPIO_PIN_RESET);
+    //1x off
+    HAL_GPIO_WritePin(fec_ch_params[param_idx].shnt_1_gpio_port,
+                      fec_ch_params[param_idx].shnt_1_gpio_pin,
+                      GPIO_PIN_RESET);
+  }
 }
 
 
@@ -308,23 +414,42 @@ void fec_set_shunt_1000x(uint8_t channel){
  * @param voltage voltage in V
  */
 void fec_set_force_voltage(uint8_t channel, float voltage){
-  uint8_t param_idx = channel - 1;
+  if(channel == 0){
+    for(uint8_t i = 0; i < FEC_NUM_CHANNELS; i++){
+      //voltage request check
+      if(voltage > FEC_MCU_VOLTAGE || voltage < -FEC_CELL_NEG_OFFSET){
+        //voltage request out of range
+        dbg(Error, "FEC: force voltage request out of range\n");
+        return;
+      }
 
-  //invalid channel number check
-  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
-  //voltage request check
-  if(voltage > FEC_MCU_VOLTAGE || voltage < -FEC_CELL_NEG_OFFSET){
-    //voltage request out of range
-    dbg(Error, "FEC: force voltage request out of range\n");
-    return;
+      //DUT cell has negative terminal offset, compensate for this
+      voltage += FEC_CELL_NEG_OFFSET;
+
+      __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[i].pwm_timer),
+                            fec_ch_params[i].pwm_tim_channel,
+                            prv_get_pwm_value(voltage));
+    }
   }
+  else{
+    uint8_t param_idx = channel - 1;
 
-  //DUT cell has negative terminal offset, compensate for this
-  voltage += FEC_CELL_NEG_OFFSET;
+    //invalid channel number check
+    assert_param(channel <= FEC_NUM_CHANNELS && channel >= 1);
+    //voltage request check
+    if(voltage > FEC_MCU_VOLTAGE || voltage < -FEC_CELL_NEG_OFFSET){
+      //voltage request out of range
+      dbg(Error, "FEC: force voltage request out of range\n");
+      return;
+    }
 
-  __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[param_idx].pwm_timer),
-                        fec_ch_params[param_idx].pwm_tim_channel,
-                        prv_get_pwm_value(voltage));
+    //DUT cell has negative terminal offset, compensate for this
+    voltage += FEC_CELL_NEG_OFFSET;
+
+    __HAL_TIM_SET_COMPARE(prv_get_pwm_timer_handle(fec_ch_params[param_idx].pwm_timer),
+                          fec_ch_params[param_idx].pwm_tim_channel,
+                          prv_get_pwm_value(voltage));
+  }
 }
 
 
