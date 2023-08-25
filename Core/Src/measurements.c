@@ -541,7 +541,10 @@ void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_w
       if(iter_cnt > MEAS_FORCE_VOLT_ITER_MAX){
         //approach iteration limit reached
         dbg(Warning, "Voltage approach did not converge!!\r\n");
-        mainser_printf("NOCONVERGE\r\n");
+        if(MEAS_NOCONVERGE_REPORT){
+          //report to main serial
+          mainser_printf("NOCONVERGE\r\n");
+        }
         //break out of for loop
         break;
       }
@@ -888,6 +891,7 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
       //not last point
       setp = start_volt + n*step_volt;
     }
+    mainser_printf("[%lu]", n);
     meas_get_IV_point(channel, setp, 0, 1);
   }
   mainser_printf("END_IVCHAR\r\n");

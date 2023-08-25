@@ -21,6 +21,7 @@
 #include "main_serial.h"
 
 #define MEAS_NUM_AVG_DEFAULT 16
+#define MEAS_NOCONVERGE_REPORT 0
 
 #define MEAS_DUT_SETTLING_TIME_MS 1 //ms
 #define MEAS_FORCE_VOLT_CLOSE_ENOUGH 0.002f //V
