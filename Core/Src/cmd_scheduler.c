@@ -261,8 +261,9 @@ uint64_t cmdsched_handler(void){
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
       float temp = ds18b20_get_temp();
+      mainser_printf("LEDTEMP:\r\n");
       prv_meas_print_timestamp(usec_get_timestamp_64());
-      mainser_printf("LEDTEMP:%f\r\n", temp);
+      mainser_printf("TEMP:%f\r\n", temp);
       break;
     }
 
