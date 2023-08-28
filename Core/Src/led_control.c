@@ -114,8 +114,6 @@ void ledctrl_set_illum(float illum){
 float ledctrl_illumination_to_current(float illumination){
   //this is exact for 25degc, so needs to be compensated for temperature
   float curr = illumination * prv_ledctrl_illum_to_curr_coeff;
-  //compensate for temperature
-  curr = ledctrl_compensate_current_for_temp(curr);
   return curr;
 }
 
@@ -142,6 +140,16 @@ void ledctrl_print_temperature_mainser(void){
   mainser_printf("LEDTEMP:\r\n");
   prv_meas_print_timestamp(usec_get_timestamp_64());
   mainser_printf("TEMP:%f\r\n", ds18b20_get_temp());
+}
+
+/**
+ * @brief Takes a callibrate point (illumination[sun], current[A]) from user and calculates prv_ledctrl_illum_to_curr_coeff coefficient
+ * @param illum illumination in suns
+ * @param current current in A
+ */
+void ledctrl_calibrate_illum_curr(float illum, float current){
+  prv_ledctrl_illum_to_curr_coeff = current / illum;
+  dbg(Warning, "prv_ledctrl_illum_to_curr_coeff set to: %f\r\n", prv_ledctrl_illum_to_curr_coeff);
 }
 
 /**
