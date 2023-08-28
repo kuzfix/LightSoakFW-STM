@@ -149,6 +149,7 @@ void ledctrl_print_temperature_mainser(void){
  */
 void ledctrl_calibrate_illum_curr(float illum, float current){
   prv_ledctrl_illum_to_curr_coeff = current / illum;
+  mainser_printf("[A] per [sun]: %f\r\n", prv_ledctrl_illum_to_curr_coeff);
   dbg(Warning, "prv_ledctrl_illum_to_curr_coeff set to: %f\r\n", prv_ledctrl_illum_to_curr_coeff);
 }
 

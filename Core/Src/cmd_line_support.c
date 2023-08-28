@@ -39,6 +39,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("autorange", cli_cmd_autorange_fn, "Autorange current shunts on all channels. No scheduling.");
   lwshell_register_cmd("reboot", cli_cmd_reboot_fn, "Reboot the device. No scheduling.");
   lwshell_register_cmd("getledtemp", cli_cmd_getledtemp_fn, "Get LED temperature.");
+  lwshell_register_cmd("calibillum", cli_cmd_calib_illum_fn, "Callibrate illumination-current coefficient for LED. Specify a calibrated point with -i #current[A]# -illum #illum[sun]#");
   lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
   lwshell_register_cmd("setbaud", cli_cmd_setbaud_fn, "sets baud rate. -b #baud# to set baud rate. No scheduling.");
   lwshell_register_cmd("ready?", cli_cmd_ready_fn, "Call to check if ready.");
@@ -777,6 +778,50 @@ int32_t cli_cmd_endseq_fn(int32_t argc, char** argv){
     meas_end_of_sequence();
   }
   return 0;
+}
+
+int32_t cli_cmd_calib_illum_fn(int32_t argc, char** argv){
+  float illum;
+  float curr;
+  //parse illum
+  if(cmdsprt_is_arg("-illum", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-illum", &illum, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\r\n");
+    return -1;
+  }
+  //parse curr
+  if(cmdsprt_is_arg("-i", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-i", &curr, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\r\n");
+    return -1;
+  }
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    //save params
+    ledctrl_calibillum_param_t param;
+    param.illum = illum;
+    param.curr = curr;
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, end_of_sequence_id, &param, sizeof(ledctrl_calibillum_param_t));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    ledctrl_calibrate_illum_curr(illum, curr);
+  }
+  return 0;
+
 }
 
 

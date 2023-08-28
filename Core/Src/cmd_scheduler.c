@@ -263,6 +263,14 @@ uint64_t cmdsched_handler(void){
       ledctrl_print_temperature_mainser();
       break;
     }
+    case calibillum_id: {
+      ledctrl_calibillum_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(ledctrl_calibillum_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      ledctrl_calibrate_illum_curr(param.illum, param.curr);
+      break;
+    }
 
 
     default: {

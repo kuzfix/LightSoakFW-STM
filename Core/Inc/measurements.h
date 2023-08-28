@@ -173,6 +173,12 @@ typedef struct{
     float volt;
 } fec_setforcevolt_param_t;
 
+// calibillum
+typedef struct{
+    float illum;
+    float curr;
+} ledctrl_calibillum_param_t;
+
 
 
 //typedef enum for cmd ids. IDs needed for cmd scheduling
@@ -194,7 +200,8 @@ typedef enum {
     setshunt_id,
     setforcevolt_id,
     autorange_id,
-    getledtemp_id
+    getledtemp_id,
+    calibillum_id
 } meas_funct_id;
 
 
