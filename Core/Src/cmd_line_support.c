@@ -26,8 +26,8 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("getivpoint", cli_cmd_getiv_point_fn, "Measures IV point. -c #ch# to select channel. -v #volt# to set voltage");
   lwshell_register_cmd("getivchar", cli_cmd_getiv_char_fn, "Measures IV characteristic. -c #ch# to select channel. -vs #volt# start volt, -ve #volt# end volt, -s #volt# step");
   lwshell_register_cmd("measuredump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
-  lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current.");
-  lwshell_register_cmd("setledillum", cli_cmd_setledillum_fn, "Set LED illumination. -illum #illumination[sun]# to set led.");
+  lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current. Temperature compensated");
+  lwshell_register_cmd("setledillum", cli_cmd_setledillum_fn, "Set LED illumination. -illum #illumination[sun]# to set led. Temperature compensated");
   lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time. No scheduling.");
   lwshell_register_cmd("resettimestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0. No scheduling.");
   lwshell_register_cmd("gettimestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value. No scheduling.");
@@ -331,7 +331,7 @@ int32_t cli_cmd_setledcurr_fn(int32_t argc, char** argv){
   }
   else{
     //immediate command
-    ledctrl_set_current(current);
+    ledctrl_set_current_tempcomp(current);
   }
   return 0;
 }
@@ -398,9 +398,9 @@ int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
     return -1;
   }
 
-  ledctrl_set_current(current);
+  ledctrl_set_current_tempcomp(current);
   usec_delay(dur);
-  ledctrl_set_current(0.0f);
+  ledctrl_set_current_tempcomp(0.0f);
 
   return 0;
 }
@@ -641,9 +641,9 @@ int32_t cli_cmd_reboot_fn(int32_t argc, char** argv){
 int32_t cli_cmd_yeet_fn(int32_t argc, char** argv){
   for(int i = 0; i < 20; i++){
     mainser_printf("Y E E E E E T\r\n");
-    ledctrl_set_current(1.5f);
+    ledctrl_set_current_tempcomp(1.5f);
     usec_delay(40000);
-    ledctrl_set_current(0.0f);
+    ledctrl_set_current_tempcomp(0.0f);
     usec_delay(60000);
   }
   return 0;

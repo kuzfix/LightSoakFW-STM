@@ -24,15 +24,22 @@
 #define LEDCTRL_CURRENT_GAIN 1.88f
 #define LED_CURRENT_MAX 1.5f
 
+#define LED_REF_TEMP 25.0f
+// LED light output temperature coefficient (unit: ratio change per degree)
+#define LED_PER_DEG_TEMP_COEFF (-0.00204f)
+
 void ledctrl_init(void);
 void ledctrl_set_dac_raw(uint32_t dac_value);
 uint32_t ledctrl_get_raw_from_current(float current);
-void ledctrl_set_current(float current);
+void ledctrl_set_current_tempcomp(float current);
 void ledctrl_set_illum(float illum);
 
 float ledctrl_get_temperature(void);
 void ledctrl_print_temperature_mainser(void);
 float ledctrl_illumination_to_current(float illumination);
+float ledctrl_compensate_current_for_temp(float current);
+
+void ledctrl_handler(void);
 
 
 #endif //LIGHTSOAKFW_STM_LED_CONTROL_H

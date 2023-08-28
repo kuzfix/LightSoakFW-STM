@@ -979,10 +979,12 @@ void meas_flashmeasure_singlesample(uint8_t channel, float illum, uint32_t flash
   uint32_t ton, tmeas, toff;
   //get current for specified illumination
   curr_set = ledctrl_illumination_to_current(illum);
+  //compensate current for temperature
+  curr_set = ledctrl_compensate_current_for_temp(curr_set);
   //prepare for sampling
   daq_prepare_for_sampling(numavg);
   //set current. LED is now on
-  ledctrl_set_current(curr_set);
+  ledctrl_set_current_tempcomp(curr_set);
   //save LED on time
   ton = usec_get_timestamp();
   //calculate at what time to measure and turn-off time
@@ -995,7 +997,7 @@ void meas_flashmeasure_singlesample(uint8_t channel, float illum, uint32_t flash
   //wait off time
   while(usec_get_timestamp() < toff);
   //turn off LED. LED is now off
-  ledctrl_set_current(0.0f);
+  ledctrl_set_current_tempcomp(0.0f);
 
   //check if sampling is finished
   if(!daq_is_sampling_done()){
@@ -1030,6 +1032,8 @@ void meas_flashmeasure_dumpbuffer(uint8_t channel, float illum, uint32_t flash_d
   uint32_t ton, toff, tmeas_start, num_samples;
   //get current for specified illumination
   curr_set = ledctrl_illumination_to_current(illum);
+  //compensate current for temperature
+  curr_set = ledctrl_compensate_current_for_temp(curr_set);
   //calculate number of samples
   num_samples = (flash_dur_us+(2*MEAS_FLASH_DUMP_SAMPLEBORDER_US)) / DAQ_SAMPLE_TIME_100KSPS;
   //prepare for sampling
@@ -1044,11 +1048,11 @@ void meas_flashmeasure_dumpbuffer(uint8_t channel, float illum, uint32_t flash_d
   //wait for LED on
   while(usec_get_timestamp() < ton);
   //set current. LED is now on
-  ledctrl_set_current(curr_set);
+  ledctrl_set_current_tempcomp(curr_set);
   //wait for LED off
   while(usec_get_timestamp() < toff);
   //turn off LED. LED is now off
-  ledctrl_set_current(0.0f);
+  ledctrl_set_current_tempcomp(0.0f);
   //wait for sampling to finish
   while(!daq_is_sampling_done());
 

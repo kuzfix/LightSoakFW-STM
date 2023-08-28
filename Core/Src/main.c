@@ -58,6 +58,7 @@
 
 /* USER CODE BEGIN PV */
 uint32_t temptime = 0;
+uint32_t ledtemptime = 0;
 
 /* USER CODE END PV */
 
@@ -205,7 +206,11 @@ int main(void)
       if(HAL_GetTick()-temptime > 1000){
         temptime = HAL_GetTick();
         ds18b20_handler();
-//        mainser_printf("temp: %f\r\n", ds18b20_get_temp());
+      }
+
+      if(HAL_GetTick()-ledtemptime > 500){
+        ledtemptime = HAL_GetTick();
+        ledctrl_handler();
       }
 
       cmdsched_handler();
