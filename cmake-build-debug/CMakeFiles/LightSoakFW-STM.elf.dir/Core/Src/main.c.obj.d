@@ -85,15 +85,17 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/debug.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/led_control.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/dac.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/ds18b20.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/micro_sec.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main_serial.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/front_end_control.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/adc.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/front_end_control.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/micro_sec.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/led_control.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main_serial.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/micro_sec.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/daq.h \
+ /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main_serial.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/lwshell/lwshell.h \
  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/stdlib.h \
@@ -103,8 +105,6 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/main.c.obj: \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/lwshell/lwshell_opts.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_line_support.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/lwshell/lwshell.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/measurements.h \
- /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/ds18b20.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_scheduler.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_line_support.h \
  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/ds18b20.h
