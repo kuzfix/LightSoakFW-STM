@@ -9,6 +9,9 @@
 #include "dac.h"
 #include "main.h"
 #include "debug.h"
+#include "ds18b20.h"
+#include "main_serial.h"
+#include "measurements.h"
 
 #define LEDCTRL_DAC_HANDLE &hdac1
 #define LEDCTRL_DAC_CH DAC_CHANNEL_1
@@ -28,6 +31,7 @@ void ledctrl_set_current(float current);
 void ledctrl_set_illum(float illum);
 
 float ledctrl_get_temperature(void);
+void ledctrl_print_temperature_mainser(void);
 float ledctrl_illumination_to_current(float illumination);
 
 

@@ -260,10 +260,7 @@ uint64_t cmdsched_handler(void){
     case getledtemp_id: {
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
-      float temp = ds18b20_get_temp();
-      mainser_printf("LEDTEMP:\r\n");
-      prv_meas_print_timestamp(usec_get_timestamp_64());
-      mainser_printf("TEMP:%f\r\n", temp);
+      ledctrl_print_temperature_mainser();
       break;
     }
 

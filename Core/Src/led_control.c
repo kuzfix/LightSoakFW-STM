@@ -95,3 +95,20 @@ float ledctrl_illumination_to_current(float illumination){
   //todo: not yet implemented
   return illumination;
 }
+
+/**
+ * @brief Returns current temperature of LED. Non-blocking: this just returns last known value. Sampling is done in handler.
+ */
+float ledctrl_get_temperature(void){
+  return ds18b20_get_temp();
+}
+
+/**
+ * @brief Prints led temperature to main serial
+ */
+void ledctrl_print_temperature_mainser(void){
+  dbg(Debug, "ledctrl_print_temperature_mainser()\r\n");
+  mainser_printf("LEDTEMP:\r\n");
+  prv_meas_print_timestamp(usec_get_timestamp_64());
+  mainser_printf("TEMP:%f\r\n", ds18b20_get_temp());
+}

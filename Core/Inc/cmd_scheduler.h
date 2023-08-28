@@ -14,7 +14,7 @@
 
 //todo: determine size
 #define CMDSCHED_PARAM_BUFF_LEN 32
-#define CMDSCHED_QUEUE_SIZE 128
+#define CMDSCHED_QUEUE_SIZE 32
 //cmds are poped from the queue and parsed some time before execution.
 //When this happens, code waits in blocking until the time of execution.
 #define CMDSCHED_POP_BEFORE_EXEC_US 1000
