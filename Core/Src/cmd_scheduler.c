@@ -271,6 +271,21 @@ uint64_t cmdsched_handler(void){
       ledctrl_calibrate_illum_curr(param.illum, param.curr);
       break;
     }
+    case meas_set_numavg_id: {
+      meas_set_num_avg_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_set_num_avg_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_set_num_avg(param.numavg);
+      break;
+    }
+    case meas_get_numavg_id: {
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      prv_meas_print_timestamp(usec_get_timestamp_64());
+      mainser_printf("NUMAVG:%lu\r\n", meas_get_num_avg());
+      break;
+    }
 
 
     default: {

@@ -114,6 +114,8 @@ int main(void)
 
   dbg(Warning, "Booting LighSoak V1...\r\n");
 
+
+
   mainser_init();
   fec_init();
   ledctrl_init();

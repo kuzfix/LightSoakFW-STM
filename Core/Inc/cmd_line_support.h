@@ -65,12 +65,8 @@ int32_t cli_cmd_endseq_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_calib_illum_fn(int32_t argc, char** argv);
 
-
-
-
-
-//todo: implement
 int32_t cli_cmd_setnumavg_fn(int32_t argc, char** argv);
+
 int32_t cli_cmd_getnumavg_fn(int32_t argc, char** argv);
 
 //todo:

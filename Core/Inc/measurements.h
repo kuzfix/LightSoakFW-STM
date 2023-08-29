@@ -179,6 +179,11 @@ typedef struct{
     float curr;
 } ledctrl_calibillum_param_t;
 
+// setnumavg
+typedef struct{
+    uint32_t numavg;
+} meas_set_num_avg_param_t;
+
 
 
 //typedef enum for cmd ids. IDs needed for cmd scheduling
@@ -201,7 +206,9 @@ typedef enum {
     setforcevolt_id,
     autorange_id,
     getledtemp_id,
-    calibillum_id
+    calibillum_id,
+    meas_set_numavg_id,
+    meas_get_numavg_id
 } meas_funct_id;
 
 

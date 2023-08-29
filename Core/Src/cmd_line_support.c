@@ -44,6 +44,8 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("setbaud", cli_cmd_setbaud_fn, "sets baud rate. -b #baud# to set baud rate. No scheduling.");
   lwshell_register_cmd("ready?", cli_cmd_ready_fn, "Call to check if ready.");
   lwshell_register_cmd("ENDSEQUENCE", cli_cmd_endseq_fn, "End of sequence signal. deletes any scheduled cmds. prints out END_OF_SEQUENCE");
+  lwshell_register_cmd("getnumavg", cli_cmd_getnumavg_fn, "Get number of samples to average for getvolt/getcurr.");
+  lwshell_register_cmd("setnumavg", cli_cmd_setnumavg_fn, "Set number of samples to average for getvolt/getcurr. -n #num# to set number of samples.");
 }
 
 
@@ -756,9 +758,6 @@ int32_t cli_cmd_set_shunt_fn(int32_t argc, char** argv){
         dbg(Warning, "CLI CMD Error\r\n");
     }
   }
-
-
-
   return 0;
 }
 
@@ -821,10 +820,61 @@ int32_t cli_cmd_calib_illum_fn(int32_t argc, char** argv){
     ledctrl_calibrate_illum_curr(illum, curr);
   }
   return 0;
+}
+
+int32_t cli_cmd_setnumavg_fn(int32_t argc, char** argv){
+  uint32_t numavg = 0;
+  //parse numavg
+  if(cmdsprt_is_arg("-n", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-n", &numavg, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\r\n");
+    return -1;
+  }
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    //save params
+    meas_set_num_avg_param_t param;
+    param.numavg = numavg;
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, meas_set_numavg_id, &param, sizeof(meas_set_numavg_id));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    meas_set_num_avg(numavg);
+  }
+  return 0;
 
 }
 
+int32_t cli_cmd_getnumavg_fn(int32_t argc, char** argv){
+  //scheduled or immediate
 
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    //save params
+
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, meas_get_numavg_id, 0, 0);
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    prv_meas_print_timestamp(usec_get_timestamp_64());
+    mainser_printf("NUMAVG:%lu\r\n", meas_get_num_avg());
+  }
+  return 0;
+}
 
 
 
