@@ -208,9 +208,12 @@ int main(void)
       if(HAL_GetTick()-temptime > 1000){
         temptime = HAL_GetTick();
         ds18b20_handler();
+        if(LEDCTRL_PERIODIC_TEMP_REPORT_MAINSER){
+          ledctrl_print_temperature_mainser();
+        }
       }
 
-      if(HAL_GetTick()-ledtemptime > 500){
+      if(HAL_GetTick()-ledtemptime > 1000){
         ledtemptime = HAL_GetTick();
         ledctrl_handler();
       }

@@ -26,7 +26,10 @@
 
 #define LED_REF_TEMP 25.0f
 // LED light output temperature coefficient (unit: ratio change per degree)
-#define LED_PER_DEG_TEMP_COEFF (-0.00204f)
+#define LED_PER_DEG_TEMP_COEFF (-0.0039f)
+//#define LED_PER_DEG_TEMP_COEFF (-0.0f)
+
+#define LEDCTRL_PERIODIC_TEMP_REPORT_MAINSER 0
 
 void ledctrl_init(void);
 void ledctrl_set_dac_raw(uint32_t dac_value);

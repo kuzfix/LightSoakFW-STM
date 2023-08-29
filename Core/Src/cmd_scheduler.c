@@ -36,7 +36,7 @@ cmd_sched_t cmdsched_q_pop() {
   return item;
 }
 
-uint8_t cmdsched_q_count() {
+uint32_t cmdsched_q_count() {
   if (cmdsched_q_rear >= cmdsched_q_front) {
     return cmdsched_q_rear - cmdsched_q_front;
   } else {
@@ -44,7 +44,7 @@ uint8_t cmdsched_q_count() {
   }
 }
 
-uint8_t cmdsched_q_free_spaces() {
+uint32_t cmdsched_q_free_spaces() {
   //todo: is -1 needed?
   if(cmdsched_q_count() < CMDSCHED_QUEUE_SIZE-1){
     return CMDSCHED_QUEUE_SIZE - cmdsched_q_count();

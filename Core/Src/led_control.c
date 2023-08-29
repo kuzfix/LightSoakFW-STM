@@ -84,7 +84,7 @@ void ledctrl_set_current_tempcomp(float current){
   //save current for temperature compensation handler (if led is on for long time)
   prv_ledctrl_current_now_notempcomp = current;
   current = ledctrl_compensate_current_for_temp(current);
-//  dbg(Debug, "ledctrl set current: %f\r\n", current);
+  dbg(Debug, "ledctrl set current: %f\r\n", current);
   uint32_t dac_raw_val = ledctrl_get_raw_from_current(current);
   ledctrl_set_dac_raw(dac_raw_val);
 }
