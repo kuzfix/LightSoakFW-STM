@@ -73,6 +73,8 @@ int32_t cli_cmd_setdutsettle_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_getdutsettle_fn(int32_t argc, char** argv);
 
+int32_t cli_cmd_getnoise_fn(int32_t argc, char** argv);
+
 
 
 

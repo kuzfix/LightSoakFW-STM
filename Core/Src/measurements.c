@@ -227,6 +227,181 @@ void meas_get_voltage(uint8_t channel){
 }
 
 /**
+ * @brief Measures RMS noise level on one or all (param=0) channels. Prints to main serial
+ * @param channel channel to measure
+ */
+void meas_get_noise(uint8_t channel){
+  // todo: this is solata and not very elegant.
+  t_daq_sample_convd meas;
+  t_daq_sample_raw avg;
+  uint32_t t1, t2;
+  uint32_t sample_noise, sum_squares;
+  double rms_noise, snr;
+  t1 = usec_get_timestamp();
+  dbg(Debug, "MEAS:meas_get_noise()\r\n");
+  assert_param(channel <= 6);
+  meas = daq_single_shot_volt(NOISE_MEASURE_NUMSAMPLES);
+  avg = daq_volt_raw_get_average(NOISE_MEASURE_NUMSAMPLES);
+  switch(channel){
+    case 1:
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch1 - avg.ch1;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch1/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH1;
+      mainser_printf("CH1:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr);
+      break;
+    case 2:
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch2 - avg.ch2;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch2/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH2;
+      mainser_printf("CH2:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr);
+      break;
+    case 3:
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch3 - avg.ch3;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch3/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH3;
+      mainser_printf("CH3:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr);
+      break;
+    case 4:
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch4 - avg.ch4;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch4/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH4;
+      mainser_printf("CH4:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr);
+      break;
+    case 5:
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch5 - avg.ch5;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch5/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH5;
+      mainser_printf("CH5:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr);
+      break;
+    case 6:
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch6 - avg.ch6;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch6/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH6;
+      mainser_printf("CH6:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr);
+      break;
+    default:
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch1 - avg.ch1;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch1/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH1;
+      mainser_printf("CH1:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr);
+
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch2 - avg.ch2;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch2/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH2;
+      mainser_printf("CH2:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr);
+
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch3 - avg.ch3;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch3/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH3;
+      mainser_printf("CH3:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr);
+
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch4 - avg.ch4;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch4/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH4;
+      mainser_printf("CH4:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr);
+
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch5 - avg.ch5;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch5/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH5;
+      mainser_printf("CH5:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr);
+
+      sum_squares = 0;
+      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
+        sample_noise = daq_get_from_buffer_volt(i).ch6 - avg.ch6;
+        sum_squares += sample_noise * sample_noise;  // Square the noise
+      }
+      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
+      snr = 20*log(avg.ch6/rms_noise);
+      //convert to volts
+      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH6;
+      mainser_printf("CH6:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
+      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr);
+
+  }
+
+  t2 = usec_get_timestamp();
+  dbg(Debug, "meas_get_noise() took: %lu usec\r\n", t2-t1);
+
+}
+
+/**
  * @brief Measures current on one or all (param=0) channels. Prints to main serial
  * Not that usefull to measure jut current - more for testing
  * !!! Does not change current enable, shunts, force voltage or do any autoranging !!!

@@ -19,6 +19,7 @@
 #include "daq.h"
 #include "led_control.h"
 #include "main_serial.h"
+#include <math.h>
 
 #define MEAS_NUM_AVG_DEFAULT 16
 #define MEAS_NOCONVERGE_REPORT 0
@@ -28,6 +29,8 @@
 #define MEAS_FORCE_VOLT_ITER_MAX 10
 //sampling for MEAS_FLASH_DUMP_SAMPLEBORDER_US before and after led is turned on and off
 #define MEAS_FLASH_DUMP_SAMPLEBORDER_US 2000
+
+#define NOISE_MEASURE_NUMSAMPLES 2000
 
 //each approach iteration, shunt voltage is calculated and compensated
 //for better stability we can compensate a bit less
@@ -53,6 +56,9 @@ uint32_t meas_get_settling_time(void);
 // call with 0 for all channels
 void meas_get_voltage(uint8_t channel);
 
+// call with 0 for all channels
+void meas_get_noise(uint8_t channel);
+
 //for testing purposes
 //call with 0 for all channels
 void meas_get_current(uint8_t channel);
@@ -76,6 +82,7 @@ void meas_flashmeasure_dumpbuffer(uint8_t channel, float illum, uint32_t flash_d
 //checks sample for over/under range, reports to main serial
 void meas_check_out_of_rng_volt(t_daq_sample_convd sample, uint8_t channel);
 void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
+
 
 void meas_end_of_sequence(void);
 

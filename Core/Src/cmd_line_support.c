@@ -19,6 +19,8 @@ void cmdsprt_setup_cli(void){
   mainser_printf("Type help to list all commands.\r\n");
   mainser_printf("Type <cmd> -h to get help for a specific command.\r\n");
   mainser_printf("Add -sched ### argument to schedule command at specific time\r\n");
+  mainser_printf("See https://github.com/mrmp17/LightSoakFW-STM for more info.\r\n");
+  mainser_printf("See https://github.com/mrmp17/LightSoakFW-Python for data logging python interface.\r\n");
   mainser_printf("READY\r\n");
   //register commands
   lwshell_register_cmd("getvolt", cli_cmd_getvolt_fn, "Measures voltage. -c #ch# to select channel. No param for all channels");
@@ -46,8 +48,9 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("ENDSEQUENCE", cli_cmd_endseq_fn, "End of sequence signal. deletes any scheduled cmds. prints out END_OF_SEQUENCE");
   lwshell_register_cmd("getnumavg", cli_cmd_getnumavg_fn, "Get number of samples to average for getvolt/getcurr.");
   lwshell_register_cmd("setnumavg", cli_cmd_setnumavg_fn, "Set number of samples to average for getvolt/getcurr. -n #num# to set number of samples.");
-  lwshell_register_cmd("setdutsettle", cli_cmd_setdutsettle_fn, "Set settling time of DUT for measuring IV points and IV characteristics. In ms.");
+  lwshell_register_cmd("setdutsettle", cli_cmd_setdutsettle_fn, "Set settling time of DUT for measuring IV points and IV characteristics. -t #settle_time[ms]# to set. In ms.");
   lwshell_register_cmd("getdutsettle", cli_cmd_getdutsettle_fn, "Get settling time of DUT for measuring IV points and IV characteristics In ms.");
+  lwshell_register_cmd("getnoise", cli_cmd_getnoise_fn, "Measures noise (RMSmV and SNR) on voltage channels. -c #ch# to select channel. No param for all channels. No scheduling");
 }
 
 
@@ -930,6 +933,22 @@ int32_t cli_cmd_getdutsettle_fn(int32_t argc, char** argv){
   }
   return 0;
 }
+
+int32_t cli_cmd_getnoise_fn(int32_t argc, char** argv){
+  uint32_t ch;
+
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+  else{
+    ch = 0;
+  }
+  meas_get_noise(ch);
+  return 0;
+  //todo: implement scheduling.
+}
+
 
 
 
