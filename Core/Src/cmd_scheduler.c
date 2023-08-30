@@ -286,6 +286,23 @@ uint64_t cmdsched_handler(void){
       mainser_printf("NUMAVG:%lu\r\n", meas_get_num_avg());
       break;
     }
+    case meas_get_settle_time_id: {
+      meas_set_stltm_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_set_stltm_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      prv_meas_print_timestamp(usec_get_timestamp_64());
+      mainser_printf("SETTLE_TIME:%lu\r\n", meas_get_settling_time());
+      break;
+    }
+    case meas_set_settle_time_id: {
+      meas_set_stltm_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_set_stltm_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      meas_set_settling_time(param.settle_time);
+      break;
+    }
 
 
     default: {

@@ -14,6 +14,7 @@
 //define number of averaged samples for all measurements here
 //todo: do value setting in init
 uint32_t prv_meas_num_avg = MEAS_NUM_AVG_DEFAULT;
+uint32_t prv_meas_dut_settling_time_ms = MEAS_DUT_SETTLING_TIME_DEFAULT_MS;
 
 
 
@@ -32,6 +33,22 @@ void meas_set_num_avg(uint32_t num_avg_smpl){
  */
 uint32_t meas_get_num_avg(void){
   return prv_meas_num_avg;
+}
+
+/**
+ * @brief Sets DUT settling time
+ * @param stltm settling time in ms
+ */
+void meas_set_settling_time(uint32_t stltm){
+  prv_meas_dut_settling_time_ms = stltm;
+}
+
+/**
+ * @brief Gets time to wait for DUT settling after changing force voltage
+ * @return settling time set currently
+ */
+uint32_t meas_get_settling_time(void){
+  return prv_meas_dut_settling_time_ms;
 }
 
 
@@ -506,7 +523,7 @@ void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_w
         break;
     }
     //wait to settle
-    HAL_Delay(MEAS_DUT_SETTLING_TIME_MS);
+    HAL_Delay(prv_meas_dut_settling_time_ms);
     //approach voltage, do not change shunt
     iter_cnt = 0;
     while(1){
@@ -563,7 +580,7 @@ void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_w
         fec_set_force_voltage(channel, volt_cmd);
         dbg(Debug, "force: %f\r\n", volt_cmd);
         //wait for DUT to settle
-        HAL_Delay(MEAS_DUT_SETTLING_TIME_MS);
+        HAL_Delay(prv_meas_dut_settling_time_ms);
       }
       //increment iteration counter
       iter_cnt++;

@@ -69,7 +69,10 @@ int32_t cli_cmd_setnumavg_fn(int32_t argc, char** argv);
 
 int32_t cli_cmd_getnumavg_fn(int32_t argc, char** argv);
 
-//todo:
+int32_t cli_cmd_setdutsettle_fn(int32_t argc, char** argv);
+
+int32_t cli_cmd_getdutsettle_fn(int32_t argc, char** argv);
+
 
 
 

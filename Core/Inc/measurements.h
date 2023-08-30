@@ -23,7 +23,7 @@
 #define MEAS_NUM_AVG_DEFAULT 16
 #define MEAS_NOCONVERGE_REPORT 0
 
-#define MEAS_DUT_SETTLING_TIME_MS 1 //ms
+#define MEAS_DUT_SETTLING_TIME_DEFAULT_MS 1 //ms
 #define MEAS_FORCE_VOLT_CLOSE_ENOUGH 0.002f //V
 #define MEAS_FORCE_VOLT_ITER_MAX 10
 //sampling for MEAS_FLASH_DUMP_SAMPLEBORDER_US before and after led is turned on and off
@@ -45,6 +45,10 @@ void meas_iv_sample_and_dump(uint8_t channel, uint32_t num_samples);
 // set/get averaging number
 void meas_set_num_avg(uint32_t num_avg_smpl);
 uint32_t meas_get_num_avg(void);
+
+// set/get settling time
+void meas_set_settling_time(uint32_t stltm);
+uint32_t meas_get_settling_time(void);
 
 // call with 0 for all channels
 void meas_get_voltage(uint8_t channel);
@@ -184,6 +188,11 @@ typedef struct{
     uint32_t numavg;
 } meas_set_num_avg_param_t;
 
+// set settle time
+typedef struct{
+    uint32_t settle_time;
+} meas_set_stltm_param_t;
+
 
 
 //typedef enum for cmd ids. IDs needed for cmd scheduling
@@ -208,7 +217,9 @@ typedef enum {
     getledtemp_id,
     calibillum_id,
     meas_set_numavg_id,
-    meas_get_numavg_id
+    meas_get_numavg_id,
+    meas_set_settle_time_id,
+    meas_get_settle_time_id
 } meas_funct_id;
 
 
