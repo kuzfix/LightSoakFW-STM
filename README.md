@@ -95,7 +95,7 @@ The only external code used is *lwshell* CLI library, see https://github.com/MaJ
 Hardware specific parameters are specified as macros in *.h* files of individual modules.
 
 ### Execution timing
-This application is writen as bare-metal, without the us of a RTOS. For simplicity and hardware limitations in handling large amounts of sampling data, measurement functions are implemented as blocking throughout the measurement and data transfer process.
+This application is writen as bare-metal, without the use of a RTOS. For simplicity and hardware limitations in handling large amounts of sampling data, measurement functions are implemented as blocking throughout the measurement and data transfer process.
 
 CLI commands that are not scheduled, call the measurement functions directly. Scheduled commands are executed by a simple scheduler, run in the main infinite loop in *main.c*. In this loop, some other periodic tasks are executed, such as passing input characters to CLI library as well as some periodic housekeeping tasks.
 

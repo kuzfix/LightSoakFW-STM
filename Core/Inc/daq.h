@@ -68,7 +68,7 @@ typedef struct {
 } t_daq_sample_raw;
 
 // structure typedef for one sample of all channels - converted to voltage or current
-//can be voltage or current in actual units (mV or mA)
+//can be voltage or current in actual units (mV or uA)
 typedef struct {
     float ch1;
     float ch2;

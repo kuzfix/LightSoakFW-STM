@@ -215,7 +215,7 @@ t_daq_sample_convd daq_raw_to_volt(t_daq_sample_raw raw){
 }
 
 /**
- * @brief convert raw sample to current [mA]
+ * @brief convert raw sample to current [uA]
  * @param raw raw sample structure
  * @return converted sample structure
  */
@@ -225,56 +225,56 @@ t_daq_sample_convd daq_raw_to_curr(t_daq_sample_raw raw){
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch1 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
-  //voltage measured by ADC in mV
-  shunt_volt *= 1000;
-  //shunt voltage in mV
+  //voltage measured by ADC in uV
+  shunt_volt *= 1000000UL;
+  //shunt voltage in uV
   shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN;
-  //current in mA
+  //current in uA
   convd.ch1 = shunt_volt / fec_get_shunt_resistance(1);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch2 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
-  //voltage measured by ADC in mV
-  shunt_volt *= 1000;
-  //shunt voltage in mV
+  //voltage measured by ADC in uV
+  shunt_volt *= 1000000UL;
+  //shunt voltage in uV
   shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN;
-  //current in mA
+  //current in uA
   convd.ch2 = shunt_volt / fec_get_shunt_resistance(2);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch3 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
-  //voltage measured by ADC in mV
-  shunt_volt *= 1000;
-  //shunt voltage in mV
+  //voltage measured by ADC in uV
+  shunt_volt *= 1000000UL;
+  //shunt voltage in uV
   shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN;
-  //current in mA
+  //current in uA
   convd.ch3 = shunt_volt / fec_get_shunt_resistance(3);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch4 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
-  //voltage measured by ADC in mV
-  shunt_volt *= 1000;
-  //shunt voltage in mV
+  //voltage measured by ADC in uV
+  shunt_volt *= 1000000UL;
+  //shunt voltage in uV
   shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN;
-  //current in mA
+  //current in uA
   convd.ch4 = shunt_volt / fec_get_shunt_resistance(4);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch5 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
-  //voltage measured by ADC in mV
-  shunt_volt *= 1000;
-  //shunt voltage in mV
+  //voltage measured by ADC in uV
+  shunt_volt *= 1000000UL;
+  //shunt voltage in uV
   shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN;
-  //current in mA
+  //current in uA
   convd.ch5 = shunt_volt / fec_get_shunt_resistance(5);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch6 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
-  //voltage measured by ADC in mV
-  shunt_volt *= 1000;
-  //shunt voltage in mV
+  //voltage measured by ADC in uV
+  shunt_volt *= 1000000UL;
+  //shunt voltage in uV
   shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN;
-  //current in mA
+  //current in uA
   convd.ch6 = shunt_volt / fec_get_shunt_resistance(6);
 
   convd.timestamp = raw.timestamp;
@@ -400,7 +400,7 @@ t_daq_sample_convd daq_single_shot_volt(uint32_t num_samples){
  * !! WARNING: blocking function !!
  * !! WARNING: uses currently set shunts, no autoranging!
  * @param num_samples number of samples to take
- * @return averaged measurement, converted to mA, all channels
+ * @return averaged measurement, converted to uA, all channels
  */
 t_daq_sample_convd daq_single_shot_curr_no_autorng(uint32_t num_samples){
   daq_prepare_for_sampling(num_samples);

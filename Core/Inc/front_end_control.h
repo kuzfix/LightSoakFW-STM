@@ -23,15 +23,15 @@
 #define FEC_VOLT_UNDRNG 0.001f
 
 #define FEC_CURR_OVRNG 4.7f
-#define FEC_CURR_UNDRNG 0.0001f
+#define FEC_CURR_UNDRNG 0.1f
 
 #define SHUNT_SWITCH_SETTLING_TIME 100 //us
 
 //thresholds at which to switch from lower to higher resistance shunt
 //currently switch at 8% range, goes to 80% on next range
-#define FEC_SHNT_1X_LOWTHR 0.387f
-#define FEC_SHNT_10X_LOWTHR 0.0387f
-#define FEC_SHNT_100X_LOWTHR 0.00383f
+#define FEC_SHNT_1X_LOWTHR 387.0f
+#define FEC_SHNT_10X_LOWTHR 38.7f
+#define FEC_SHNT_100X_LOWTHR 3.83f
 
 enum timEnum{
     timer1,

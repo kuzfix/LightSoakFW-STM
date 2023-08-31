@@ -111,7 +111,7 @@ void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_c
       mainser_printf("CH4:%f\r\n", sample_volt.ch4);
       mainser_printf("CH5:%f\r\n", sample_volt.ch5);
       mainser_printf("CH6:%f\r\n", sample_volt.ch6);
-      mainser_printf("CURR[mA]:\r\n");
+      mainser_printf("CURR[uA]:\r\n");
       mainser_printf("CH1:%f\r\n", sample_curr.ch1);
       mainser_printf("CH2:%f\r\n", sample_curr.ch2);
       mainser_printf("CH3:%f\r\n", sample_curr.ch3);
@@ -122,32 +122,32 @@ void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_c
       break;
     case 1:
       mainser_printf("VOLT[V]:\r\nCH1:%f\r\n", sample_volt.ch1);
-      mainser_printf("CURR[mA]:\r\nCH1:%f\r\n", sample_curr.ch1);
+      mainser_printf("CURR[uA]:\r\nCH1:%f\r\n", sample_curr.ch1);
       mainser_printf("TIME:%llu\r\n", sample_volt.timestamp);
       break;
     case 2:
       mainser_printf("VOLT[V]:\r\nCH2:%f\r\n", sample_volt.ch2);
-      mainser_printf("CURR[mA]:\r\nCH2:%f\r\n", sample_curr.ch2);
+      mainser_printf("CURR[uA]:\r\nCH2:%f\r\n", sample_curr.ch2);
       mainser_printf("TIME:%llu\r\n", sample_volt.timestamp);
       break;
     case 3:
       mainser_printf("VOLT[V]:\r\nCH3:%f\r\n", sample_volt.ch3);
-      mainser_printf("CURR[mA]:\r\nCH3:%f\r\n", sample_curr.ch3);
+      mainser_printf("CURR[uA]:\r\nCH3:%f\r\n", sample_curr.ch3);
       mainser_printf("TIME:%llu\r\n", sample_volt.timestamp);
       break;
     case 4:
       mainser_printf("VOLT[V]:\r\nCH4:%f\r\n", sample_volt.ch4);
-      mainser_printf("CURR[mA]:\r\nCH4:%f\r\n", sample_curr.ch4);
+      mainser_printf("CURR[uA]:\r\nCH4:%f\r\n", sample_curr.ch4);
       mainser_printf("TIME:%llu\r\n", sample_volt.timestamp);
       break;
     case 5:
       mainser_printf("VOLT[V]:\r\nCH5:%f\r\n", sample_volt.ch5);
-      mainser_printf("CURR[mA]:\r\nCH5:%f\r\n", sample_curr.ch5);
+      mainser_printf("CURR[uA]:\r\nCH5:%f\r\n", sample_curr.ch5);
       mainser_printf("TIME:%llu\r\n", sample_volt.timestamp);
       break;
     case 6:
       mainser_printf("VOLT[V]:\r\nCH6:%f\r\n", sample_volt.ch6);
-      mainser_printf("CURR[mA]:\r\nCH6:%f\r\n", sample_curr.ch6);
+      mainser_printf("CURR[uA]:\r\nCH6:%f\r\n", sample_curr.ch6);
       mainser_printf("TIME:%llu\r\n", sample_volt.timestamp);
       break;
     default:
@@ -867,7 +867,7 @@ void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num
 }
 
 /**
- * @brief Dumps current buffer (converted to mA) (num_samples points starting at 0) to main serial in human readable format
+ * @brief Dumps current buffer (converted to uA) (num_samples points starting at 0) to main serial in human readable format
  * - call with channel = 0 to dump all channels
  * @param channel channel to dump
  * @param num_samples number of samples to dump
@@ -897,7 +897,7 @@ void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num
   for(uint32_t n = 0 ; n< num_samples ; n++){
     //get sample from buffer (all channels)
     sample_raw = daq_get_from_buffer_curr(n);
-    //convert to current mA
+    //convert to current uA
     sample_convd = daq_raw_to_curr(sample_raw);
     //print to serial
     mainser_printf("[%lu]", n);
@@ -911,7 +911,7 @@ void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num
 }
 
 /**
- * @brief Dumps current buffer (converted to mA) (num_samples points starting at 0) to main serial in human readable format
+ * @brief Dumps current buffer (converted to uA) (num_samples points starting at 0) to main serial in human readable format
  * - call with channel = 0 to dump all channels
  * @param channel channel to dump
  * @param num_samples number of samples to dump
@@ -943,7 +943,7 @@ void prv_meas_dump_from_buffer_human_readable_iv(uint8_t channel, uint32_t num_s
     //get sample from buffer (all channels)
     sample_raw_volt = daq_get_from_buffer_volt(n);
     sample_raw_curr = daq_get_from_buffer_curr(n);
-    //convert to current V/mA
+    //convert to current V/uA
     sample_convd_volt = daq_raw_to_volt(sample_raw_volt);
     sample_convd_curr = daq_raw_to_curr(sample_raw_curr);
     //print to serial
@@ -991,14 +991,14 @@ void prv_meas_print_data_ident_voltage(void){
  * @brief prints data identification VOLT
  */
 void prv_meas_print_data_ident_current(void){
-  mainser_printf("CURR[mA]:\r\n");
+  mainser_printf("CURR[uA]:\r\n");
 }
 
 /**
  * @brief prints data identification IV point
  */
 void prv_meas_print_data_ident_IV_point(void){
-  mainser_printf("IV[mA__V]:\r\n");
+  mainser_printf("IV[uA__V]:\r\n");
 }
 
 /**
@@ -1012,21 +1012,21 @@ void prv_meas_print_data_ident_dump_text_volt(void){
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_dump_text_curr(void){
-  mainser_printf("DUMPCURR[mA]:\r\n");
+  mainser_printf("DUMPCURR[uA]:\r\n");
 }
 
 /**
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_dump_text_IV(void){
-  mainser_printf("DUMPIVPT[mA__V]:\r\n");
+  mainser_printf("DUMPIVPT[uA__V]:\r\n");
 }
 
 /**
  * @brief prints data identification human readable text buffer dump
  */
 void prv_meas_print_data_ident_IV_characteristic(void){
-  mainser_printf("IVCHAR[mA__V]:\r\n");
+  mainser_printf("IVCHAR[uA__V]:\r\n");
 }
 
 /**
