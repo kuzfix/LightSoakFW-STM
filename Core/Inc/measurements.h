@@ -57,11 +57,14 @@ uint32_t meas_get_settling_time(void);
 void meas_get_voltage(uint8_t channel);
 
 // call with 0 for all channels
-void meas_get_noise(uint8_t channel);
+void meas_get_noise_volt(uint8_t channel);
 
 //for testing purposes
 //call with 0 for all channels
 void meas_get_current(uint8_t channel);
+
+// call with 0 for all channels
+void meas_get_noise_curr(uint8_t channel);
 
 
 //call with 0 for all channels

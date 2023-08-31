@@ -50,7 +50,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("setnumavg", cli_cmd_setnumavg_fn, "Set number of samples to average for getvolt/getcurr. -n #num# to set number of samples.");
   lwshell_register_cmd("setdutsettle", cli_cmd_setdutsettle_fn, "Set settling time of DUT for measuring IV points and IV characteristics. -t #settle_time[ms]# to set. In ms.");
   lwshell_register_cmd("getdutsettle", cli_cmd_getdutsettle_fn, "Get settling time of DUT for measuring IV points and IV characteristics In ms.");
-  lwshell_register_cmd("getnoise", cli_cmd_getnoise_fn, "Measures noise (RMSmV and SNR) on voltage channels. -c #ch# to select channel. No param for all channels. No scheduling");
+  lwshell_register_cmd("getnoise", cli_cmd_getnoise_fn, "Measures noise (RMSmV and SNR) on channels. -c #ch# to select channel. No param for all channels. -VOLT or/and -CURR to measure noise on voltage or/and current channels. No scheduling");
 }
 
 
@@ -944,7 +944,19 @@ int32_t cli_cmd_getnoise_fn(int32_t argc, char** argv){
   else{
     ch = 0;
   }
-  meas_get_noise(ch);
+
+  if(cmdsprt_is_arg("-VOLT", argc, argv)){
+    meas_get_noise_volt(ch);
+  }
+  else if(cmdsprt_is_arg("-CURR", argc, argv)){
+    meas_get_noise_curr(ch);
+  }
+  else{
+    meas_get_noise_volt(ch);
+    meas_get_noise_curr(ch);
+  }
+
+
   return 0;
   //todo: implement scheduling.
 }

@@ -227,177 +227,235 @@ void meas_get_voltage(uint8_t channel){
 }
 
 /**
- * @brief Measures RMS noise level on one or all (param=0) channels. Prints to main serial
+ * @brief Measures RMS noise level on one or all (param=0) voltage channels. Prints to main serial
  * @param channel channel to measure
  */
-void meas_get_noise(uint8_t channel){
-  // todo: this is solata and not very elegant.
-  t_daq_sample_convd meas;
+void meas_get_noise_volt(uint8_t channel){
   t_daq_sample_raw avg;
   uint32_t t1, t2;
-  uint32_t sample_noise, sum_squares;
-  double rms_noise, snr;
+  int32_t sample_noise[6];
+  uint32_t sum_squares[6];
+  double snr[6];
+  t_daq_sample_raw rms_noise_raw;
+  t_daq_sample_convd rms_noise_convd;
   t1 = usec_get_timestamp();
-  dbg(Debug, "MEAS:meas_get_noise()\r\n");
+  dbg(Debug, "MEAS:meas_get_noise_volt()\r\n");
   assert_param(channel <= 6);
-  meas = daq_single_shot_volt(NOISE_MEASURE_NUMSAMPLES);
+  daq_single_shot_volt(NOISE_MEASURE_NUMSAMPLES);
   avg = daq_volt_raw_get_average(NOISE_MEASURE_NUMSAMPLES);
+
+  sum_squares[0] = 0;
+  sum_squares[1] = 0;
+  sum_squares[2] = 0;
+  sum_squares[3] = 0;
+  sum_squares[4] = 0;
+  sum_squares[5] = 0;
+  for(uint32_t i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++){
+    sample_noise[0] = daq_get_from_buffer_volt(i).ch1 - avg.ch1;
+    sample_noise[1] = daq_get_from_buffer_volt(i).ch2 - avg.ch2;
+    sample_noise[2] = daq_get_from_buffer_volt(i).ch3 - avg.ch3;
+    sample_noise[3] = daq_get_from_buffer_volt(i).ch4 - avg.ch4;
+    sample_noise[4] = daq_get_from_buffer_volt(i).ch5 - avg.ch5;
+    sample_noise[5] = daq_get_from_buffer_volt(i).ch6 - avg.ch6;
+    for(uint8_t n = 0 ; n<6 ; n++){
+      sum_squares[n] += sample_noise[n] * sample_noise[n];  // Square the noise
+    }
+  }
+  rms_noise_raw.ch1 = sqrt((double)sum_squares[0] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch2 = sqrt((double)sum_squares[1] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch3 = sqrt((double)sum_squares[2] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch4 = sqrt((double)sum_squares[3] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch5 = sqrt((double)sum_squares[4] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch6 = sqrt((double)sum_squares[5] / (double)NOISE_MEASURE_NUMSAMPLES);
+
+  snr[0] = 20*log(avg.ch1 / rms_noise_raw.ch1);
+  snr[1] = 20*log(avg.ch2 / rms_noise_raw.ch2);
+  snr[2] = 20*log(avg.ch3 / rms_noise_raw.ch3);
+  snr[3] = 20*log(avg.ch4 / rms_noise_raw.ch4);
+  snr[4] = 20*log(avg.ch5 / rms_noise_raw.ch5);
+  snr[5] = 20*log(avg.ch6 / rms_noise_raw.ch6);
+
+  rms_noise_convd = daq_raw_to_volt(rms_noise_raw);
+
   switch(channel){
     case 1:
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch1 - avg.ch1;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch1/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH1;
-      mainser_printf("CH1:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr);
+      mainser_printf("CH1:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch1 * 1000));
+      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr[0]);
       break;
     case 2:
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch2 - avg.ch2;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch2/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH2;
-      mainser_printf("CH2:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr);
+      mainser_printf("CH2:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch2 * 1000));
+      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr[1]);
       break;
     case 3:
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch3 - avg.ch3;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch3/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH3;
-      mainser_printf("CH3:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr);
+      mainser_printf("CH3:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch3 * 1000));
+      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr[2]);
       break;
     case 4:
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch4 - avg.ch4;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch4/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH4;
-      mainser_printf("CH4:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr);
+      mainser_printf("CH4:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch4 * 1000));
+      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr[3]);
       break;
     case 5:
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch5 - avg.ch5;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch5/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH5;
-      mainser_printf("CH5:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr);
+      mainser_printf("CH5:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch5 * 1000));
+      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr[4]);
       break;
     case 6:
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch6 - avg.ch6;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch6/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH6;
-      mainser_printf("CH6:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr);
+      mainser_printf("CH6:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch6 * 1000));
+      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr[5]);
       break;
-    default:
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch1 - avg.ch1;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch1/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH1;
-      mainser_printf("CH1:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr);
-
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch2 - avg.ch2;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch2/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH2;
-      mainser_printf("CH2:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr);
-
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch3 - avg.ch3;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch3/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH3;
-      mainser_printf("CH3:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr);
-
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch4 - avg.ch4;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch4/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH4;
-      mainser_printf("CH4:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr);
-
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch5 - avg.ch5;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch5/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH5;
-      mainser_printf("CH5:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr);
-
-      sum_squares = 0;
-      for(int i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++) {
-        sample_noise = daq_get_from_buffer_volt(i).ch6 - avg.ch6;
-        sum_squares += sample_noise * sample_noise;  // Square the noise
-      }
-      rms_noise = sqrt((double)sum_squares / (double)NOISE_MEASURE_NUMSAMPLES);
-      snr = 20*log(avg.ch6/rms_noise);
-      //convert to volts
-      rms_noise = (((float)rms_noise / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH6;
-      mainser_printf("CH6:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise*1000));
-      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr);
-
+    case 0:
+      mainser_printf("CH1:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch1 * 1000));
+      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr[0]);
+      mainser_printf("CH2:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch2 * 1000));
+      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr[1]);
+      mainser_printf("CH3:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch3 * 1000));
+      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr[2]);
+      mainser_printf("CH4:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch4 * 1000));
+      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr[3]);
+      mainser_printf("CH5:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch5 * 1000));
+      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr[4]);
+      mainser_printf("CH6:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch6 * 1000));
+      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr[5]);
   }
 
+
   t2 = usec_get_timestamp();
-  dbg(Debug, "meas_get_noise() took: %lu usec\r\n", t2-t1);
+  dbg(Debug, "meas_get_noise_volt() took: %lu usec\r\n", t2-t1);
+
+}
+
+
+/**
+ * @brief Measures RMS noise level on one or all (param=0) current channels. Prints to main serial
+ * @param channel channel to measure
+ */
+void meas_get_noise_curr(uint8_t channel){
+  t_daq_sample_raw avg;
+  uint32_t t1, t2;
+  int32_t sample_noise[6];
+  uint32_t sum_squares[6];
+  double snr[6];
+  t_daq_sample_raw rms_noise_raw;
+  t_daq_sample_convd rms_noise_convd;
+  t1 = usec_get_timestamp();
+  dbg(Debug, "MEAS:meas_get_noise_curr()\r\n");
+  assert_param(channel <= 6);
+  daq_single_shot_volt(NOISE_MEASURE_NUMSAMPLES);
+  avg = daq_curr_raw_get_average(NOISE_MEASURE_NUMSAMPLES);
+
+  sum_squares[0] = 0;
+  sum_squares[1] = 0;
+  sum_squares[2] = 0;
+  sum_squares[3] = 0;
+  sum_squares[4] = 0;
+  sum_squares[5] = 0;
+  for(uint32_t i = 0; i < NOISE_MEASURE_NUMSAMPLES; i++){
+    sample_noise[0] = daq_get_from_buffer_curr(i).ch1 - avg.ch1;
+    sample_noise[1] = daq_get_from_buffer_curr(i).ch2 - avg.ch2;
+    sample_noise[2] = daq_get_from_buffer_curr(i).ch3 - avg.ch3;
+    sample_noise[3] = daq_get_from_buffer_curr(i).ch4 - avg.ch4;
+    sample_noise[4] = daq_get_from_buffer_curr(i).ch5 - avg.ch5;
+    sample_noise[5] = daq_get_from_buffer_curr(i).ch6 - avg.ch6;
+    for(uint8_t n = 0 ; n<6 ; n++){
+      sum_squares[n] += sample_noise[n] * sample_noise[n];  // Square the noise
+    }
+  }
+  rms_noise_raw.ch1 = sqrt((double)sum_squares[0] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch2 = sqrt((double)sum_squares[1] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch3 = sqrt((double)sum_squares[2] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch4 = sqrt((double)sum_squares[3] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch5 = sqrt((double)sum_squares[4] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch6 = sqrt((double)sum_squares[5] / (double)NOISE_MEASURE_NUMSAMPLES);
+
+  snr[0] = 20*log(avg.ch1 / rms_noise_raw.ch1);
+  snr[1] = 20*log(avg.ch2 / rms_noise_raw.ch2);
+  snr[2] = 20*log(avg.ch3 / rms_noise_raw.ch3);
+  snr[3] = 20*log(avg.ch4 / rms_noise_raw.ch4);
+  snr[4] = 20*log(avg.ch5 / rms_noise_raw.ch5);
+  snr[5] = 20*log(avg.ch6 / rms_noise_raw.ch6);
+
+  rms_noise_raw.ch1 = sqrt((double)sum_squares[0] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch2 = sqrt((double)sum_squares[1] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch3 = sqrt((double)sum_squares[2] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch4 = sqrt((double)sum_squares[3] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch5 = sqrt((double)sum_squares[4] / (double)NOISE_MEASURE_NUMSAMPLES);
+  rms_noise_raw.ch6 = sqrt((double)sum_squares[5] / (double)NOISE_MEASURE_NUMSAMPLES);
+
+  float shunt_volt;
+  // conversion is kinda hacky, but we don't want to compensate offset here, just differential and so can not use function...
+  shunt_volt = ((float)rms_noise_raw.ch1 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  shunt_volt *= 1000000UL;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH1;
+  rms_noise_convd.ch1 = shunt_volt / fec_get_shunt_resistance(1);
+
+  shunt_volt = ((float)rms_noise_raw.ch2 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  shunt_volt *= 1000000UL;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH2;
+  rms_noise_convd.ch2 = shunt_volt / fec_get_shunt_resistance(2);
+
+
+  shunt_volt = ((float)rms_noise_raw.ch3 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  shunt_volt *= 1000000UL;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH3;
+  rms_noise_convd.ch3 = shunt_volt / fec_get_shunt_resistance(3);
+
+  shunt_volt = ((float)rms_noise_raw.ch4 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  shunt_volt *= 1000000UL;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH4;
+  rms_noise_convd.ch4 = shunt_volt / fec_get_shunt_resistance(4);
+
+  shunt_volt = ((float)rms_noise_raw.ch5 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  shunt_volt *= 1000000UL;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH5;
+  rms_noise_convd.ch5 = shunt_volt / fec_get_shunt_resistance(5);
+
+  shunt_volt = ((float)rms_noise_raw.ch6 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  shunt_volt *= 1000000UL;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH6;
+  rms_noise_convd.ch6 = shunt_volt / fec_get_shunt_resistance(6);
+
+  switch(channel){
+    case 1:
+      mainser_printf("CH1:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch1));
+      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr[0]);
+      break;
+    case 2:
+      mainser_printf("CH2:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch2));
+      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr[1]);
+      break;
+    case 3:
+      mainser_printf("CH3:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch3));
+      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr[2]);
+      break;
+    case 4:
+      mainser_printf("CH4:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch4));
+      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr[3]);
+      break;
+    case 5:
+      mainser_printf("CH5:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch5));
+      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr[4]);
+      break;
+    case 6:
+      mainser_printf("CH6:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch6));
+      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr[5]);
+      break;
+    case 0:
+      mainser_printf("CH1:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch1));
+      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr[0]);
+      mainser_printf("CH2:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch2));
+      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr[1]);
+      mainser_printf("CH3:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch3));
+      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr[2]);
+      mainser_printf("CH4:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch4));
+      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr[3]);
+      mainser_printf("CH5:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch5));
+      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr[4]);
+      mainser_printf("CH6:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch6));
+      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr[5]);
+  }
+
+
+  t2 = usec_get_timestamp();
+  dbg(Debug, "meas_get_noise_curr() took: %lu usec\r\n", t2-t1);
 
 }
 
