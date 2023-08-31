@@ -225,55 +225,67 @@ t_daq_sample_convd daq_raw_to_curr(t_daq_sample_raw raw){
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch1 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  //compensate for shunt amp offset
+  shunt_volt += DAQ_SHUNT_AMP_OUT_OFST_CH1;
   //voltage measured by ADC in uV
   shunt_volt *= 1000000UL;
   //shunt voltage in uV
-  shunt_volt = shunt_volt / DAQ_VOLT_AMP_GAIN_CH1;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH1;
   //current in uA
   convd.ch1 = shunt_volt / fec_get_shunt_resistance(1);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch2 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  //compensate for shunt amp offset
+  shunt_volt += DAQ_SHUNT_AMP_OUT_OFST_CH2;
   //voltage measured by ADC in uV
   shunt_volt *= 1000000UL;
   //shunt voltage in uV
-  shunt_volt = shunt_volt / DAQ_VOLT_AMP_GAIN_CH2;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH2;
   //current in uA
   convd.ch2 = shunt_volt / fec_get_shunt_resistance(2);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch3 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  //compensate for shunt amp offset
+  shunt_volt += DAQ_SHUNT_AMP_OUT_OFST_CH3;
   //voltage measured by ADC in uV
   shunt_volt *= 1000000UL;
   //shunt voltage in uV
-  shunt_volt = shunt_volt / DAQ_VOLT_AMP_GAIN_CH3;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH3;
   //current in uA
   convd.ch3 = shunt_volt / fec_get_shunt_resistance(3);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch4 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  //compensate for shunt amp offset
+  shunt_volt += DAQ_SHUNT_AMP_OUT_OFST_CH4;
   //voltage measured by ADC in uV
   shunt_volt *= 1000000UL;
   //shunt voltage in uV
-  shunt_volt = shunt_volt / DAQ_VOLT_AMP_GAIN_CH4;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH4;
   //current in uA
   convd.ch4 = shunt_volt / fec_get_shunt_resistance(4);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch5 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  //compensate for shunt amp offset
+  shunt_volt += DAQ_SHUNT_AMP_OUT_OFST_CH5;
   //voltage measured by ADC in uV
   shunt_volt *= 1000000UL;
   //shunt voltage in uV
-  shunt_volt = shunt_volt / DAQ_VOLT_AMP_GAIN_CH5;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH5;
   //current in uA
   convd.ch5 = shunt_volt / fec_get_shunt_resistance(5);
 
   //voltage measured by ADC in V
   shunt_volt = ((float)raw.ch6 / DAQ_MAX_ADC_VAL) * DAQ_VREF;
+  //compensate for shunt amp offset
+  shunt_volt += DAQ_SHUNT_AMP_OUT_OFST_CH6;
   //voltage measured by ADC in uV
   shunt_volt *= 1000000UL;
   //shunt voltage in uV
-  shunt_volt = shunt_volt / DAQ_VOLT_AMP_GAIN_CH6;
+  shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH6;
   //current in uA
   convd.ch6 = shunt_volt / fec_get_shunt_resistance(6);
 
