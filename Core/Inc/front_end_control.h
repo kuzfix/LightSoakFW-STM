@@ -20,10 +20,10 @@
 //todo: check if 4095 or 4096 is corrct for calcs?
 
 #define FEC_VOLT_OVRNG 1.45f
-#define FEC_VOLT_UNDRNG 0.001f
+#define FEC_VOLT_UNDRNG 0.005f
 
-#define FEC_CURR_OVRNG 4.7f
-#define FEC_CURR_UNDRNG 0.1f
+#define FEC_CURR_OVRNG 4700.0f
+#define FEC_CURR_UNDRNG 0.05f
 
 #define SHUNT_SWITCH_SETTLING_TIME 100 //us
 

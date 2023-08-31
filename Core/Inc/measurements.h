@@ -21,7 +21,7 @@
 #include "main_serial.h"
 #include <math.h>
 
-#define MEAS_NUM_AVG_DEFAULT 16
+#define MEAS_NUM_AVG_DEFAULT 64
 #define MEAS_NOCONVERGE_REPORT 0
 
 #define MEAS_DUT_SETTLING_TIME_DEFAULT_MS 1 //ms
