@@ -65,7 +65,7 @@ List of all commands can be printed via CLI by issuing a *help* command. Help fo
 
 - ***enablecurrent*** - Connects the current measurement circuitry on a specific channel/s.
 - ***disablecurrent*** - Disconnects the current measurement circuitry on a specific channel/s.
-- ***setshunt*** - Manually sets shunt range on a specific channel/s. Recomended ranges for currents are:
+- ***setshunt*** - Manually sets shunt range on a specific channel/s. Defaults to 1000X. Before enabling current circuitry, always start at 1X range to avoid damage. Recomended ranges for currents are:
   - 1X: Above 0.38mA
   - 10X: Above 38uA
   - 100X: Above 3.8uA
