@@ -202,6 +202,8 @@ uint64_t cmdsched_handler(void){
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
       meas_end_of_sequence();
+      HAL_Delay(1000);
+      NVIC_SystemReset();
       break;
     }
     case fec_enable_current_id: {

@@ -45,7 +45,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
   lwshell_register_cmd("setbaud", cli_cmd_setbaud_fn, "sets baud rate. -b #baud# to set baud rate. No scheduling.");
   lwshell_register_cmd("ready?", cli_cmd_ready_fn, "Call to check if ready.");
-  lwshell_register_cmd("ENDSEQUENCE", cli_cmd_endseq_fn, "End of sequence signal. deletes any scheduled cmds. prints out END_OF_SEQUENCE");
+  lwshell_register_cmd("ENDSEQUENCE", cli_cmd_endseq_fn, "End of sequence signal. prints out END_OF_SEQUENCE and reboots after one second.");
   lwshell_register_cmd("getnumavg", cli_cmd_getnumavg_fn, "Get number of samples to average for getvolt/getcurr.");
   lwshell_register_cmd("setnumavg", cli_cmd_setnumavg_fn, "Set number of samples to average for getvolt/getcurr. -n #num# to set number of samples.");
   lwshell_register_cmd("setdutsettle", cli_cmd_setdutsettle_fn, "Set settling time of DUT for measuring IV points and IV characteristics. -t #settle_time[ms]# to set. In ms.");
@@ -780,6 +780,8 @@ int32_t cli_cmd_endseq_fn(int32_t argc, char** argv){
   else{
     //immediate command
     meas_end_of_sequence();
+    HAL_Delay(1000);
+    NVIC_SystemReset();
   }
   return 0;
 }

@@ -73,7 +73,7 @@ List of all commands can be printed via CLI by issuing a *help* command. Help fo
 - ***setforcevolt*** - Manually sets voltage to be forced on a specific channel/s. Keep in mind the actual voltage on DUT deffers by the voltage drop on the shunt resistor. Always measure the actual voltage on DUT with *getvolt*.
 - ***autorange*** - Manually trigger shunt autoranging on all channels.
 
-- ***ENDSEQUENCE*** - This command should be called by Python data logging code at the end of the sequence.
+- ***ENDSEQUENCE*** - This command should be called by Python data logging code at the end of the sequence. Reboots the device one second after this command is invoked.
 
 
 ### Command scheduling
