@@ -174,7 +174,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.obj: /Users/matej
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/ds18b20.h \
   /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/math.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_scheduler.h \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_line_support.h
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_line_support.h \
+  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/lwshell/lwshell.h
 
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_scheduler.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/cmd_scheduler.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_scheduler.h \

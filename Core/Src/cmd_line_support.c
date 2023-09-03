@@ -2,6 +2,7 @@
 // Created by Matej Planinšek on 08/08/2023.
 //
 #include "cmd_line_support.h"
+#include "lwshell/lwshell.h"
 
 //this is the callback function for the lwshell when it wants to output stuff to cli
 void cmdsprt_lwshell_out_callback(const char* str, struct lwshell* lwobj){
@@ -10,10 +11,6 @@ void cmdsprt_lwshell_out_callback(const char* str, struct lwshell* lwobj){
 
 //sets up cli interface. inits lwshell and registers commands
 void cmdsprt_setup_cli(void){
-  //init lwshell
-  lwshell_init();
-  //set lwshel output callback
-  lwshell_set_output_fn(cmdsprt_lwshell_out_callback);
   //welcome message
   mainser_printf("LightSoak CLI started.\r\n");
   mainser_printf("Firmware version: %s\r\n", FW_VERSION);
@@ -26,6 +23,12 @@ void cmdsprt_setup_cli(void){
   mainser_printf("See https://github.com/mrmp17/LightSoakFW-Python for data logging python interface.\r\n");
   mainser_printf("-----------------------------\r\n");
   mainser_printf("READY\r\n");
+  mainser_printf(LWSHELL_PROMPT);
+  //init lwshell
+  lwshell_init();
+  //set lwshel output callback
+  lwshell_set_output_fn(cmdsprt_lwshell_out_callback);
+
   //register commands
   lwshell_register_cmd("getvolt", cli_cmd_getvolt_fn, "Measures voltage. -c #ch# to select channel. No param for all channels");
   lwshell_register_cmd("getcurr", cli_cmd_getcurr_fn, "Measures current. -c #ch# to select channel. No param for all channels");

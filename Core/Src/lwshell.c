@@ -330,12 +330,14 @@ lwshell_input_ex(lwshell_t* lwobj, const void* in_data, size_t len) {
             case LWSHELL_ASCII_CR: {
                 LWSHELL_OUTPUT(lwobj, "\r\n");
                 prv_parse_input(lwobj);
+                LWSHELL_OUTPUT(lwobj, LWSHELL_PROMPT);
                 LWSHELL_RESET_BUFF(lwobj);
                 break;
             }
             case LWSHELL_ASCII_LF: {
                 LWSHELL_OUTPUT(lwobj, "\n");
                 prv_parse_input(lwobj);
+                LWSHELL_OUTPUT(lwobj, LWSHELL_PROMPT);
                 LWSHELL_RESET_BUFF(lwobj);
                 break;
             }

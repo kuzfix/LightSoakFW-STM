@@ -42,6 +42,9 @@
 extern "C" {
 #endif /* __cplusplus */
 
+
+#define LWSHELL_PROMPT ">> "
+
 /**
  * \defgroup        LWSHELL Lightweight shell
  * \brief           Lightweight shell
