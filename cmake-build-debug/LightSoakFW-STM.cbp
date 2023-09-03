@@ -24,9 +24,6 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add option="-DARM_MATH_CM4"/>
-					<Add option="-DARM_MATH_MATRIX_CHECK"/>
-					<Add option="-DARM_MATH_ROUNDING"/>
 					<Add option="-DDEBUG"/>
 					<Add option="-DUSE_FULL_LL_DRIVER"/>
 					<Add option="-DUSE_HAL_DRIVER"/>
@@ -57,9 +54,6 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add option="-DARM_MATH_CM4"/>
-					<Add option="-DARM_MATH_MATRIX_CHECK"/>
-					<Add option="-DARM_MATH_ROUNDING"/>
 					<Add option="-DDEBUG"/>
 					<Add option="-DUSE_FULL_LL_DRIVER"/>
 					<Add option="-DUSE_HAL_DRIVER"/>

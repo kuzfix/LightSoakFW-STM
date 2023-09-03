@@ -18,6 +18,7 @@
 #include "measurements.h"
 #include "ds18b20.h"
 #include "cmd_scheduler.h"
+#include "main.h"
 
 #define MIN_TIME_TO_CMD_TO_REQ_CMDS_US 50000
 

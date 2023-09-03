@@ -3,15 +3,15 @@
 
 # compile ASM with /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc
 # compile C with /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/bin/arm-none-eabi-gcc
-ASM_DEFINES = -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -DDEBUG -DSTM32G474xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER
+ASM_DEFINES = -DDEBUG -DSTM32G474xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER
 
 ASM_INCLUDES = -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/CMSIS/Device/ST/STM32G4xx/Include -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/CMSIS/Include
 
-ASM_FLAGS = -g -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mcpu=cortex-m4 -mthumb -mthumb-interwork -ffunction-sections -fdata-sections -fno-common -fmessage-length=0 -x assembler-with-cpp -Og -g
+ASM_FLAGS = -g -mcpu=cortex-m4 -mthumb -mthumb-interwork -ffunction-sections -fdata-sections -fno-common -fmessage-length=0 -x assembler-with-cpp -Og -g
 
-C_DEFINES = -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -DDEBUG -DSTM32G474xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER
+C_DEFINES = -DDEBUG -DSTM32G474xx -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER
 
 C_INCLUDES = -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/CMSIS/Device/ST/STM32G4xx/Include -I/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/CMSIS/Include
 
-C_FLAGS = -g -fdiagnostics-color=always -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mcpu=cortex-m4 -mthumb -mthumb-interwork -ffunction-sections -fdata-sections -fno-common -fmessage-length=0 -Og -g -std=gnu11
+C_FLAGS = -g -fdiagnostics-color=always -mcpu=cortex-m4 -mthumb -mthumb-interwork -ffunction-sections -fdata-sections -fno-common -fmessage-length=0 -Og -g -std=gnu11
 

@@ -113,6 +113,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   dbg(Warning, "Booting LighSoak V1...\r\n");
+  dbg(Warning, "Firmware version: %s\r\n", FW_VERSION);
+  dbg(Warning, "FW compiled: %s %s\r\n", __DATE__, __TIME__);
+  dbg(Warning, "System clock: %d MHz\r\n", SystemCoreClock/1000000);
+  dbg(Warning, "Initializing modules...\r\n");
 
 
 
@@ -123,14 +127,18 @@ int main(void)
   daq_init();
   ds18b20_init();
 
+  dbg(Warning, "Modules initialized!\r\n");
 
   HAL_Delay(1000);
 
   //enable CLI
   cmdsprt_setup_cli();
 
+  dbg(Warning, "CLI initialized!\r\n");
+
   //turn on active LED
   HAL_GPIO_WritePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin, GPIO_PIN_SET);
+  dbg(Warning, "Ready LED on.\r\n");
 
 //  fec_set_shunt_10x(1);
 //  fec_set_force_voltage(1, 0.1f);
@@ -195,7 +203,7 @@ int main(void)
 
 
 
-
+    dbg(Warning, "Starting main loop!\r\n");
 
     uint64_t time_to_cmd;
     while(1) {

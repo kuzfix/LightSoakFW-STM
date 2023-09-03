@@ -16,11 +16,15 @@ void cmdsprt_setup_cli(void){
   lwshell_set_output_fn(cmdsprt_lwshell_out_callback);
   //welcome message
   mainser_printf("LightSoak CLI started.\r\n");
+  mainser_printf("Firmware version: %s\r\n", FW_VERSION);
+  mainser_printf("FW compiled: %s %s\r\n", __DATE__, __TIME__);
+  mainser_printf("-----------------------------\r\n");
   mainser_printf("Type help to list all commands.\r\n");
   mainser_printf("Type <cmd> -h to get help for a specific command.\r\n");
   mainser_printf("Add -sched ### argument to schedule command at specific time\r\n");
   mainser_printf("See https://github.com/mrmp17/LightSoakFW-STM for more info.\r\n");
   mainser_printf("See https://github.com/mrmp17/LightSoakFW-Python for data logging python interface.\r\n");
+  mainser_printf("-----------------------------\r\n");
   mainser_printf("READY\r\n");
   //register commands
   lwshell_register_cmd("getvolt", cli_cmd_getvolt_fn, "Measures voltage. -c #ch# to select channel. No param for all channels");
