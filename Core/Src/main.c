@@ -217,6 +217,7 @@ int main(void)
         temptime = HAL_GetTick();
         ds18b20_handler();
         if(LEDCTRL_PERIODIC_TEMP_REPORT_MAINSER){
+          mainser_printf("\r\n");
           ledctrl_print_temperature_mainser();
         }
       }

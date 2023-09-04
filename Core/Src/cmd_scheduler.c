@@ -112,6 +112,7 @@ uint64_t cmdsched_handler(void){
   switch (cmd.cmd_id) {
     case meas_get_voltage_id: {
       meas_get_voltage_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_get_voltage_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -120,6 +121,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_get_current_id: {
       meas_get_current_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_get_current_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -128,6 +130,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_get_IV_point_id: {
       meas_get_IV_point_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_get_IV_point_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -136,6 +139,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_get_iv_characteristic_id: {
       meas_get_iv_characteristic_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_get_iv_characteristic_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -144,6 +148,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_volt_sample_and_dump_id: {
       meas_sample_and_dump_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_sample_and_dump_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -152,6 +157,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_curr_sample_and_dump_id: {
       meas_sample_and_dump_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_sample_and_dump_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -160,6 +166,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_iv_sample_and_dump_id: {
       meas_sample_and_dump_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_sample_and_dump_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -168,6 +175,7 @@ uint64_t cmdsched_handler(void){
     }
     case ledctrl_set_current_id: {
       ledctrl_set_current_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(ledctrl_set_current_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -176,6 +184,7 @@ uint64_t cmdsched_handler(void){
     }
     case ledctrl_set_illum_id: {
       ledctrl_set_illum_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(ledctrl_set_illum_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -184,6 +193,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_flashmeasure_dumpbuffer_id: {
       meas_flashmeasure_dumpbuffer_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_flashmeasure_dumpbuffer_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -192,6 +202,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_flashmeasure_singlesample_id: {
       meas_flashmeasure_singlesample_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_flashmeasure_singlesample_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -199,6 +210,7 @@ uint64_t cmdsched_handler(void){
       break;
     }
     case end_of_sequence_id: {
+      mainser_printf("\r\n");
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
       meas_end_of_sequence();
@@ -208,6 +220,7 @@ uint64_t cmdsched_handler(void){
     }
     case fec_enable_current_id: {
       fec_enable_disable_current_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(fec_enable_disable_current_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -216,6 +229,7 @@ uint64_t cmdsched_handler(void){
     }
     case fec_disable_current_id: {
       fec_enable_disable_current_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(fec_setshunt_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -224,6 +238,7 @@ uint64_t cmdsched_handler(void){
     }
     case setshunt_id: {
       fec_setshunt_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(fec_enable_disable_current_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -247,6 +262,7 @@ uint64_t cmdsched_handler(void){
     }
     case setforcevolt_id: {
       fec_setforcevolt_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(fec_setforcevolt_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -254,18 +270,21 @@ uint64_t cmdsched_handler(void){
       break;
     }
     case autorange_id: {
+      mainser_printf("\r\n");
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
       daq_autorange();
       break;
     }
     case getledtemp_id: {
+      mainser_printf("\r\n");
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
       ledctrl_print_temperature_mainser();
       break;
     }
     case calibillum_id: {
+      mainser_printf("\r\n");
       ledctrl_calibillum_param_t param;
       cmdsched_decode(cmd, &param, sizeof(ledctrl_calibillum_param_t));
       //wait for exact time to call function
@@ -274,6 +293,7 @@ uint64_t cmdsched_handler(void){
       break;
     }
     case meas_set_numavg_id: {
+      mainser_printf("\r\n");
       meas_set_num_avg_param_t param;
       cmdsched_decode(cmd, &param, sizeof(meas_set_num_avg_param_t));
       //wait for exact time to call function
@@ -282,6 +302,7 @@ uint64_t cmdsched_handler(void){
       break;
     }
     case meas_get_numavg_id: {
+      mainser_printf("\r\n");
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
       prv_meas_print_timestamp(usec_get_timestamp_64());
@@ -290,6 +311,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_get_settle_time_id: {
       meas_set_stltm_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_set_stltm_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -299,6 +321,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_set_settle_time_id: {
       meas_set_stltm_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_set_stltm_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
@@ -307,6 +330,7 @@ uint64_t cmdsched_handler(void){
     }
     case meas_get_noise_id: {
       meas_get_noise_param_t param;
+      mainser_printf("\r\n");
       cmdsched_decode(cmd, &param, sizeof(meas_get_noise_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
