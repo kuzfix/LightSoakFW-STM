@@ -89,13 +89,17 @@ void daq_start_sampling(void){
   daq_sampling_done_volt = 0;
   daq_sampling_done_curr = 0;
 
-  //start timer
+  //turn on debug pad (for logic analyzer debug)
   HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_SET);
-  HAL_TIM_Base_Start_IT(DAQ_SAMPLE_TIMER_HANDLE);
-  //adc sampling at every update(overflow) of TIM20
 
   //turn on LED
   HAL_GPIO_WritePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin, GPIO_PIN_SET);
+
+  //start timer
+  HAL_TIM_Base_Start_IT(DAQ_SAMPLE_TIMER_HANDLE);
+  //adc sampling at every update(overflow) of TIM20
+
+
 }
 
 /**
