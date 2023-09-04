@@ -57,7 +57,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("setnumavg", cli_cmd_setnumavg_fn, "Set number of samples to average for getvolt/getcurr. -n #num# to set number of samples.");
   lwshell_register_cmd("setdutsettle", cli_cmd_setdutsettle_fn, "Set settling time of DUT for measuring IV points and IV characteristics. -t #settle_time[ms]# to set. In ms.");
   lwshell_register_cmd("getdutsettle", cli_cmd_getdutsettle_fn, "Get settling time of DUT for measuring IV points and IV characteristics In ms.");
-  lwshell_register_cmd("getnoise", cli_cmd_getnoise_fn, "Measures noise (RMSmV and SNR) on channels. -c #ch# to select channel. No param for all channels. -VOLT or/and -CURR to measure noise on voltage or/and current channels. No scheduling");
+  lwshell_register_cmd("getnoise", cli_cmd_getnoise_fn, "Measures noise (RMSmV and SNR) on channels. -c #ch# to select channel. No param for all channels. -VOLT or/and -CURR to measure noise on voltage or/and current channels.");
 }
 
 
@@ -945,6 +945,8 @@ int32_t cli_cmd_getdutsettle_fn(int32_t argc, char** argv){
 
 int32_t cli_cmd_getnoise_fn(int32_t argc, char** argv){
   uint32_t ch;
+  uint8_t vflag = 0;
+  uint8_t iflag = 0;
 
   if(cmdsprt_is_arg("-c", argc, argv)){
     //channel argument present, parse
@@ -955,19 +957,45 @@ int32_t cli_cmd_getnoise_fn(int32_t argc, char** argv){
   }
 
   if(cmdsprt_is_arg("-VOLT", argc, argv)){
-    meas_get_noise_volt(ch);
+    vflag = 1;
   }
   else if(cmdsprt_is_arg("-CURR", argc, argv)){
-    meas_get_noise_curr(ch);
+    iflag = 1;
   }
   else{
-    meas_get_noise_volt(ch);
-    meas_get_noise_curr(ch);
+    vflag = 1;
+    iflag = 1;
+  }
+
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)) {
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+
+    // schedule command ##########
+    meas_get_noise_param_t param;
+    param.channel = ch;
+    param.volt_flag = vflag;
+    param.curr_flag = iflag;
+    cmdsched_encode_and_add(sched_time, meas_get_noise_id, &param, sizeof(meas_get_noise_param_t));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    if(vflag) {
+      meas_get_noise_volt(ch);
+    }
+    if(iflag) {
+      meas_get_noise_curr(ch);
+    }
   }
 
 
   return 0;
-  //todo: implement scheduling.
+
 }
 
 

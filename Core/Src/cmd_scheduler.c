@@ -305,6 +305,19 @@ uint64_t cmdsched_handler(void){
       meas_set_settling_time(param.settle_time);
       break;
     }
+    case meas_get_noise_id: {
+      meas_get_noise_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(meas_get_noise_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      if(param.volt_flag) {
+        meas_get_noise_volt(param.channel);
+      }
+      if(param.curr_flag) {
+        meas_get_noise_curr(param.channel);
+      }
+      break;
+    }
 
 
     default: {
