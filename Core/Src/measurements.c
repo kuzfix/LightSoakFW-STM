@@ -277,44 +277,69 @@ void meas_get_noise_volt(uint8_t channel){
 
   rms_noise_convd = daq_raw_to_volt(rms_noise_raw);
 
+  mainser_printf("RMS_VOLTNOISE[mV]:\r\n");
+  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(daq_get_sampling_start_timestamp());
+
   switch(channel){
     case 1:
-      mainser_printf("CH1:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch1 * 1000));
-      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr[0]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch1 * 1000));
       break;
     case 2:
-      mainser_printf("CH2:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch2 * 1000));
-      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr[1]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch2 * 1000));
       break;
     case 3:
-      mainser_printf("CH3:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch3 * 1000));
-      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr[2]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch3 * 1000));
+
       break;
     case 4:
-      mainser_printf("CH4:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch4 * 1000));
-      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr[3]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch4 * 1000));
       break;
     case 5:
-      mainser_printf("CH5:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch5 * 1000));
-      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr[4]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch5 * 1000));
       break;
     case 6:
-      mainser_printf("CH6:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch6 * 1000));
-      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr[5]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch6 * 1000));
       break;
     case 0:
-      mainser_printf("CH1:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch1 * 1000));
-      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr[0]);
-      mainser_printf("CH2:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch2 * 1000));
-      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr[1]);
-      mainser_printf("CH3:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch3 * 1000));
-      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr[2]);
-      mainser_printf("CH4:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch4 * 1000));
-      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr[3]);
-      mainser_printf("CH5:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch5 * 1000));
-      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr[4]);
-      mainser_printf("CH6:RMS_NOISE[mV]:%f\r\n", (float)(rms_noise_convd.ch6 * 1000));
-      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr[5]);
+      mainser_printf("%f", (float)(rms_noise_convd.ch1 * 1000));
+      mainser_printf(":%f", (float)(rms_noise_convd.ch2 * 1000));
+      mainser_printf(":%f", (float)(rms_noise_convd.ch3 * 1000));
+      mainser_printf(":%f", (float)(rms_noise_convd.ch4 * 1000));
+      mainser_printf(":%f", (float)(rms_noise_convd.ch5 * 1000));
+      mainser_printf(":%f\r\n", (float)(rms_noise_convd.ch6 * 1000));
+  }
+
+  mainser_printf("SNR_VOLTNOISE[dB]:\r\n");
+  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(daq_get_sampling_start_timestamp());
+
+  switch(channel){
+    case 1:
+      mainser_printf("%f\r\n", (float)snr[0]);
+      break;
+    case 2:
+      mainser_printf("%f\r\n", (float)snr[1]);
+      break;
+    case 3:
+      mainser_printf("%f\r\n", (float)snr[2]);
+      break;
+    case 4:
+      mainser_printf("%f\r\n", (float)snr[3]);
+      break;
+    case 5:
+      mainser_printf("%f\r\n", (float)snr[4]);
+      break;
+    case 6:
+      mainser_printf("%f\r\n", (float)snr[5]);
+      break;
+    case 0:
+      mainser_printf("%f", (float)snr[0]);
+      mainser_printf(":%f", (float)snr[1]);
+      mainser_printf(":%f", (float)snr[2]);
+      mainser_printf(":%f", (float)snr[3]);
+      mainser_printf(":%f", (float)snr[4]);
+      mainser_printf(":%f\r\n", (float)snr[5]);
   }
 
 
@@ -413,44 +438,70 @@ void meas_get_noise_curr(uint8_t channel){
   shunt_volt = shunt_volt / DAQ_SHUNT_AMP_GAIN_CH6;
   rms_noise_convd.ch6 = shunt_volt / fec_get_shunt_resistance(6);
 
+  //print to mainser
+
+  mainser_printf("RMS_CURRNOISE[uA]:\r\n");
+  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(daq_get_sampling_start_timestamp());
+
   switch(channel){
     case 1:
-      mainser_printf("CH1:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch1));
-      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr[0]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch1));
       break;
     case 2:
-      mainser_printf("CH2:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch2));
-      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr[1]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch2));
       break;
     case 3:
-      mainser_printf("CH3:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch3));
-      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr[2]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch3));
       break;
     case 4:
-      mainser_printf("CH4:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch4));
-      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr[3]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch4));
       break;
     case 5:
-      mainser_printf("CH5:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch5));
-      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr[4]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch5));
       break;
     case 6:
-      mainser_printf("CH6:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch6));
-      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr[5]);
+      mainser_printf("%f\r\n", (float)(rms_noise_convd.ch6));
       break;
     case 0:
-      mainser_printf("CH1:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch1));
-      mainser_printf("CH1:SNR[dB]:%f\r\n", (float)snr[0]);
-      mainser_printf("CH2:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch2));
-      mainser_printf("CH2:SNR[dB]:%f\r\n", (float)snr[1]);
-      mainser_printf("CH3:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch3));
-      mainser_printf("CH3:SNR[dB]:%f\r\n", (float)snr[2]);
-      mainser_printf("CH4:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch4));
-      mainser_printf("CH4:SNR[dB]:%f\r\n", (float)snr[3]);
-      mainser_printf("CH5:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch5));
-      mainser_printf("CH5:SNR[dB]:%f\r\n", (float)snr[4]);
-      mainser_printf("CH6:RMS_NOISE[uA]:%f\r\n", (float)(rms_noise_convd.ch6));
-      mainser_printf("CH6:SNR[dB]:%f\r\n", (float)snr[5]);
+      mainser_printf("%f", (float)(rms_noise_convd.ch1));
+      mainser_printf(":%f", (float)(rms_noise_convd.ch2));
+      mainser_printf(":%f", (float)(rms_noise_convd.ch3));
+      mainser_printf(":%f", (float)(rms_noise_convd.ch4));
+      mainser_printf(":%f", (float)(rms_noise_convd.ch5));
+      mainser_printf(":%f\r\n", (float)(rms_noise_convd.ch6));
+  }
+
+  mainser_printf("SNR_CURRNOISE[dB]:\r\n");
+  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(daq_get_sampling_start_timestamp());
+
+  switch(channel){
+    case 1:
+      mainser_printf("%f\r\n", (float)snr[0]);
+      break;
+    case 2:
+      mainser_printf("%f\r\n", (float)snr[1]);
+      break;
+    case 3:
+      mainser_printf("%f\r\n", (float)snr[2]);
+      break;
+    case 4:
+      mainser_printf("%f\r\n", (float)snr[3]);
+      break;
+    case 5:
+      mainser_printf("%f\r\n", (float)snr[4]);
+      break;
+    case 6:
+      mainser_printf("%f\r\n", (float)snr[5]);
+      break;
+    case 0:
+      mainser_printf("%f", (float)snr[0]);
+      mainser_printf(":%f", (float)snr[1]);
+      mainser_printf(":%f", (float)snr[2]);
+      mainser_printf(":%f", (float)snr[3]);
+      mainser_printf(":%f", (float)snr[4]);
+      mainser_printf(":%f\r\n", (float)snr[5]);
   }
 
 
