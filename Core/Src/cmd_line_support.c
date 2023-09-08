@@ -826,7 +826,7 @@ int32_t cli_cmd_calib_illum_fn(int32_t argc, char** argv){
     param.illum = illum;
     param.curr = curr;
     // schedule command ##########
-    cmdsched_encode_and_add(sched_time, end_of_sequence_id, &param, sizeof(ledctrl_calibillum_param_t));
+    cmdsched_encode_and_add(sched_time, calibillum_id, &param, sizeof(ledctrl_calibillum_param_t));
     // END schedule command ##########
   }
   else{
