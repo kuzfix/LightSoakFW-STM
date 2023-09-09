@@ -96,7 +96,9 @@ void ledctrl_set_current_tempcomp(float current){
  * @param current current in A
  */
 void ledctrl_set_illum(float illum){
-  mainser_printf("SETLEDILLUM:%f\r\n", illum);
+  mainser_printf("SETLEDILLUM:\r\n");
+  prv_meas_print_timestamp(usec_get_timestamp_64());
+  mainser_printf("ILLUM:%f\r\n", illum);
   if(illum == 0){
     ledctrl_set_dac_raw(0);
     prv_ledctrl_current_now_notempcomp = 0;
