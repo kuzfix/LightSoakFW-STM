@@ -61,7 +61,7 @@ extern "C" {
 /* USER CODE BEGIN EM */
 #define COMPILE_DATE __DATE__
 #define COMPILE_TIME __TIME__
-#define FW_VERSION "1.0.36"
+#define FW_VERSION "1.0.38"
 
 /* USER CODE END EM */
 

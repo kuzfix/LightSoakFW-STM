@@ -75,6 +75,7 @@ uint32_t ledctrl_get_raw_from_current(float current){
  * @param current current in A
  */
 void ledctrl_set_current_tempcomp(float current){
+//  mainser_printf("SETLEDCURR:%f\r\n", current);
   //no need to calculate if 0 requested. Set to 0, not LEDCTRL_ZERO_CURRENT_CTRL to get 100% turn off
   if(current == 0){
     ledctrl_set_dac_raw(0);
@@ -95,6 +96,7 @@ void ledctrl_set_current_tempcomp(float current){
  * @param current current in A
  */
 void ledctrl_set_illum(float illum){
+  mainser_printf("SETLEDILLUM:%f\r\n", illum);
   if(illum == 0){
     ledctrl_set_dac_raw(0);
     prv_ledctrl_current_now_notempcomp = 0;
