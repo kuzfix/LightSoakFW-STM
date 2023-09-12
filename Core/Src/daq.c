@@ -207,12 +207,12 @@ t_daq_sample_raw daq_get_from_buffer_curr(uint32_t sample_idx){
  */
 t_daq_sample_convd daq_raw_to_volt(t_daq_sample_raw raw){
   t_daq_sample_convd convd;
-  convd.ch1 = (((float)raw.ch1 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH1;
-  convd.ch2 = (((float)raw.ch2 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH2;
-  convd.ch3 = (((float)raw.ch3 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH3;
-  convd.ch4 = (((float)raw.ch4 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH4;
-  convd.ch5 = (((float)raw.ch5 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH5;
-  convd.ch6 = (((float)raw.ch6 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH6;
+  convd.ch1 = ((((float)raw.ch1 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH1)*DAQ_GAIN_COMP_CH1 + DAQ_VOLT_OFFSET_CH1;
+  convd.ch2 = ((((float)raw.ch2 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH2)*DAQ_GAIN_COMP_CH2 + DAQ_VOLT_OFFSET_CH2;
+  convd.ch3 = ((((float)raw.ch3 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH3)*DAQ_GAIN_COMP_CH3 + DAQ_VOLT_OFFSET_CH3;
+  convd.ch4 = ((((float)raw.ch4 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH4)*DAQ_GAIN_COMP_CH4 + DAQ_VOLT_OFFSET_CH4;
+  convd.ch5 = ((((float)raw.ch5 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH5)*DAQ_GAIN_COMP_CH5 + DAQ_VOLT_OFFSET_CH5;
+  convd.ch6 = ((((float)raw.ch6 / DAQ_MAX_ADC_VAL) * DAQ_VREF)/DAQ_VOLT_AMP_GAIN_CH6)*DAQ_GAIN_COMP_CH6 + DAQ_VOLT_OFFSET_CH6;
   convd.timestamp = raw.timestamp;
 
   return convd;

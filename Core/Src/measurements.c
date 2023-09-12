@@ -276,6 +276,13 @@ void meas_get_noise_volt(uint8_t channel){
   snr[5] = 20*log(avg.ch6 / rms_noise_raw.ch6);
 
   rms_noise_convd = daq_raw_to_volt(rms_noise_raw);
+  rms_noise_convd.timestamp = rms_noise_raw.timestamp;
+  rms_noise_convd.ch1 = (((float)rms_noise_raw.ch1 / DAQ_MAX_ADC_VAL) * DAQ_VREF)*DAQ_VOLT_AMP_GAIN_CH1;
+  rms_noise_convd.ch2 = (((float)rms_noise_raw.ch2 / DAQ_MAX_ADC_VAL) * DAQ_VREF)*DAQ_VOLT_AMP_GAIN_CH2;
+  rms_noise_convd.ch3 = (((float)rms_noise_raw.ch3 / DAQ_MAX_ADC_VAL) * DAQ_VREF)*DAQ_VOLT_AMP_GAIN_CH3;
+  rms_noise_convd.ch4 = (((float)rms_noise_raw.ch4 / DAQ_MAX_ADC_VAL) * DAQ_VREF)*DAQ_VOLT_AMP_GAIN_CH4;
+  rms_noise_convd.ch5 = (((float)rms_noise_raw.ch5 / DAQ_MAX_ADC_VAL) * DAQ_VREF)*DAQ_VOLT_AMP_GAIN_CH5;
+  rms_noise_convd.ch6 = (((float)rms_noise_raw.ch6 / DAQ_MAX_ADC_VAL) * DAQ_VREF)*DAQ_VOLT_AMP_GAIN_CH6;
 
   mainser_printf("RMS_VOLTNOISE[mV]:\r\n");
   prv_meas_print_ch_ident(channel);
