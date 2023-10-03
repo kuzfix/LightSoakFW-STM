@@ -71,16 +71,6 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/adc.c.obj: /Users/matej/Documents/pr
   /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/lock.h \
   /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/stdio.h
 
-CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/buf.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/buf.c \
-  /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/buf.h \
-  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/lib/gcc/arm-none-eabi/12.2.1/include/stdint.h \
-  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/stdint.h \
-  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/machine/_default_types.h \
-  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/features.h \
-  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/_newlib_version.h \
-  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/_intsup.h \
-  /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
-
 CMakeFiles/LightSoakFW-STM.elf.dir/Core/Src/cmd_line_support.c.obj: /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/cmd_line_support.c \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_line_support.h \
   /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
@@ -3032,6 +3022,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/stm32g4xx_it.c:
 
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/stm32g4xx_hal_msp.c:
+
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/micro_sec.c:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/measurements.c:
@@ -3044,6 +3036,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/global_callbacks.c:
 
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c:
+
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/dma.h:
 
 /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/types.h:
@@ -3052,7 +3046,9 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/usart.h:
 
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/debug.c:
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main.h:
+
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/daq.c:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/cmd_scheduler.c:
 
@@ -3103,10 +3099,6 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/machine/types.h:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/cmd_line_support.h:
-
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/front_end_control.c:
-
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/buf.c:
 
 /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/sys/lock.h:
 
@@ -3175,10 +3167,6 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_dac_ex.h:
 
 /Applications/ArmGNUToolchain/12.2.rel1/arm-none-eabi/arm-none-eabi/include/machine/stdlib.h:
-
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/stm32g4xx_hal_msp.c:
-
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/buf.h:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c:
 
@@ -3280,10 +3268,6 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc.h:
 
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/daq.c:
-
-/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/main.h:
-
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Inc/led_control.h:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_exti.h:
@@ -3297,6 +3281,8 @@ CMakeFiles/LightSoakFW-STM.elf.dir/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h:
+
+/Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Core/Src/debug.c:
 
 /Users/matej/Documents/projects/masters-code-stm/LightSoakFW-STM/Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_ll_dma.h:
 
