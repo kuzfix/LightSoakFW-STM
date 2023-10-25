@@ -83,6 +83,30 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
   cmdsched_q_push(cmd);
   dbg(Debug, "cmd scheduled at %llu\n", exec_time);
   mainser_printf("SCHED_OK\r\n");
+  //request new cmd if time
+  //return time left until next cmd is to be executed
+  if(cmdsched_q_count() == 0){
+    //nothing in queue, we have a lot of time, request sched
+    cmdsprt_request_new_cmds();
+    return 0;
+  }
+  cmd = cmdsched_q_peek();
+
+  uint64_t tnow = usec_get_timestamp_64();
+  //check that if time left is actually positive (scheduled cmds can be late...)
+  if((tnow + CMDSCHED_POP_BEFORE_EXEC_US) >  cmd.exec_time){
+    //we are already late, no time to transfer cmds. return 0
+    return 0;
+  }
+
+  uint64_t time_to_cmd =  cmd.exec_time - usec_get_timestamp_64() - CMDSCHED_POP_BEFORE_EXEC_US;
+  if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
+    // send request for new cmds to put in cmd queue
+    cmdsprt_request_new_cmds();
+  }
+  // ##
+
+
   return 0;
 }
 
@@ -357,6 +381,14 @@ uint64_t cmdsched_handler(void){
     return 0xFFFFFFFFFFFFFFFF;
   }
   cmd = cmdsched_q_peek();
+
+  uint64_t tnow = usec_get_timestamp_64();
+  //check that if time left is actually positive (scheduled cmds can be late...)
+  if((tnow + CMDSCHED_POP_BEFORE_EXEC_US) >  cmd.exec_time){
+    //we are already late, no time to transfer cmds. return 0
+    return 0;
+  }
+
   uint64_t time_to_cmd =  cmd.exec_time - usec_get_timestamp_64() - CMDSCHED_POP_BEFORE_EXEC_US;
   if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
     // send request for new cmds to put in cmd queue

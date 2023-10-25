@@ -14,10 +14,10 @@
 
 //todo: determine size
 #define CMDSCHED_PARAM_BUFF_LEN 32
-#define CMDSCHED_QUEUE_SIZE 256UL
+#define CMDSCHED_QUEUE_SIZE 512UL
 //cmds are poped from the queue and parsed some time before execution.
 //When this happens, code waits in blocking until the time of execution.
-#define CMDSCHED_POP_BEFORE_EXEC_US 1000
+#define CMDSCHED_POP_BEFORE_EXEC_US 500
 
 //todo: implement a check so that cmds are scheduled after now and cronologically one after the other
 

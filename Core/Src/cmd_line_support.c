@@ -37,7 +37,7 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("measuredump", cli_cmd_dump_fn, "Measure and dump buffer. -c #ch# to select channel. No param for all channels. -n #num# to set number of samples. -VOLT/-CURR/-IV to select what to dump");
   lwshell_register_cmd("setledcurr", cli_cmd_setledcurr_fn, "Set LED current. -i #current[A]# to set current. Temperature compensated");
   lwshell_register_cmd("setledillum", cli_cmd_setledillum_fn, "Set LED illumination. -illum #illumination[sun]# to set led. Temperature compensated");
-  lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[ms]# to set time. No scheduling.");
+  lwshell_register_cmd("blinkled", cli_cmd_blinkled_fn, "Blink LED. -i #current[A]# to set current. -t #time[us]# to set time. -n to set number of blinks. No scheduling.");
   lwshell_register_cmd("resettimestamp", cli_cmd_reset_timestamp_fn, "Reset internal 64bit microseconds timer to 0. No scheduling.");
   lwshell_register_cmd("gettimestamp", cli_cmd_get_timestamp_fn, "Get internal 64bit microseconds timer value. No scheduling.");
   lwshell_register_cmd("flashmeasure", cli_cmd_flash_measure_fn, "Flash voltage measurement. -c #ch# to select channel. -illum #illum[sun]# to set illumination. -t #time[us]# to set flash duration. <<-m #time[us]# to set measurement time. -n #num# to set number of averages>> or <<-DUMP to dump buffer>>.");
@@ -386,6 +386,7 @@ int32_t cli_cmd_setledillum_fn(int32_t argc, char** argv){
 int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
   float current;
   uint32_t dur;
+  uint32_t numblinks;
   //parse current
   if(cmdsprt_is_arg("-i", argc, argv)){
     cmdsprt_parse_float("-i", &current, argc, argv);
@@ -394,9 +395,17 @@ int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
     dbg(Warning, "CLI CMD Error\r\n");
     return -1;
   }
-//parse duration
+  //parse duration
   if(cmdsprt_is_arg("-t", argc, argv)){
     cmdsprt_parse_uint32("-t", &dur, argc, argv);
+  }
+  else{
+    dbg(Warning, "CLI CMD Error\r\n");
+    return -1;
+  }
+  //parse numblinks
+  if(cmdsprt_is_arg("-n", argc, argv)){
+    cmdsprt_parse_uint32("-n", &numblinks, argc, argv);
   }
   else{
     dbg(Warning, "CLI CMD Error\r\n");
@@ -413,9 +422,12 @@ int32_t cli_cmd_blinkled_fn(int32_t argc, char** argv){
     return -1;
   }
 
-  ledctrl_set_current_tempcomp(current);
-  usec_delay(dur);
-  ledctrl_set_current_tempcomp(0.0f);
+  for(uint32_t i = 0; i < numblinks; i++){
+    ledctrl_set_current_tempcomp(current);
+    usec_delay(dur);
+    ledctrl_set_current_tempcomp(0.0f);
+    usec_delay(dur);
+  }
 
   return 0;
 }
