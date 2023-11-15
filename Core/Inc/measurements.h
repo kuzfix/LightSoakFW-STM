@@ -32,6 +32,8 @@
 
 #define NOISE_MEASURE_NUMSAMPLES 2000
 
+#define MEAS_IV_CHAR_MIN_CURR_THR 0.08 //uA
+
 //each approach iteration, shunt voltage is calculated and compensated
 //for better stability we can compensate a bit less
 #define MEAS_FORCE_VOLT_APPROACH_K 1.0f
@@ -71,7 +73,7 @@ void meas_get_noise_curr(uint8_t channel);
 void meas_get_voltage_and_current(uint8_t channel);
 
 //only single channel
-void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident);
+float meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident);
 
 //call with 0 for all channels
 void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt);

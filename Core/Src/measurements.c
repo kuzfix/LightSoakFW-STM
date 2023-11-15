@@ -757,8 +757,9 @@ void meas_get_voltage_and_current(uint8_t channel){
  * @param voltage voltage to force
  * @param disable_current_when_finished if 1, disables current when finished.
  * @param noident if 1, does not print identification string and timestamp. usefull if called from iv characteristic funct
+ * @return current measured. used to terminate IV curve mesurements when current reaches 0
  */
-void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident){
+float meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident){
   //todo: change delays to RTOS delays
 
   t_daq_sample_raw raw_volt, raw_curr;
@@ -934,6 +935,35 @@ void meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_w
   //evaluate time and print
   t2 = usec_get_timestamp();
   dbg(Debug, "MEAS:meas_get_IV_point() took: %lu usec\r\n", t2-t1);
+
+  //return current measured (for terminating IV curve measurements when current reaches 0)
+
+  float retcur;
+  switch (channel) {
+    case 1:
+      retcur = convd_curr.ch1;
+      break;
+    case 2:
+      retcur = convd_curr.ch2;
+      break;
+    case 3:
+      retcur = convd_curr.ch3;
+      break;
+    case 4:
+      retcur = convd_curr.ch4;
+      break;
+    case 5:
+      retcur = convd_curr.ch5;
+      break;
+    case 6:
+      retcur = convd_curr.ch6;
+      break;
+    default:
+      retcur = 0.0f;
+      break;
+  }
+
+  return retcur;
 
 }
 
@@ -1188,6 +1218,7 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
   num_iv_points = (uint32_t)(((end_volt - start_volt)/step_volt) + 2);
   dbg(Debug, "IV characteristic num points: %lu\r\n", num_iv_points);
 
+  float curr;
   for(uint32_t n = 0 ; n < num_iv_points ; n++){
 
     //determine setpoint
@@ -1200,7 +1231,12 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
       setp = start_volt + n*step_volt;
     }
     mainser_printf("[%lu]", n);
-    meas_get_IV_point(channel, setp, 0, 1);
+    curr = meas_get_IV_point(channel, setp, 0, 1);
+    if(curr < MEAS_IV_CHAR_MIN_CURR_THR){
+      //current is below threshold. stop measurements
+      dbg(Debug, "Current below threshold. Stopping IV char measurements\r\n");
+      break;
+    }
   }
   mainser_printf("END_IVCHAR\r\n");
   //turn off current stuff
