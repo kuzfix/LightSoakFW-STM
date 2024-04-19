@@ -205,7 +205,7 @@ int main(void)
 
     dbg(Warning, "Starting main loop!\r\n");
 
-    uint64_t time_to_cmd;
+    //uint64_t time_to_cmd;
     while(1) {
       if (mainser_available()) {
         char c = mainser_read();

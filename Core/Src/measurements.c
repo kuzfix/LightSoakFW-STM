@@ -239,6 +239,7 @@ void meas_get_noise_volt(uint8_t channel){
   t_daq_sample_raw rms_noise_raw;
   t_daq_sample_convd rms_noise_convd;
   t1 = usec_get_timestamp();
+  rms_noise_raw.timestamp = t1;
   dbg(Debug, "MEAS:meas_get_noise_volt()\r\n");
   assert_param(channel <= 6);
   daq_single_shot_volt(NOISE_MEASURE_NUMSAMPLES);
@@ -1067,7 +1068,7 @@ void prv_meas_dump_from_buffer_human_readable_iv(uint8_t channel, uint32_t num_s
   uint32_t t1, t2;
   t_daq_sample_raw sample_raw_volt, sample_raw_curr;
   t_daq_sample_convd sample_convd_volt, sample_convd_curr;
-  float ch_volt;
+  //float ch_volt;
 
   t1 = usec_get_timestamp();
 

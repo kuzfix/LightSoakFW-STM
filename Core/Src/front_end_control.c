@@ -469,6 +469,7 @@ TIM_HandleTypeDef* prv_get_pwm_timer_handle(enum timEnum timer){
   else if(timer == timer4){
     return &htim4;
   }
+  return NULL;
 }
 
 
@@ -479,8 +480,8 @@ TIM_HandleTypeDef* prv_get_pwm_timer_handle(enum timEnum timer){
  * @param voltage DC component of PWM signal
  */
 uint32_t prv_get_pwm_value(float voltage){
-  const float supplyVoltage = 3.3f; // MCU supply voltage
-  const uint16_t counterPeriod = 4095; // PWM counter period
+  //const float supplyVoltage = 3.3f; // MCU supply voltage
+  //const uint16_t counterPeriod = 4095; // PWM counter period
 
   if(voltage > FEC_MCU_VOLTAGE) {
     voltage = FEC_MCU_VOLTAGE; // Cap at max voltage
@@ -525,6 +526,7 @@ float fec_get_shunt_resistance(uint8_t channel){
     break;
 
   }
+  return -1.0;
 }
 
 /**

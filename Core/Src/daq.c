@@ -310,6 +310,8 @@ t_daq_sample_raw daq_volt_raw_get_average(uint32_t num_samples){
   assert_param(num_samples < 65535);
 
   uint32_t t1, t2;
+  UNUSED(t1);
+  UNUSED(t2);
 
   //accumulator for each channel
   uint32_t sum_array[DAQ_NUM_CH] = {0};
@@ -356,6 +358,8 @@ t_daq_sample_raw daq_curr_raw_get_average(uint32_t num_samples){
   assert_param(num_samples < 65535);
 
   uint32_t t1, t2;
+  UNUSED(t1);
+  UNUSED(t2);
 
   //accumulator for each channel
   uint32_t sum_array[DAQ_NUM_CH] = {0};

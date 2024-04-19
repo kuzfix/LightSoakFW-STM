@@ -1,5 +1,7 @@
 # LightSoakV1 Firmware
-This is the firmware for the LightSoakV1 project, developed as a part of my Master's thesis. It's intended to run on LightSoakV1 hardware. See https://github.com/mrmp17/LightSoak-Hardware for hardware design files. For Python data logging software, see https://github.com/mrmp17/LightSoakFW-Python.
+This is the firmware for the LightSoakV1 project, developed as a part of the original author's Master's thesis (original: https://github.com/mrmp17/LightSoakFW-STM). It's intended to run on LightSoakV1 hardware. See https://github.com/kuzfix/LightSoak-Hardware for hardware design files. For Python data logging software, see https://github.com/kuzfix/LightSoakFW-Python.
+
+This fork has been moved to the STM32CubeIDE.
 
 ## Light soaking measurements
 Perovskite solar cells exhibit a phenomenon called light soaking, where the cell's forward voltage increases when exposed to light for some time. The relaxation of which is challenging to measure, as to be able to measure forward voltage, the cell needs to be illuminated, which in turn changes the relaxation curve.
@@ -21,7 +23,7 @@ LightSoakV1 hardware is a specialized data acquisition device, designed specific
   - Temperature compensated for constant light output
 - DUT temperature control with TEC-1091 module (software implemented only in Python data logging software)
 
-For specs, see https://github.com/mrmp17/LightSoak-Hardware.
+For specs, see https://github.com/kuzfix/LightSoak-Hardware.
 
 ## Command line interface
 
