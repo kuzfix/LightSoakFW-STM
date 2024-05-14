@@ -52,26 +52,43 @@ List of all commands can be printed via CLI by issuing a *help* command. Help fo
 - ***gettimestamp*** - Returns the microsecond timestamp counter.
 - ***resettimestamp*** - Resets the microsecond timestamp counter to zero. This counter is used for timestamping measurements.
 
-- ***getvolt*** - Measures the voltage on specified channel/s. Measurement is the average of a certain number of samples. See *getnumavg* and *setnumavg*.
-- ***getcurr*** - Measures the current on specified channel/s. Measurement is the average of a certain number of samples. See *getnumavg* and *setnumavg*. Does not change any current measuring parameters. By default, the measurement will be zero, as current measurement circuitry is disconnected.
+- ***getvolt*** - Measures the voltage on specified channel/s [V]. Measurement is the average of a certain number of samples. See *getnumavg* and *setnumavg*.
+
+- ***getcurr*** - Measures the current on specified channel/s [uA]. Measurement is the average of a certain number of samples. See *getnumavg* and *setnumavg*. Does not change any current measuring parameters. By default, the measurement will be zero, as current measurement circuitry is disconnected.
+
+- ***setnumavg*** - Set number of measurements to average. Applies to *getvolt* and *getcurr*. Buffer size for measurement results is 12000, meaning max. value can be 12000 if only 1 channel is to be mesured, or 2000 if all 6 are to be measured - not tested!
+Example: *setnumavg -n 20* Set number of measurements to average to 20.
+
 - ***getivpoint*** - Enables current measurement circuitry and measures current at a specified voltage. This measurement can take a while, depending on various conditions. See *setdutsettle* and *getdutsettle* to specify the settling time of DUT.
 - ***getivchar*** - Measures an IV curve on specified channel. Only one channel at the same time is supported. This measurement can take a while, depending on various conditions. It consists of multiple *getivpoint* measurements.
 - ***measuredump*** - Dumps a certain number of samples (at full 100kHz sample rate) for specified channel/s. A maximum number of samples is 2000 (20ms). Voltage, current or both signals can be dumped, as both are sampled concurrently. The transfer of data can take a while, depending on the number of samples and the baud rate.
 - ***flashmeasure*** - Performs a flashmeasure measurement on specified channel/s. This measurement consists of a short pulse of light, during which forward voltage is measured. By defaul, voltage is measured as an average of a certain number of samples at a certain time during the flash. *-DUMP* parameter can be used to dump the voltage samples of the whole flashmeasure measurement.
 - ***getnoise*** - Evaluates the noise on input channels (voltage current or both) as RMS and SNR ratio. Evaluated on maximum possible number of buffered samples (2000).
 
-- ***setledcurr*** - Sets LED current. This is temperature compensated to a reference temperature of 25C. Actual led current might differ due to this, but the light output will be constant for a given current at any LED temperature.
+- ***setledcurr*** - Sets LED current. This is temperature compensated to a reference temperature of 25 C. Actual led current might differ due to this, but the light output will be constant for a given current at any LED temperature. (Max current is 1.5 A, allowing for temperature compensation even a bit less. Practical resolution is about 1% or 15 mA (compared to theoretical 1/4096 or 0.37 mA))
 - ***setledillum*** - Sets illumination in unit of Sun. Temperature compensated. Calibration should be done with *calibillum* as a point of LED current and illumination measured by external equipment. This should be configured for every test and is not persistent across reboots.
-- ***calibillum*** - Calibrates the relation between LED current and illumination. Relation is assumed to be linear. Calibrate at the illumination that will be used during the test for best accuracy. Not persistent across reboots.
-
+- ***calibillum*** - Calibrates the relation between LED current and illumination. Relation is assumed to be linear. Calibrate at the illumination that will be used during the test for best accuracy. Not persistent across reboots. Parameters:
+	- *-illum*: illumination, unit: [sun]
+	- *-i*: current, unit: [A]
+Example: *calibillum -illum 1.0 -i 1.4* means that at current of 1.4 A, an illumination of 1.0 suns is achieved.
+To get the calibration parameters, use *setledcurr* to set the current, and measure the achieved illumination with external equipment.
 
 - ***enablecurrent*** - Connects the current measurement circuitry on a specific channel/s.
+Example 1: *enablecurrent* Enable current measurement circuitry on all channels.
+Example 2: *enablecurrent -c 3* Enable current measurement circuitry on channel 3.
+
 - ***disablecurrent*** - Disconnects the current measurement circuitry on a specific channel/s.
+Example 1: *disablecurrent* Disable current measurement circuitry on all channels.
+Example 2: *disablecurrent -c 3* Disable current measurement circuitry on channel 3.
+
 - ***setshunt*** - Manually sets shunt range on a specific channel/s. Defaults to 1000X. Before enabling current circuitry, always start at 1X range to avoid damage. Recomended ranges for currents are:
   - 1X: Above 0.38mA
   - 10X: Above 38uA
   - 100X: Above 3.8uA
   - 1000X: Below 3.8uA
+Example 1: *setshunt -1x*	Set 1X range on all channels
+Example 2: *setshunt -c 1 -1000x* Set 1000X range on channel 1
+
 - ***setforcevolt*** - Manually sets voltage to be forced on a specific channel/s. Keep in mind the actual voltage on DUT deffers by the voltage drop on the shunt resistor. Always measure the actual voltage on DUT with *getvolt*.
 - ***autorange*** - Manually trigger shunt autoranging on all channels.
 
