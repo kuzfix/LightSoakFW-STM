@@ -62,7 +62,16 @@ Example: *setnumavg -n 20* Set number of measurements to average to 20.
 - ***getivpoint*** - Enables current measurement circuitry and measures current at a specified voltage. This measurement can take a while, depending on various conditions. See *setdutsettle* and *getdutsettle* to specify the settling time of DUT.
 - ***getivchar*** - Measures an IV curve on specified channel. Only one channel at the same time is supported. This measurement can take a while, depending on various conditions. It consists of multiple *getivpoint* measurements.
 - ***measuredump*** - Dumps a certain number of samples (at full 100kHz sample rate) for specified channel/s. A maximum number of samples is 2000 (20ms). Voltage, current or both signals can be dumped, as both are sampled concurrently. The transfer of data can take a while, depending on the number of samples and the baud rate.
+Parameters:
+	- *-c* - channel (1-6 or 0 for all (default))
+	- *-n* - number of samples
+	- *-VOLT/-CURR/-IV* - measure either voltage or current or both
+Example: *measuredump -c 0 -n 1000 -VOLT* will measure voltage on all channels for a time period of 10ms.
+
 - ***flashmeasure*** - Performs a flashmeasure measurement on specified channel/s. This measurement consists of a short pulse of light, during which forward voltage is measured. By defaul, voltage is measured as an average of a certain number of samples at a certain time during the flash. *-DUMP* parameter can be used to dump the voltage samples of the whole flashmeasure measurement.
+Example: *flashmeasure -illum 1.0 -t 100 -DUMP* will generate a 100us long pulse of light with 1 sun irradiance and return all voltage measurements during the duration of the pulse.
+Example: *flashmeasure -illum 1.0 -t 100 -m 10 -n 4* will generate a 100us long pulse of light with 1 sun irradiance and start measuring voltages 10us after the start of the pulse. The result will be the average of 4 measurements.
+
 - ***getnoise*** - Evaluates the noise on input channels (voltage current or both) as RMS and SNR ratio. Evaluated on maximum possible number of buffered samples (2000).
 
 - ***setledcurr*** - Sets LED current. This is temperature compensated to a reference temperature of 25 C. Actual led current might differ due to this, but the light output will be constant for a given current at any LED temperature. (Max current is 1.5 A, allowing for temperature compensation even a bit less. Practical resolution is about 1% or 15 mA (compared to theoretical 1/4096 or 0.37 mA))

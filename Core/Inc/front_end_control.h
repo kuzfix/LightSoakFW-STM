@@ -14,7 +14,7 @@
 
 #define FEC_NUM_CHANNELS 6
 #define FEC_MCU_VOLTAGE 3.2969f
-#define FEC_TIMER_RELOAD 4095
+#define FEC_TIMER_RELOAD 2047	//changed from 4095 to 2047 to double the frequency and reduce ripple from +-1.2mV to +-0.3mV
 #define FEC_CELL_NEG_OFFSET 1.0f
 
 //todo: check if 4095 or 4096 is corrct for calcs?
