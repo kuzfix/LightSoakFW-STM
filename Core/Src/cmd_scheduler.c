@@ -254,7 +254,7 @@ uint64_t cmdsched_handler(void){
     case fec_disable_current_id: {
       fec_enable_disable_current_param_t param;
       mainser_printf("\r\n");
-      cmdsched_decode(cmd, &param, sizeof(fec_setshunt_param_t));
+      cmdsched_decode(cmd, &param, sizeof(fec_enable_disable_current_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
       fec_disable_current(param.channel);
@@ -263,7 +263,7 @@ uint64_t cmdsched_handler(void){
     case setshunt_id: {
       fec_setshunt_param_t param;
       mainser_printf("\r\n");
-      cmdsched_decode(cmd, &param, sizeof(fec_enable_disable_current_param_t));
+      cmdsched_decode(cmd, &param, sizeof(fec_setshunt_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
 
