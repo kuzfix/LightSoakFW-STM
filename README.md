@@ -75,7 +75,11 @@ Example: *flashmeasure -illum 1.0 -t 100 -m 10 -n 4* will generate a 100us long 
 - ***getnoise*** - Evaluates the noise on input channels (voltage current or both) as RMS and SNR ratio. Evaluated on maximum possible number of buffered samples (2000).
 
 - ***setledcurr*** - Sets LED current. This is temperature compensated to a reference temperature of 25 C. Actual led current might differ due to this, but the light output will be constant for a given current at any LED temperature. (Max current is 1.5 A, allowing for temperature compensation even a bit less. Practical resolution is about 1% or 15 mA (compared to theoretical 1/4096 or 0.37 mA))
+Warning: The system does NOT keep correcting LED current to compensate for temperature - it could interfere with timing of other commands. Instead periodically schedule the same command when there is enough time to do so.
+
 - ***setledillum*** - Sets illumination in unit of Sun. Temperature compensated. Calibration should be done with *calibillum* as a point of LED current and illumination measured by external equipment. This should be configured for every test and is not persistent across reboots.
+Warning: The system does NOT keep correcting LED current to compensate for temperature - it could interfere with timing of other commands. Instead periodically schedule the same command when there is enough time to do so.
+
 - ***calibillum*** - Calibrates the relation between LED current and illumination. Relation is assumed to be linear. Calibrate at the illumination that will be used during the test for best accuracy. Not persistent across reboots. Parameters:
 	- *-illum*: illumination, unit: [sun]
 	- *-i*: current, unit: [A]
@@ -107,6 +111,11 @@ Example 2: *setshunt -c 1 -1000x* Set 1000X range on channel 1
 ### Command scheduling
 Most commands can be scheduled to execute at a certain time by appending *-sched ###* parameter to the command, where ### is the time in microseconds (referenced to the internal microsecond timestamp). Not all commands can be scheduled - this is indicated in the command help in CLI. 
 Scheduling can be done manually through CLI but is intended for test sequence programming in Python data logging software.
+
+#Limitations:#
+- The minimum time separation between 2 commands in the schedule is about 5 ms. The limiting factor is the time required to output debug messages on the debug serial interface. This limitation can be reduced by changing the debug level in debug.h. Any lower time limitations need to be further tested (Example: Current measurement takes about 0.64ms and measurement results reporting apporoximately 0.6ms more. With a bit of overhead that means each measurement takes a bit over 1.4ms to complete if debug level is set to DBG_WARNING).
+- Number of commands sent to the scheduler can also be a limiting factor! By default the minimum dead time before the measurements start is 10s precisely for this reason. However, if there are many commands in short sucession, this may not be enough. If the "ENDSEQUENCE" has not yet been received the firmware asks the PC for more commands only if there is more than 50 ms break in the schedule. The maximum length of the scheduler queue is 512 commands. If the sequence is longer, the scheduler will fetch more commands when time in the schedule allows it.
+- Python script can also be a limiting factor!
 
 ## Debug UART interface
 The device has a second UART interface exposed on the STLINK debug connector. It provides some usefull debug information like warnings, errors, crash reports, time it takes for measurements to complete, measurement details, etc. To access, connect a STLINK with a 14-pin cable and open the STLINK's virtual serial port with 230400 baud rate.
