@@ -6,6 +6,7 @@
 #include "debug.h"
 #include <stdarg.h>
 #include "usart.h"
+#include "UserGPIO.h"
 
 void dbg(DebugLevel level, const char* format, ...) {
   static char buffer[DEBUG_BUFFER_SIZE];
@@ -46,7 +47,6 @@ void dbg(DebugLevel level, const char* format, ...) {
     default:
       break;
   }
-
 
   //start uart transmission
   HAL_UART_Transmit_DMA(DEBUG_UART_HANDLE, (uint8_t *)(buffer), msg_len_cnt);
