@@ -2,6 +2,7 @@
 // Created by Matej Planinšek on 01/08/2023.
 //
 #include "measurements.h"
+#include "UserGPIO.h"
 
 /**
  * @brief measures num_samples on channel, sends data to UART
@@ -530,10 +531,9 @@ void meas_get_current(uint8_t channel){
   t_daq_sample_convd meas;
   uint32_t t1, t2;
 
+  D3On();
   t1= usec_get_timestamp();
-
   dbg(Debug, "MEAS:meas_get_current()\r\n");
-
   //measure and print
   meas = daq_single_shot_curr_no_autorng(prv_meas_num_avg);
   meas_check_out_of_rng_curr(meas, channel);
@@ -548,6 +548,7 @@ void meas_get_current(uint8_t channel){
   //report shunt config to debug serial
   t2 = usec_get_timestamp();
   dbg(Debug, "meas_get_current() took: %lu usec\r\n", t2-t1);
+  D3Off();
 
 }
 
