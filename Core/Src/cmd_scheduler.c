@@ -3,6 +3,7 @@
 //
 
 #include "cmd_scheduler.h"
+#include "UserGPIO.h"
 
 // time of last scheduled cmd for chronological scheduling check
 static uint64_t cmdsched_last_scheduled_time = 0;
