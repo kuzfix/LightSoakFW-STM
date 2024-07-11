@@ -37,6 +37,7 @@
 #include "lwshell/lwshell.h"
 #include "cmd_line_support.h"
 #include "ds18b20.h"
+#include "UserGPIO.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -138,7 +139,8 @@ int main(void)
   dbg(Warning, "CLI initialized!\r\n");
 
   //turn on active LED
-  HAL_GPIO_WritePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin, GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(DBG_LED_1_GPIO_Port, DBG_LED_1_Pin, GPIO_PIN_SET);
+  L1On();
   dbg(Warning, "Ready LED on.\r\n");
 
 //  fec_set_shunt_10x(1);
@@ -206,7 +208,7 @@ int main(void)
 
     dbg(Warning, "Starting main loop!\r\n");
 
-    //uint64_t time_to_cmd;
+    uint64_t time_to_cmd=0;
     while(1) {
       if (mainser_available()) {
         char c = mainser_read();
@@ -214,22 +216,22 @@ int main(void)
 
       }
 
-      if(HAL_GetTick()-temptime > 1000){
+      if ((HAL_GetTick()-temptime > 1000) && (time_to_cmd > LEDCTRL_TEMP_READ_TIME_US)){
+      	D1On();
         temptime = HAL_GetTick();
         ds18b20_handler();
         if(LEDCTRL_PERIODIC_TEMP_REPORT_MAINSER){
           mainser_printf("\r\n");
           ledctrl_print_temperature_mainser();
         }
+        D1Off();
       }
 
       if(HAL_GetTick()-ledtemptime > 1000){
         ledtemptime = HAL_GetTick();
         ledctrl_handler();
       }
-
-      cmdsched_handler();
-
+      time_to_cmd = cmdsched_handler();
     }
 
 //    HAL_Delay(30000);
