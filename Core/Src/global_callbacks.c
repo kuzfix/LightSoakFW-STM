@@ -3,6 +3,7 @@
 //
 
 #include "global_callbacks.h"
+#include "UserGPIO.h"
 
 
 //timer period elapsed callback
@@ -11,7 +12,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
   if(htim->Instance == TIM20)
   {
     // Your code here
-    HAL_GPIO_TogglePin(DBG_PAD_1_GPIO_Port, DBG_PAD_1_Pin);
+	//D1Tgl();
   }
 
   //check if the interrupt is from the usec timer
@@ -26,9 +27,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
   if(hadc->Instance == DAQ_VOLT_ADC){
     daq_sampling_done_volt = 1;
     daq_sampling_volt_done_timestamp = usec_get_timestamp_64();
-    HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_RESET);
+    //HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_RESET);
+    D2Off();
     //turn off LED
-    HAL_GPIO_WritePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin, GPIO_PIN_RESET);
+    //HAL_GPIO_WritePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin, GPIO_PIN_RESET);
+    L2Off();
   }
   else if(hadc->Instance == DAQ_CURR_ADC){
     daq_sampling_done_curr = 1;

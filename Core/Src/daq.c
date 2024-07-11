@@ -3,6 +3,7 @@
 //
 
 #include "daq.h"
+#include "UserGPIO.h"
 
 // voltage ADC buffer
 volatile uint16_t g_daq_buffer_volt[DAQ_BUFF_SIZE] = {0};
@@ -90,10 +91,12 @@ void daq_start_sampling(void){
   daq_sampling_done_curr = 0;
 
   //turn on debug pad (for logic analyzer debug)
-  HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(DBG_PAD_2_GPIO_Port, DBG_PAD_2_Pin, GPIO_PIN_SET);
+  D2On();
 
   //turn on LED
-  HAL_GPIO_WritePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin, GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(DBG_LED_2_GPIO_Port, DBG_LED_2_Pin, GPIO_PIN_SET);
+  L2On();
 
   //start timer
   HAL_TIM_Base_Start_IT(DAQ_SAMPLE_TIMER_HANDLE);
