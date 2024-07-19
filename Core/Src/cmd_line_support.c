@@ -164,13 +164,13 @@ int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv){
   }
   else{
     //immediate command
-    meas_get_IV_point(ch, cmdvolt, 1, 0);
+    meas_get_exact_IV_point(ch, cmdvolt, 1, 0);
   }
   return 0;
 }
 
 int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
-  uint32_t ch;
+  uint32_t ch, Dt=10, N=1;
   float start, end, step;
   //parse ch
   if(cmdsprt_is_arg("-c", argc, argv)){
@@ -212,6 +212,23 @@ int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
     return -1;
   }
 
+  //parse Dt
+  if(cmdsprt_is_arg("-st", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-st", &Dt, argc, argv);
+    if ((Dt<1) || (Dt>65535) ) {
+    	dbg(Warning, "CLI CMD Error: invalid -st value\r\n");
+    }
+  }
+
+  //parse N
+  if(cmdsprt_is_arg("-sn", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-sn", &N, argc, argv);
+    if ((N<1) || (N>Dt) ) {
+    	dbg(Warning, "CLI CMD Error: invalid -sn value\r\n");
+    }
+  }
 
   //scheduled or immediate
 
@@ -225,12 +242,14 @@ int32_t cli_cmd_getiv_char_fn(int32_t argc, char** argv){
     param.start_volt = start;
     param.end_volt = end;
     param.step_volt = step;
+    param.step_time = Dt;
+    param.Npoints_per_step = N;
     cmdsched_encode_and_add(sched_time, meas_get_iv_characteristic_id, &param, sizeof(meas_get_iv_characteristic_param_t));
     // END schedule command ##########
   }
   else{
     //immediate command
-    meas_get_iv_characteristic(ch, start, end, step);
+    meas_get_iv_characteristic(ch, start, end, step, Dt, N);
   }
   return 0;
 }

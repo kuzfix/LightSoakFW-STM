@@ -5,9 +5,12 @@
 #include "cmd_scheduler.h"
 #include "UserGPIO.h"
 
+//Scheduler running status flag
+static uint8_t sch_running=0;
+#define isSchRunning() (sch_running == 1) //safety macro
+
 // time of last scheduled cmd for chronological scheduling check
 static uint64_t cmdsched_last_scheduled_time = 0;
-
 
 // Statically allocated FIFO queue
 static cmd_sched_t cmdsched_q_queue[CMDSCHED_QUEUE_SIZE];
@@ -62,11 +65,21 @@ cmd_sched_t cmdsched_q_peek() {
   // Return the item at the front of the queue without removing it
   return cmdsched_q_queue[cmdsched_q_front];
 }
+
+void cmdsched_start() {
+  if (sch_running == 0)
+  {
+    usec_reset_timestamp();
+    sch_running = 1;
+  }
+}
+
 //######################################################################
 
 
 int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *params, uint8_t params_len){
-  if(cmdsched_q_free_spaces() == 0){
+  uint32_t free_space = cmdsched_q_free_spaces();
+  if(free_space == 0){
     dbg(Error, "sched queue full\n");
     mainser_printf("SCHED_FAIL\r\n");
     return -1;
@@ -84,6 +97,14 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
   cmdsched_q_push(cmd);
   dbg(Debug, "cmd scheduled at %llu\n", exec_time);
   mainser_printf("SCHED_OK\r\n");
+
+  //if schedule queue full or complete sequence loaded, start execution
+  free_space = cmdsched_q_free_spaces();
+  if (free_space == 0)
+    cmdsched_start();
+  if (cmd_id == end_of_sequence_id)
+    cmdsched_start();
+
   //request new cmd if time
   //return time left until next cmd is to be executed
   if(cmdsched_q_count() == 0){
@@ -93,20 +114,27 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
   }
   cmd = cmdsched_q_peek();
 
-  uint64_t tnow = usec_get_timestamp_64();
-  //check that if time left is actually positive (scheduled cmds can be late...)
-  if((tnow + CMDSCHED_POP_BEFORE_EXEC_US) >  cmd.exec_time){
-    //we are already late, no time to transfer cmds. return 0
-    return 0;
-  }
+  if (isSchRunning())
+  {
+    uint64_t tnow = usec_get_timestamp_64();
+    //check that if time left is actually positive (scheduled cmds can be late...)
+    if((tnow + CMDSCHED_POP_BEFORE_EXEC_US) >  cmd.exec_time){
+      //we are already late, no time to transfer cmds. return 0
+      return 0;
+    }
 
-  uint64_t time_to_cmd =  cmd.exec_time - usec_get_timestamp_64() - CMDSCHED_POP_BEFORE_EXEC_US;
-  if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
-    // send request for new cmds to put in cmd queue
+    uint64_t time_to_cmd =  cmd.exec_time - usec_get_timestamp_64() - CMDSCHED_POP_BEFORE_EXEC_US;
+    if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
+      // send request for new cmds to put in cmd queue
+      cmdsprt_request_new_cmds();
+    }
+  }
+  else
+  {
     cmdsprt_request_new_cmds();
   }
-  // ##
 
+  // ##
 
   return 0;
 }
@@ -117,7 +145,7 @@ void cmdsched_decode(cmd_sched_t cmd, void *params, uint8_t params_len){
 
 //run this as often as possible. returns time left until next cmd is to be executed
 uint64_t cmdsched_handler(void){
-  if(cmdsched_q_count() == 0){
+  if(cmdsched_q_count() == 0 || !isSchRunning()){
     //nothing in queue. we have a lot of time.
     return 0xFFFFFFFFFFFFFFFF;
   }
@@ -159,7 +187,7 @@ uint64_t cmdsched_handler(void){
       cmdsched_decode(cmd, &param, sizeof(meas_get_IV_point_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
-      meas_get_IV_point(param.channel, param.voltage, param.disable_current_when_finished, param.noident);
+      meas_get_exact_IV_point(param.channel, param.voltage, param.disable_current_when_finished, param.noident);
       break;
     }
     case meas_get_iv_characteristic_id: {
@@ -168,7 +196,7 @@ uint64_t cmdsched_handler(void){
       cmdsched_decode(cmd, &param, sizeof(meas_get_iv_characteristic_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
-      meas_get_iv_characteristic(param.channel, param.start_volt, param.end_volt, param.step_volt);
+      meas_get_iv_characteristic(param.channel, param.start_volt, param.end_volt, param.step_volt, param.step_time, param.Npoints_per_step);
       break;
     }
     case meas_volt_sample_and_dump_id: {

@@ -60,7 +60,15 @@ List of all commands can be printed via CLI by issuing a *help* command. Help fo
 Example: *setnumavg -n 20* Set number of measurements to average to 20.
 
 - ***getivpoint*** - Enables current measurement circuitry and measures current at a specified voltage. This measurement can take a while, depending on various conditions. See *setdutsettle* and *getdutsettle* to specify the settling time of DUT.
-- ***getivchar*** - Measures an IV curve on specified channel. Only one channel at the same time is supported. This measurement can take a while, depending on various conditions. It consists of multiple *getivpoint* measurements.
+- ***getivchar*** - Measures an IV curve on specified channel. This measurement can take a while, depending on various conditions. 
+Parameters:
+	- *-c* - channel (1-6 or 0 for all (default))
+	- *-vs* - start voltage [V]
+	- *-ve* - end voltage [V] (measurement is stopped before this voltage is reached if current drops below minimum value (OC condition detected or hardware error).
+	- *-s* - step size [V]
+	- *-st* - step time [ms] (min 1, max ?, default 10)
+	- *-sn* - number of measurements during each step (min 1, max 10). Measurements are performed evry st/sn ms. The minimum achievable st/sn is approxiamtely 1100 us at default number of averaged samples per measurement.
+	Warning: PWM voltage settling time is about 1.6 ms and 1.1ms measuring period does not leave any time for voltage settling! Therefore each microstep time (st/sn) should be at least 2.7 ms (unless this is taken into account in data interpretation).
 - ***measuredump*** - Dumps a certain number of samples (at full 100kHz sample rate) for specified channel/s. A maximum number of samples is 2000 (20ms). Voltage, current or both signals can be dumped, as both are sampled concurrently. The transfer of data can take a while, depending on the number of samples and the baud rate.
 Parameters:
 	- *-c* - channel (1-6 or 0 for all (default))
@@ -75,10 +83,10 @@ Example: *flashmeasure -illum 1.0 -t 100 -m 10 -n 4* will generate a 100us long 
 - ***getnoise*** - Evaluates the noise on input channels (voltage current or both) as RMS and SNR ratio. Evaluated on maximum possible number of buffered samples (2000).
 
 - ***setledcurr*** - Sets LED current. This is temperature compensated to a reference temperature of 25 C. Actual led current might differ due to this, but the light output will be constant for a given current at any LED temperature. (Max current is 1.5 A, allowing for temperature compensation even a bit less. Practical resolution is about 1% or 15 mA (compared to theoretical 1/4096 or 0.37 mA))
-Warning: The system does NOT keep correcting LED current to compensate for temperature - it could interfere with timing of other commands. Instead periodically schedule the same command when there is enough time to do so.
+Warning: The system keeps correcting LED current to compensate for temperature if the schedule allows it - only if there is at least 10ms before the next measurement in the schedule to be performed.
 
 - ***setledillum*** - Sets illumination in unit of Sun. Temperature compensated. Calibration should be done with *calibillum* as a point of LED current and illumination measured by external equipment. This should be configured for every test and is not persistent across reboots.
-Warning: The system does NOT keep correcting LED current to compensate for temperature - it could interfere with timing of other commands. Instead periodically schedule the same command when there is enough time to do so.
+Warning: The system keeps correcting LED current to compensate for temperature if the schedule allows it - only if there is at least 10ms before the next measurement in the schedule to be performed.
 
 - ***calibillum*** - Calibrates the relation between LED current and illumination. Relation is assumed to be linear. Calibrate at the illumination that will be used during the test for best accuracy. Not persistent across reboots. Parameters:
 	- *-illum*: illumination, unit: [sun]
@@ -114,7 +122,7 @@ Scheduling can be done manually through CLI but is intended for test sequence pr
 
 #Limitations:#
 - The minimum time separation between 2 commands in the schedule is about 5 ms. The limiting factor is the time required to output debug messages on the debug serial interface. This limitation can be reduced by changing the debug level in debug.h. Any lower time limitations need to be further tested (Example: Current measurement takes about 0.64ms and measurement results reporting apporoximately 0.6ms more. With a bit of overhead that means each measurement takes a bit over 1.4ms to complete if debug level is set to DBG_WARNING).
-- Number of commands sent to the scheduler can also be a limiting factor! By default the minimum dead time before the measurements start is 10s precisely for this reason. However, if there are many commands in short sucession, this may not be enough. If the "ENDSEQUENCE" has not yet been received the firmware asks the PC for more commands only if there is more than 50 ms break in the schedule. The maximum length of the scheduler queue is 512 commands. If the sequence is longer, the scheduler will fetch more commands when time in the schedule allows it.
+- Number of commands sent to the scheduler can also be a limiting factor! By default the minimum dead time before the measurements start is 10s precisely for this reason. However, if there are many commands in short sucession, this may not be enough. If the "ENDSEQUENCE" has not yet been received the firmware asks the PC for more commands only if there is more than 50 ms break in the schedule. The maximum length of the scheduler queue is 512 commands. If the sequence is longer, the scheduler will fetch more commands when time in the schedule allows it. (Scheduling 500 repetitions of "getcurr" command took approximately 16 s).
 - Python script can also be a limiting factor!
 
 ## Debug UART interface

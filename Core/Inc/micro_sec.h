@@ -16,7 +16,7 @@
 #include "stm32g4xx_hal.h"
 #include "tim.h"
 
-#define MICRO_SEC_TIM_HANDLE &htim2
+#define MICRO_SEC_TIM_HANDLE htim2
 
 extern volatile uint32_t g_usec_overflow_count;
 

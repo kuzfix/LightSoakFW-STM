@@ -33,6 +33,8 @@
 #define NOISE_MEASURE_NUMSAMPLES 2000
 
 #define MEAS_IV_CHAR_MIN_CURR_THR 0.08 //uA
+#define MEAS_IV_CHAR_MIN_STEPS_THR 3 //
+#define MEAS_IV_CHAR_MIN_DELTA_V 0.002 //V  //PWM ripple up to 0.62mV and step size 1.6 mV
 
 //each approach iteration, shunt voltage is calculated and compensated
 //for better stability we can compensate a bit less
@@ -73,10 +75,14 @@ void meas_get_noise_curr(uint8_t channel);
 void meas_get_voltage_and_current(uint8_t channel);
 
 //only single channel
-float meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident);
+float meas_get_exact_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident);
 
-//call with 0 for all channels
-void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt);
+void autorange_IV_point(uint8_t channel, float voltage, uint32_t settling_time, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
+//Return results through the two pointers.
+void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, uint32_t settle_time_us, uint8_t find_range, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
+
+//only single channel
+void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt, uint32_t step_time, uint32_t Npoints_per_step);
 
 //flash measurements (measures Vf as quickly as possible)
 //call with 0 for all channels
@@ -94,7 +100,7 @@ void meas_end_of_sequence(void);
 
 //sample printing to main serial functions
 void prv_meas_print_timestamp(uint64_t timestamp);
-void prv_meas_print_ch_ident(uint8_t channel);
+void prv_meas_print_ch_ident(uint8_t channel, uint8_t sample_timestamp);
 void prv_meas_print_data_ident_voltage(void);
 void prv_meas_print_data_ident_current(void);
 void prv_meas_print_data_ident_IV_point(void);
@@ -106,6 +112,7 @@ void prv_meas_print_data_ident_flashmeasure_single(void);
 void prv_meas_print_data_ident_flashmeasure_dump(void);
 void prv_meas_print_dump_end(void);
 void prv_meas_print_sample(t_daq_sample_convd sample, uint8_t channel);
+void prv_meas_print_IV_point_ts(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel, uint8_t channel_mask);
 void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
 void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num_samples);
 void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num_samples);
@@ -138,6 +145,8 @@ typedef struct{
     float start_volt;
     float end_volt;
     float step_volt;
+    uint32_t step_time;
+    uint32_t Npoints_per_step;
 } meas_get_iv_characteristic_param_t;
 
 //meas_##_sample_and_dump (for v i and iv)

@@ -208,29 +208,23 @@ int main(void)
 
     dbg(Warning, "Starting main loop!\r\n");
 
-    uint64_t time_to_cmd=0;
+    int64_t time_to_cmd=0;
     while(1) {
       if (mainser_available()) {
         char c = mainser_read();
         lwshell_input(&c, 1);
-
       }
 
       if ((HAL_GetTick()-temptime > 1000) && (time_to_cmd > LEDCTRL_TEMP_READ_TIME_US)){
-      	D1On();
         temptime = HAL_GetTick();
-        ds18b20_handler();
+        ds18b20_handler();	//Takes about 6ms
+        ledctrl_handler();	//Takes about 70us and only makes sense if temperature has just been measured
         if(LEDCTRL_PERIODIC_TEMP_REPORT_MAINSER){
           mainser_printf("\r\n");
           ledctrl_print_temperature_mainser();
         }
-        D1Off();
       }
 
-      if(HAL_GetTick()-ledtemptime > 1000){
-        ledtemptime = HAL_GetTick();
-        ledctrl_handler();
-      }
       time_to_cmd = cmdsched_handler();
     }
 

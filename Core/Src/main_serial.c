@@ -1,4 +1,5 @@
 #include "main_serial.h"
+#include "UserGPIO.h"
 
 
 volatile uint8_t mainser_rx_buffer[RX_BUFFER_SIZE];
@@ -143,6 +144,7 @@ uint32_t mainser_tx_space(void) {
 void mainser_printf(const char* format, ...){
   uint32_t msg_len_cnt;
   va_list args;
+  D1On();
   va_start(args, format);
   msg_len_cnt = 0;
   msg_len_cnt = vsnprintf(mainser_printf_buffer, MAINSER_PRINTF_BUF_LEN, format, args);
@@ -159,6 +161,7 @@ void mainser_printf(const char* format, ...){
   while(mainser_write_multi( (uint8_t*)mainser_printf_buffer, msg_len_cnt) == 0){
     //wait for space
   }
+  D1Off();
 }
 
 /**

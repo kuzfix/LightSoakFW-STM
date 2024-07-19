@@ -3,6 +3,7 @@
 //
 #include "measurements.h"
 #include "UserGPIO.h"
+#include <math.h>
 
 /**
  * @brief measures num_samples on channel, sends data to UART
@@ -17,6 +18,8 @@
 uint32_t prv_meas_num_avg = MEAS_NUM_AVG_DEFAULT;
 uint32_t prv_meas_dut_settling_time_ms = MEAS_DUT_SETTLING_TIME_DEFAULT_MS;
 
+//start timestamp of any measurement, that requires relative timestamps within a measurement (starting at zero)
+uint64_t prv_meas_start_timestamp;
 
 
 /**
@@ -163,6 +166,62 @@ void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_c
  * @param sample_curr current to print
  * @param channel channel to measure
  */
+void prv_meas_print_IV_point_ts(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel, uint8_t channel_mask){
+  uint64_t sample_time;
+  //voltage and current should have same timestamp if we want to print them in one go. Timestamp for voltage is used.
+  //warning if timestamps not equal
+  if(sample_volt.timestamp != sample_curr.timestamp){
+    dbg(Warning,"prv_meas_print_volt_and_curr(): Volt/Curr timestamps not equal!\r\n");
+    //I am guessing this can happen on occasion, if the timer
+  }
+  sample_time = sample_volt.timestamp-prv_meas_start_timestamp;
+
+  switch(channel){
+    case 0:
+      (channel_mask & (1<<0)) ? mainser_printf("%f_%f:", sample_curr.ch1, sample_volt.ch1) : mainser_printf("NaN_NaN:");
+      (channel_mask & (1<<1)) ? mainser_printf("%f_%f:", sample_curr.ch2, sample_volt.ch2) : mainser_printf("NaN_NaN:");
+      (channel_mask & (1<<2)) ? mainser_printf("%f_%f:", sample_curr.ch3, sample_volt.ch3) : mainser_printf("NaN_NaN:");
+      (channel_mask & (1<<3)) ? mainser_printf("%f_%f:", sample_curr.ch4, sample_volt.ch4) : mainser_printf("NaN_NaN:");
+      (channel_mask & (1<<4)) ? mainser_printf("%f_%f:", sample_curr.ch5, sample_volt.ch5) : mainser_printf("NaN_NaN:");
+      (channel_mask & (1<<5)) ? mainser_printf("%f_%f:", sample_curr.ch6, sample_volt.ch6) : mainser_printf("NaN_NaN:");
+      mainser_printf("%llu\r\n", sample_time);
+      break;
+    case 1:
+      mainser_printf("%f_%f:", sample_curr.ch1, sample_volt.ch1);
+      mainser_printf("%llu\r\n", sample_time);
+      break;
+    case 2:
+      mainser_printf("%f_%f:", sample_curr.ch2, sample_volt.ch2);
+      mainser_printf("%llu\r\n", sample_time);
+      break;
+    case 3:
+      mainser_printf("%f_%f:", sample_curr.ch3, sample_volt.ch3);
+      mainser_printf("%llu\r\n", sample_time);
+      break;
+    case 4:
+      mainser_printf("%f_%f:", sample_curr.ch4, sample_volt.ch4);
+      mainser_printf("%llu\r\n", sample_time);
+      break;
+    case 5:
+      mainser_printf("%f_%f:", sample_curr.ch5, sample_volt.ch5);
+      mainser_printf("%llu\r\n", sample_time);
+      break;
+    case 6:
+      mainser_printf("%f_%f:", sample_curr.ch6, sample_volt.ch6);
+      mainser_printf("%llu\r\n", sample_time);
+      break;
+    default:
+      break;
+  }
+}
+
+/**
+ * @brief prints voltage and current to main serial in human readable format - as a IV curve point. for internal use
+ * - use 0 to print all channels
+ * @param sample_volt voltage to print
+ * @param sample_curr current to print
+ * @param channel channel to measure
+ */
 void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel){
   //voltage and current should have same timestamp if we want to print them in one go. Timestamp for voltage is used.
   //warning if timestamps not equal
@@ -219,7 +278,7 @@ void meas_get_voltage(uint8_t channel){
   meas_check_out_of_rng_volt(meas, channel);
   //print sample
   prv_meas_print_data_ident_voltage();
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
   prv_meas_print_timestamp(meas.timestamp);
   prv_meas_print_sample(meas, channel);
 
@@ -287,7 +346,7 @@ void meas_get_noise_volt(uint8_t channel){
   rms_noise_convd.ch6 = (((float)rms_noise_raw.ch6 / DAQ_MAX_ADC_VAL) * DAQ_VREF)*DAQ_VOLT_AMP_GAIN_CH6;
 
   mainser_printf("RMS_VOLTNOISE[mV]:\r\n");
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
   prv_meas_print_timestamp(daq_get_sampling_start_timestamp());
 
   switch(channel){
@@ -320,7 +379,7 @@ void meas_get_noise_volt(uint8_t channel){
   }
 
   mainser_printf("SNR_VOLTNOISE[dB]:\r\n");
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
   prv_meas_print_timestamp(daq_get_sampling_start_timestamp());
 
   switch(channel){
@@ -450,7 +509,7 @@ void meas_get_noise_curr(uint8_t channel){
   //print to mainser
 
   mainser_printf("RMS_CURRNOISE[uA]:\r\n");
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
   prv_meas_print_timestamp(daq_get_sampling_start_timestamp());
 
   switch(channel){
@@ -482,7 +541,7 @@ void meas_get_noise_curr(uint8_t channel){
   }
 
   mainser_printf("SNR_CURRNOISE[dB]:\r\n");
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
   prv_meas_print_timestamp(daq_get_sampling_start_timestamp());
 
   switch(channel){
@@ -531,7 +590,6 @@ void meas_get_current(uint8_t channel){
   t_daq_sample_convd meas;
   uint32_t t1, t2;
 
-  D3On();
   t1= usec_get_timestamp();
   dbg(Debug, "MEAS:meas_get_current()\r\n");
   //measure and print
@@ -541,14 +599,13 @@ void meas_get_current(uint8_t channel){
 
   //print sample
   prv_meas_print_data_ident_current();
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
   prv_meas_print_timestamp(meas.timestamp);
   prv_meas_print_sample(meas, channel);
 
   //report shunt config to debug serial
   t2 = usec_get_timestamp();
   dbg(Debug, "meas_get_current() took: %lu usec\r\n", t2-t1);
-  D3Off();
 
 }
 
@@ -741,7 +798,7 @@ void meas_get_voltage_and_current(uint8_t channel){
 
   //print voltage and current
   prv_meas_print_data_ident_IV_point();
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
   prv_meas_print_timestamp(convd_volt.timestamp);
   prv_meas_print_IV_point(convd_volt, convd_curr, channel);
 
@@ -751,7 +808,7 @@ void meas_get_voltage_and_current(uint8_t channel){
 }
 
 /**
- * @brief measures a point of IV curve. Prints to main serial
+ * @brief measures a point of IV curve at the exact selected voltage. Prints to main serial
  * - prints voltage and current measurement. Actual voltage might not be exactly the same as setpoint
  * - !! only one channel at a time
  * - During IV curve meassurement, usefull to leave current on to reduce settling time
@@ -761,7 +818,7 @@ void meas_get_voltage_and_current(uint8_t channel){
  * @param noident if 1, does not print identification string and timestamp. usefull if called from iv characteristic funct
  * @return current measured. used to terminate IV curve mesurements when current reaches 0
  */
-float meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident){
+float meas_get_exact_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident){
   //todo: change delays to RTOS delays
 
   t_daq_sample_raw raw_volt, raw_curr;
@@ -770,7 +827,7 @@ float meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_
   uint32_t t1, t2;
   uint8_t iter_cnt;
 
-  dbg(Debug, "MEAS:meas_get_IV_point()\r\n");
+  dbg(Debug, "MEAS:meas_get_exact_IV_point()\r\n");
   assert_param(channel <= 6 && channel != 0);
 
   t1 = usec_get_timestamp();
@@ -916,7 +973,7 @@ float meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_
   if(!noident){
     //print data identification. usefull if called from iv characteristic neas
     prv_meas_print_data_ident_IV_point();
-    prv_meas_print_ch_ident(channel);
+    prv_meas_print_ch_ident(channel,0);
     prv_meas_print_timestamp(convd_volt.timestamp);
   }
   prv_meas_print_IV_point(convd_volt, convd_curr, channel);
@@ -969,6 +1026,229 @@ float meas_get_IV_point(uint8_t channel, float voltage, uint8_t disable_current_
 
 }
 
+
+/**
+ * @brief finds the required range for current measurement range for IV curve scanning at the selected voltage.
+ * @param channel channel to sample.
+ * @param voltage voltage to force
+ * @return current measured. used to terminate IV curve mesurements when current reaches 0
+ */
+enum shntEnum lastRange[6]={shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X};
+void autorange_IV_point(uint8_t channel, float voltage, uint32_t settling_time, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr){
+
+  t_daq_sample_raw raw_volt, raw_curr;
+  float ch_curr, ch_volt, volt_cmd;
+  uint32_t t1, t2;
+
+  dbg(Debug, "MEAS:meas_get_IV_point()\r\n");
+
+  t1 = usec_get_timestamp();
+
+  volt_cmd = voltage;
+
+  dbg(Debug, "force: %f\r\n", voltage);
+  fec_set_force_voltage(channel, volt_cmd);  //set force voltage
+  fec_set_shunt_10x(channel);                //start with 10x range
+  fec_enable_current(channel);               //connect current stuff to DUT
+
+  for (int i=0; i<2; i++)
+  {
+    usec_delay(settling_time);
+
+    daq_prepare_for_sampling(1);  //1 sample per measurement should be enough to determine the range
+    daq_start_sampling();         //Measures all channels always
+    while(!daq_is_sampling_done());
+    //get raw averages from buffer
+    raw_curr = daq_curr_raw_get_average(1);
+    raw_volt = daq_volt_raw_get_average(1);
+    //convert to volts and amps
+    *convd_curr = daq_raw_to_curr(raw_curr);
+    *convd_volt = daq_raw_to_volt(raw_volt);
+
+    for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
+    {
+      if ( (channel == 0) || (channel == ch+1) )
+      {
+        //get current of channel
+        ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);
+        ch_volt = daq_get_from_sample_convd_by_index(*convd_volt, ch+1);
+
+        if (ch_curr < FEC_SHNT_100X_LOWTHR)
+        {
+          fec_set_shunt_1000x(ch+1);
+          lastRange[ch] = shnt_1000X;
+          volt_cmd = -22000.0e-6*ch_curr + voltage; //current is in uA
+          dbg(Debug, "CH%u: V=%f, I=%f Rs=22k V2=%f\r\n", ch+1, ch_volt,ch_curr,volt_cmd);
+        }
+        else if (ch_curr < FEC_SHNT_10X_LOWTHR)
+        {
+          fec_set_shunt_100x(ch+1);
+          lastRange[ch] = shnt_100X;
+          volt_cmd = -2200.0e-6*ch_curr + voltage; //current is in uA
+          dbg(Debug, "CH%u: V=%f, I=%f Rs=2k2 V2=%f\r\n", ch+1, ch_volt,ch_curr,volt_cmd);
+        }
+        else if (ch_curr < FEC_SHNT_1X_LOWTHR)
+        {
+          fec_set_shunt_10x(ch+1);
+          lastRange[ch] = shnt_10X;
+          volt_cmd = -220.0e-6*ch_curr + voltage; //current is in uA
+          dbg(Debug, "CH%u: V=%f, I=%f Rs=220 V2=%f\r\n", ch+1, ch_volt,ch_curr,volt_cmd);
+        }
+        else
+        {
+          fec_set_shunt_1x(ch+1);
+          lastRange[ch] = shnt_1X;
+          volt_cmd = -22.0e-6*ch_curr + voltage; //current is in uA
+          dbg(Debug, "CH%u: V=%f, I=%f Rs=22  V2=%f\r\n", ch+1, ch_volt,ch_curr,volt_cmd);
+        }
+        fec_set_force_voltage(ch+1, volt_cmd);  //set force voltage
+      }
+    }
+  }
+  //report shunt ranges
+  fec_report_shunt_ranges_dbg();
+
+  //evaluate time and print
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MEAS:autorange took: %lu usec\r\n", t2-t1);
+
+}
+
+/**
+ * @brief measures a point of IV curve at an approximate voltage. Prints to main serial
+ * - prints voltage and current measurement. Actual voltage will not be exactly the same as setpoint
+ * @param channel channel to sample.
+ * @param voltage voltage to force
+ * @param find_range  0 - try with previously used range first and adjust if necessary, 1 - find range first, then measure
+ * @return current measured. used to terminate IV curve mesurements when current reaches 0
+ */
+void meas_stepV_for_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr)
+{
+  t_daq_sample_raw raw_volt, raw_curr;
+  float ch_curr, ch_volt, volt_cmd;
+  float Rshunt=22000.0e-6;  //current is in uA
+
+  volt_cmd = voltage;
+
+  dbg(Debug, "force: %f\r\n", voltage);
+  for (int ch = 0; ch < FEC_NUM_CHANNELS; ch++) //don't rely on the built-in  ability of functions
+  {                                             //to work with 1 or all channels, because we need to control an arbitrary number of channels
+    if ((channel_mask & (1<<ch)) != 0)
+    {
+      if      (lastRange[ch] == shnt_1000X){Rshunt = 22000.0e-6;}
+      else if (lastRange[ch] == shnt_100X) {Rshunt = 2200.0e-6;}
+      else if (lastRange[ch] == shnt_10X)  {Rshunt = 220.0e-6;}
+      else                                 {Rshunt = 22.0e-6;}
+      ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);  //use previously measured current to adjust set-point voltage
+      volt_cmd = - Rshunt * ch_curr + voltage;
+      fec_set_force_voltage(ch+1, volt_cmd);  //set force voltage
+      fec_enable_current(ch+1);               //connect current stuff to DUT
+      dbg(Debug, "CH%u: Corrected V: %f\r\n", ch+1, volt_cmd);
+    }
+  }
+}
+/**
+ * @brief measures a point of IV curve at an approximate voltage. Prints to main serial
+ * - prints voltage and current measurement. Actual voltage will not be exactly the same as setpoint
+ * @param	channel	channel to sample.
+ * @param	voltage	voltage to force
+ * @param	find_range	0 - try with previously used range first and adjust if necessary, 1 - find range first, then measure
+ * @return current measured. used to terminate IV curve mesurements when current reaches 0
+ */
+
+void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, uint32_t next_trigger_us, uint8_t find_range, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr){
+
+  t_daq_sample_raw raw_volt, raw_curr;
+  float ch_curr, ch_volt, volt_cmd;
+  float Rshunt=22000.0e-6;  //current is in uA
+  uint32_t t1, t2;
+
+  dbg(Debug, "MEAS:meas_get_IV_point()\r\n");
+
+  t1 = usec_get_timestamp();
+
+  volt_cmd = voltage;
+
+  dbg(Debug, "force: %f\r\n", voltage);
+  for (int ch = 0; ch < FEC_NUM_CHANNELS; ch++) //don't rely on the built-in  ability of functions
+  {                                             //to work with 1 or all channels, because we need to control an arbitrary number of channels
+    if ((channel_mask & (1<<ch)) != 0)
+    {
+      if      (lastRange[ch] == shnt_1000X){Rshunt = 22000.0e-6;}
+      else if (lastRange[ch] == shnt_100X) {Rshunt = 2200.0e-6;}
+      else if (lastRange[ch] == shnt_10X)  {Rshunt = 220.0e-6;}
+      else                                 {Rshunt = 22.0e-6;}
+      ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);  //use previously measured current to adjust set-point voltage
+      volt_cmd = - Rshunt * ch_curr + voltage;
+      fec_set_force_voltage(ch+1, volt_cmd);  //set force voltage
+      fec_enable_current(ch+1);               //connect current stuff to DUT
+      dbg(Debug, "CH%u: Corrected V: %f\r\n", ch+1, volt_cmd);
+    }
+  }
+#if 0
+  {
+    //Range should theoretically be ok already
+    //usec_delay(next_trigger_us);	//start waiting AFTER range has been selected to finish all disturbances as early as possible
+    while(usec_get_timestamp_64() < next_trigger_us);
+
+    //One measurement to verify range
+    daq_prepare_for_sampling(1);	//1 sample per measurement should be enough to determine the range
+    //start sampling
+    daq_start_sampling();			//Measures all channels in any case
+    //wait for sampling to finish
+    while(!daq_is_sampling_done());
+    //get raw averages from buffer
+    raw_curr = daq_curr_raw_get_average(1);
+    //convert to volts and amps
+    *convd_curr = daq_raw_to_curr(raw_curr);
+
+    for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
+    {
+      if ((channel_mask & (1<<ch)) != 0)
+      {
+        //get current of channel
+        ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);
+
+        if (ch_curr < FEC_SHNT_100X_LOWTHR) 		{fec_set_shunt_1000x(ch+1); lastRange[ch] = shnt_1000X;}
+        else if (ch_curr < FEC_SHNT_10X_LOWTHR) {fec_set_shunt_100x(ch+1);  lastRange[ch] = shnt_100X;}
+        else if (ch_curr < FEC_SHNT_1X_LOWTHR) 	{fec_set_shunt_10x(ch+1);   lastRange[ch] = shnt_10X;}
+        else                                    {fec_set_shunt_1x(ch+1);    lastRange[ch] = shnt_1X;}
+      }
+    }
+  }
+#endif
+  //report shunt ranges
+  //fec_report_shunt_ranges_dbg();
+  //perform the real measurement
+  daq_prepare_for_sampling(prv_meas_num_avg);
+  //start sampling
+  daq_start_sampling();			//Measures all channels in any case
+  //wait for sampling to finish
+  while(!daq_is_sampling_done());
+  //get raw averages from buffer
+  raw_volt = daq_volt_raw_get_average(prv_meas_num_avg);
+  raw_curr = daq_curr_raw_get_average(prv_meas_num_avg);
+  //convert to volts and amps
+  *convd_volt = daq_raw_to_volt(raw_volt);
+  *convd_curr = daq_raw_to_curr(raw_curr);
+  prv_meas_print_IV_point_ts(*convd_volt, *convd_curr, channel, channel_mask);
+
+  //evaluate time and print
+  for (int ch = 0; ch < FEC_NUM_CHANNELS; ch++) //don't rely on the built-in  ability of functions
+  {                                             //to work with 1 or all channels, because we need to control an arbitrary number of channels
+    if ((channel_mask & (1<<ch)) != 0)
+    {
+      ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);  //use previously measured current to adjust set-point voltage
+      ch_volt = daq_get_from_sample_convd_by_index(*convd_volt, ch+1);  //use previously measured current to adjust set-point voltage
+      dbg(Debug, "CH%u: measured V=%f I=%f\r\n", ch+1, ch_volt, ch_curr);
+    }
+  }
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MEAS:meas_get_IV_point() took: %lu usec\r\n", t2-t1);
+
+}
+
+
 /**
  * @brief Dumps voltage bufer (converted to V) (num_samples points starting at 0) to main serial in human readable format
  * - call with channel = 0 to dump all channels
@@ -995,7 +1275,7 @@ void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num
   //print sample time
   mainser_printf("TS[us]:%f\r\n", (float)DAQ_SAMPLE_TIME_100KSPS);
   //print channel map
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
 
   for(uint32_t n = 0 ; n< num_samples ; n++){
     //get sample from buffer (all channels)
@@ -1040,7 +1320,7 @@ void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num
   //print sample time
   mainser_printf("TS[us]:%f\r\n", (float)DAQ_SAMPLE_TIME_100KSPS);
   //print channel map
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
 
   for(uint32_t n = 0 ; n< num_samples ; n++){
     //get sample from buffer (all channels)
@@ -1085,7 +1365,7 @@ void prv_meas_dump_from_buffer_human_readable_iv(uint8_t channel, uint32_t num_s
   //print sample time
   mainser_printf("TS[us]:%f\r\n", (float)DAQ_SAMPLE_TIME_100KSPS);
   //print channel map
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
 
   for(uint32_t n = 0 ; n< num_samples ; n++){
     //get sample from buffer (all channels)
@@ -1118,14 +1398,25 @@ void prv_meas_print_timestamp(uint64_t timestamp){
  * - CH1 if single or CH1:CH2:CH3:CH4:CH5:CH6 if all
  * @param timestamp timestamp to print
  */
-void prv_meas_print_ch_ident(uint8_t channel){
-  if(channel== 0){
+void prv_meas_print_ch_ident(uint8_t channel, uint8_t sample_timestamp){
+  if (sample_timestamp == 0)
+  {
+    if(channel== 0){
     mainser_printf("CH1:CH2:CH3:CH4:CH5:CH6\r\n");
-  }
-  else{
+    }
+    else{
     mainser_printf("CH%u\r\n", channel);
+    }
   }
-
+  else
+  {
+    if(channel== 0){
+    mainser_printf("CH1:CH2:CH3:CH4:CH5:CH6:t\r\n");
+    }
+    else{
+    mainser_printf("CH%u:t\r\n", channel);
+    }
+  }
 }
 
 /**
@@ -1199,53 +1490,104 @@ void prv_meas_print_data_ident_flashmeasure_dump(void){
  * @param end_volt end (high) voltage
  * @param step_volt step voltage
  */
-void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt){
+void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt, uint32_t step_time, uint32_t Npoints_per_step){
   uint32_t t1, t2;
-  uint32_t num_iv_points;
+  uint32_t max_num_iv_points;
+  uint32_t micro_step_time_us;
+  uint64_t next_trigger_us;
+  uint8_t find_range = 1;
+  uint8_t inProgress;
+  float voltHistory[6][3];
   float setp;
+  float curr;
+  float volt;
+  t_daq_sample_convd convd_volt, convd_curr;
 
+  memset(voltHistory,0,sizeof(voltHistory));
   dbg(Debug, "MEAS:meas_get_iv_characteristic()\r\n");
-  assert_param(channel <= 6 && channel != 0);
+  assert_param(channel <= FEC_NUM_CHANNELS && channel >= 0);
 
+  if (channel == 0) inProgress = 0x3F;
+  else inProgress = 1<<(channel-1);
   t1 = usec_get_timestamp();
 
+  autorange_IV_point(channel, 0, step_time, &convd_volt, &convd_curr);  //autorange first, then mark the beginning of the IV scan
+
+  micro_step_time_us = (step_time*1000) / Npoints_per_step;
+  prv_meas_start_timestamp = usec_get_timestamp_64() + micro_step_time_us;
+  next_trigger_us = prv_meas_start_timestamp;
   //print ident
   //timestamp is just start of measurements, not for sample points
   prv_meas_print_data_ident_IV_characteristic();
-  prv_meas_print_timestamp(usec_get_timestamp_64());
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_timestamp(prv_meas_start_timestamp);
+  prv_meas_print_ch_ident(channel,1);
 
-  //calculate number of points we need to take
-  //divide range by step_volt, add 1 to get all points, add 1 to get precise last point at end_volt
-  num_iv_points = (uint32_t)(((end_volt - start_volt)/step_volt) + 2);
-  dbg(Debug, "IV characteristic num points: %lu\r\n", num_iv_points);
+  //calculate number of points we need to take and double them to set the maximum number of steps to be taken
+  max_num_iv_points = (uint32_t)((end_volt - start_volt)/step_volt) * 2;
+  dbg(Debug, "IV characteristic max num of points: %lu\r\n", max_num_iv_points);
 
-  float curr;
-  for(uint32_t n = 0 ; n < num_iv_points ; n++){
+  //max number of points should never be reached
+  //other conditions should finish the scan before that (OC, or voltage not changing anymore)
+  for(uint32_t n = 0 ; n < max_num_iv_points ; n++)
+  {
+    setp = start_volt + n*step_volt;
+    for (int m = 0; m < Npoints_per_step; m++)
+    {
+      mainser_printf("[%lu]", n*Npoints_per_step+m);
+      meas_get_IV_point(channel, inProgress, setp, next_trigger_us, find_range, &convd_volt, &convd_curr);
+      next_trigger_us += micro_step_time_us;
+      find_range=0;	//only look for range on the first measured point, later just verify.
+    }
 
-    //determine setpoint
-    if(n == num_iv_points-1){
-      //last point
-      setp = end_volt;
+    //after each burst of micro-steps, check if any of the channels has finished the scan
+    for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
+    {
+    	if ((inProgress & (1<<ch)) == 0) continue;	//skip finished channels
+
+    	curr = daq_get_from_sample_convd_by_index(convd_curr, ch+1);
+    	volt = daq_get_from_sample_convd_by_index(convd_volt, ch+1);
+
+    	//is current (practically) zero? (OC condition reached)
+    	if(curr < MEAS_IV_CHAR_MIN_CURR_THR){
+        dbg(Debug, "CH%u: Current below threshold. Stopping IV char measurements\r\n",ch+1);
+        inProgress &= ~(1<<ch);	//clear appropriate in-progress flag
+        fec_disable_current(ch+1);
+        fec_set_force_voltage(ch+1, 0);
+        fec_set_shunt_1000x(ch+1);
+        continue;
+      }
+    	//has the maximum voltage been reached?
+    	if (volt >= end_volt) {
+        dbg(Debug, "CH%u: End voltage reached. Stopping IV char measurements\r\n",ch+1);
+        inProgress &= ~(1<<ch); //clear appropriate in-progress flag
+        fec_disable_current(ch+1);
+        fec_set_force_voltage(ch+1, 0);
+        fec_set_shunt_1000x(ch+1);
+        continue;
+    	}
+#if 0 /* This type of detection does not work here, because the voltage source is not the solar cell
+       * but an active circuit that forces the desired voltage onto the cell */
+    	//is voltage still changing? Check last 3 voltages compared to the current voltage
+    	int VoltageStillChanging=1;
+    	if (n > MEAS_IV_CHAR_MIN_STEPS_THR)	//only check for voltage not changing after a minimum number of steps
+    	{
+    		VoltageStillChanging=0;
+    		for (int i=0; i<3; i++)
+    		{
+    			if (fabsf(voltHistory[ch][i]-volt) > MEAS_IV_CHAR_MIN_DELTA_V)
+    				VoltageStillChanging = 1;
+    		}
+    	}
+    	voltHistory[ch][n%3] = volt;
+    	if (!VoltageStillChanging) inProgress &= ~(1<<ch);	//clear appropriate in-progress flag
+#endif
     }
-    else{
-      //not last point
-      setp = start_volt + n*step_volt;
-    }
-    mainser_printf("[%lu]", n);
-    curr = meas_get_IV_point(channel, setp, 0, 1);
-    if(curr < MEAS_IV_CHAR_MIN_CURR_THR){
-      //current is below threshold. stop measurements
-      dbg(Debug, "Current below threshold. Stopping IV char measurements\r\n");
-      break;
-    }
+    if (inProgress == 0) break;
   }
-  mainser_printf("END_IVCHAR\r\n");
-  //turn off current stuff
-  fec_disable_current(channel);
-  fec_set_force_voltage(channel, 0);
-  fec_set_shunt_1000x(channel);
 
+  mainser_printf("END_IVCHAR\r\n");
+
+  prv_meas_start_timestamp = 0;
   t2 = usec_get_timestamp();
   dbg(Debug, "MEAS:meas_get_iv_characteristic() took: %lu usec\r\n", t2-t1);
 }
@@ -1360,7 +1702,7 @@ void meas_flashmeasure_singlesample(uint8_t channel, float illum, uint32_t flash
   meas_check_out_of_rng_volt(avg_convd, channel);
   //print sample
   prv_meas_print_data_ident_flashmeasure_single();
-  prv_meas_print_ch_ident(channel);
+  prv_meas_print_ch_ident(channel,0);
   prv_meas_print_timestamp(avg_convd.timestamp);
   prv_meas_print_sample(avg_convd, channel);
 }

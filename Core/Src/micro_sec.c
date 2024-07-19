@@ -16,25 +16,23 @@ void usec_init(void){
   //start timer
   g_usec_overflow_count = 0;
   //clear overflow interrupt flag (if not, callback called immediately)
-  __HAL_TIM_CLEAR_IT(MICRO_SEC_TIM_HANDLE ,TIM_IT_UPDATE);
-  HAL_TIM_Base_Start_IT(MICRO_SEC_TIM_HANDLE);
+  __HAL_TIM_CLEAR_IT(&MICRO_SEC_TIM_HANDLE ,TIM_IT_UPDATE);
+  HAL_TIM_Base_Start_IT(&MICRO_SEC_TIM_HANDLE);
 }
-
-
 
 /**
  * @brief blocking delay function for microsecond delays
  */
 void usec_delay(uint32_t delay_us){
-  uint32_t start_time = __HAL_TIM_GET_COUNTER(MICRO_SEC_TIM_HANDLE);
-  while(__HAL_TIM_GET_COUNTER(MICRO_SEC_TIM_HANDLE) - start_time < delay_us);
+  uint32_t start_time = __HAL_TIM_GET_COUNTER(&MICRO_SEC_TIM_HANDLE);
+  while(__HAL_TIM_GET_COUNTER(&MICRO_SEC_TIM_HANDLE) - start_time < delay_us);
 }
 
 /**
  * @brief gets timer counter value
  */
 uint32_t usec_get_timestamp(void){
-  return (uint32_t)__HAL_TIM_GET_COUNTER(MICRO_SEC_TIM_HANDLE);
+  return (uint32_t)__HAL_TIM_GET_COUNTER(&MICRO_SEC_TIM_HANDLE);
 }
 
 /**
@@ -43,7 +41,7 @@ uint32_t usec_get_timestamp(void){
 void usec_reset_timestamp(void){
   __disable_irq();
   g_usec_overflow_count = 0;
-  __HAL_TIM_SET_COUNTER(MICRO_SEC_TIM_HANDLE, 0);
+  __HAL_TIM_SET_COUNTER(&MICRO_SEC_TIM_HANDLE, 0);
   __enable_irq();
 }
 
@@ -69,7 +67,7 @@ uint32_t usec_get_overflow_count(void){
 uint64_t usec_get_timestamp_64(void){
   //this section needs to happen without interrupts to make it thread safe
   __disable_irq();
-  uint32_t timestamp_32 = __HAL_TIM_GET_COUNTER(MICRO_SEC_TIM_HANDLE);
+  uint32_t timestamp_32 = __HAL_TIM_GET_COUNTER(&MICRO_SEC_TIM_HANDLE);
   uint32_t ovf_cnt = g_usec_overflow_count;
   __enable_irq();
 
