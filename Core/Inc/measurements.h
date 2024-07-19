@@ -78,8 +78,9 @@ void meas_get_voltage_and_current(uint8_t channel);
 float meas_get_exact_IV_point(uint8_t channel, float voltage, uint8_t disable_current_when_finished, uint8_t noident);
 
 void autorange_IV_point(uint8_t channel, float voltage, uint32_t settling_time, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
+void meas_stepV_for_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
 //Return results through the two pointers.
-void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, uint32_t settle_time_us, uint8_t find_range, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
+void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, uint32_t settle_time_us, uint8_t find_range, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
 
 //only single channel
 void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt, uint32_t step_time, uint32_t Npoints_per_step);

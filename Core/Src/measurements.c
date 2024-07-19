@@ -1114,18 +1114,51 @@ void autorange_IV_point(uint8_t channel, float voltage, uint32_t settling_time, 
 
 }
 
+void adjust_range_IV_point(uint8_t channel, uint8_t channel_mask, t_daq_sample_convd* convd_curr)
+{
+  float ch_curr;
+
+  for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
+  {
+    if ( (channel_mask & (1<<ch)) != 0)
+    {
+      //get current of channel
+      ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);
+
+      if (ch_curr < FEC_SHNT_100X_LOWTHR)
+      {
+        fec_set_shunt_1000x(ch+1);
+        lastRange[ch] = shnt_1000X;
+      }
+      else if (ch_curr < FEC_SHNT_10X_LOWTHR)
+      {
+        fec_set_shunt_100x(ch+1);
+        lastRange[ch] = shnt_100X;
+      }
+      else if (ch_curr < FEC_SHNT_1X_LOWTHR)
+      {
+        fec_set_shunt_10x(ch+1);
+        lastRange[ch] = shnt_10X;
+      }
+      else
+      {
+        fec_set_shunt_1x(ch+1);
+        lastRange[ch] = shnt_1X;
+      }
+    }
+  }
+}
+
 /**
- * @brief measures a point of IV curve at an approximate voltage. Prints to main serial
- * - prints voltage and current measurement. Actual voltage will not be exactly the same as setpoint
+ * @brief Sets the voltage for the next point in the IV scan.
+ * Actual voltage will not be exactly the same as the desired voltage
  * @param channel channel to sample.
+ * @param channel_mask channels that are still active (bitmask: bit 0 = ch 1, bit 5 = ch 6)
  * @param voltage voltage to force
- * @param find_range  0 - try with previously used range first and adjust if necessary, 1 - find range first, then measure
- * @return current measured. used to terminate IV curve mesurements when current reaches 0
  */
 void meas_stepV_for_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr)
 {
-  t_daq_sample_raw raw_volt, raw_curr;
-  float ch_curr, ch_volt, volt_cmd;
+  float ch_curr, volt_cmd;
   float Rshunt=22000.0e-6;  //current is in uA
 
   volt_cmd = voltage;
@@ -1156,70 +1189,17 @@ void meas_stepV_for_IV_point(uint8_t channel, uint8_t channel_mask, float voltag
  * @return current measured. used to terminate IV curve mesurements when current reaches 0
  */
 
-void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, uint32_t next_trigger_us, uint8_t find_range, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr){
+void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, uint32_t next_trigger_us, uint8_t find_range, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr){
 
   t_daq_sample_raw raw_volt, raw_curr;
-  float ch_curr, ch_volt, volt_cmd;
-  float Rshunt=22000.0e-6;  //current is in uA
+  float ch_curr, ch_volt;
   uint32_t t1, t2;
 
   dbg(Debug, "MEAS:meas_get_IV_point()\r\n");
 
   t1 = usec_get_timestamp();
 
-  volt_cmd = voltage;
-
-  dbg(Debug, "force: %f\r\n", voltage);
-  for (int ch = 0; ch < FEC_NUM_CHANNELS; ch++) //don't rely on the built-in  ability of functions
-  {                                             //to work with 1 or all channels, because we need to control an arbitrary number of channels
-    if ((channel_mask & (1<<ch)) != 0)
-    {
-      if      (lastRange[ch] == shnt_1000X){Rshunt = 22000.0e-6;}
-      else if (lastRange[ch] == shnt_100X) {Rshunt = 2200.0e-6;}
-      else if (lastRange[ch] == shnt_10X)  {Rshunt = 220.0e-6;}
-      else                                 {Rshunt = 22.0e-6;}
-      ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);  //use previously measured current to adjust set-point voltage
-      volt_cmd = - Rshunt * ch_curr + voltage;
-      fec_set_force_voltage(ch+1, volt_cmd);  //set force voltage
-      fec_enable_current(ch+1);               //connect current stuff to DUT
-      dbg(Debug, "CH%u: Corrected V: %f\r\n", ch+1, volt_cmd);
-    }
-  }
-#if 0
-  {
-    //Range should theoretically be ok already
-    //usec_delay(next_trigger_us);	//start waiting AFTER range has been selected to finish all disturbances as early as possible
-    while(usec_get_timestamp_64() < next_trigger_us);
-
-    //One measurement to verify range
-    daq_prepare_for_sampling(1);	//1 sample per measurement should be enough to determine the range
-    //start sampling
-    daq_start_sampling();			//Measures all channels in any case
-    //wait for sampling to finish
-    while(!daq_is_sampling_done());
-    //get raw averages from buffer
-    raw_curr = daq_curr_raw_get_average(1);
-    //convert to volts and amps
-    *convd_curr = daq_raw_to_curr(raw_curr);
-
-    for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
-    {
-      if ((channel_mask & (1<<ch)) != 0)
-      {
-        //get current of channel
-        ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);
-
-        if (ch_curr < FEC_SHNT_100X_LOWTHR) 		{fec_set_shunt_1000x(ch+1); lastRange[ch] = shnt_1000X;}
-        else if (ch_curr < FEC_SHNT_10X_LOWTHR) {fec_set_shunt_100x(ch+1);  lastRange[ch] = shnt_100X;}
-        else if (ch_curr < FEC_SHNT_1X_LOWTHR) 	{fec_set_shunt_10x(ch+1);   lastRange[ch] = shnt_10X;}
-        else                                    {fec_set_shunt_1x(ch+1);    lastRange[ch] = shnt_1X;}
-      }
-    }
-  }
-#endif
-  //report shunt ranges
-  //fec_report_shunt_ranges_dbg();
-  //perform the real measurement
+  //perform the measurement
   daq_prepare_for_sampling(prv_meas_num_avg);
   //start sampling
   daq_start_sampling();			//Measures all channels in any case
@@ -1233,7 +1213,7 @@ void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, uin
   *convd_curr = daq_raw_to_curr(raw_curr);
   prv_meas_print_IV_point_ts(*convd_volt, *convd_curr, channel, channel_mask);
 
-  //evaluate time and print
+  //debug print
   for (int ch = 0; ch < FEC_NUM_CHANNELS; ch++) //don't rely on the built-in  ability of functions
   {                                             //to work with 1 or all channels, because we need to control an arbitrary number of channels
     if ((channel_mask & (1<<ch)) != 0)
@@ -1511,7 +1491,7 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
   else inProgress = 1<<(channel-1);
   t1 = usec_get_timestamp();
 
-  autorange_IV_point(channel, 0, step_time, &convd_volt, &convd_curr);  //autorange first, then mark the beginning of the IV scan
+  autorange_IV_point(channel, start_volt, step_time, &convd_volt, &convd_curr);  //autorange first, then mark the beginning of the IV scan
 
   micro_step_time_us = (step_time*1000) / Npoints_per_step;
   prv_meas_start_timestamp = usec_get_timestamp_64() + micro_step_time_us;
@@ -1531,13 +1511,16 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
   for(uint32_t n = 0 ; n < max_num_iv_points ; n++)
   {
     setp = start_volt + n*step_volt;
+    meas_stepV_for_IV_point(channel,  inProgress, setp, &convd_volt, &convd_curr);
+
     for (int m = 0; m < Npoints_per_step; m++)
     {
       mainser_printf("[%lu]", n*Npoints_per_step+m);
-      meas_get_IV_point(channel, inProgress, setp, next_trigger_us, find_range, &convd_volt, &convd_curr);
+      meas_get_IV_point(channel, inProgress, next_trigger_us, find_range, &convd_volt, &convd_curr);
       next_trigger_us += micro_step_time_us;
       find_range=0;	//only look for range on the first measured point, later just verify.
     }
+    //adjust_range_IV_point(channel, inProgress, &convd_curr);
 
     //after each burst of micro-steps, check if any of the channels has finished the scan
     for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
