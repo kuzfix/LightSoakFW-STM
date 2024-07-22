@@ -36,6 +36,20 @@
 #define MEAS_IV_CHAR_MIN_STEPS_THR 3 //
 #define MEAS_IV_CHAR_MIN_DELTA_V 0.002 //V  //PWM ripple up to 0.62mV and step size 1.6 mV
 
+#define MPPT_DURATION 2000  //us
+#define MPPT_VOLTAGE_STEP 0.002 //V
+#define MPPT_SEARCH_VOLTAGE_STEP 0.100 //V
+#define MPPT_SETTLING_TIME_DEFAULT  100000  //us
+#define MPPT_ALL_ON   0x3F
+#define MPPT_ALL_OFF  0x00
+#define MPPT_MAX_START_STEPS  100
+#define MPPT_FVOC 0.75  //first guess is Vmpp = 75% of Voc
+#define MPPT_DIR_REVERSE_THRESHOLD  10  //When first looking for MPP, MPP is reached when search algorithem reverses direction this many times
+#define MPPT_VMAX 1.5   //V
+#define MPPT_VMIN -0.1  //V
+#define MPPT_IMIN_OF_RANGE 0.01 //Minimum current depends on range. 0.01 is 1% of current range.
+#define MPPT_MAX_VOLTAGE_DEFAULT  1.2 //V
+
 //each approach iteration, shunt voltage is calculated and compensated
 //for better stability we can compensate a bit less
 #define MEAS_FORCE_VOLT_APPROACH_K 1.0f
@@ -80,7 +94,7 @@ float meas_get_exact_IV_point(uint8_t channel, float voltage, uint8_t disable_cu
 void autorange_IV_point(uint8_t channel, float voltage, uint32_t settling_time, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
 void meas_stepV_for_IV_point(uint8_t channel, uint8_t channel_mask, float voltage, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
 //Return results through the two pointers.
-void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, uint32_t settle_time_us, uint8_t find_range, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
+void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, uint32_t settle_time_us, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr);
 
 //only single channel
 void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_volt, float step_volt, uint32_t step_time, uint32_t Npoints_per_step);
@@ -97,6 +111,11 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
 
 
 void meas_end_of_sequence(void);
+
+void mppt_start(uint8_t channel, uint32_t settling_time);
+void mppt_resume();
+void mppt_stop();
+void mppt();
 
 
 //sample printing to main serial functions
@@ -120,8 +139,13 @@ void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num
 void prv_meas_dump_from_buffer_human_readable_iv(uint8_t channel, uint32_t num_samples);
 
 
-
 //parameter structures for all functions that can be scheduled
+//meas_get_voltage
+typedef struct{
+  uint8_t channel;
+  uint32_t settling_time;
+} mppt_param_t;
+
 //meas_get_voltage
 typedef struct{
     uint8_t channel;
@@ -226,6 +250,9 @@ typedef struct{
 
 //typedef enum for cmd ids. IDs needed for cmd scheduling
 typedef enum {
+    mppt_start_id,
+    mppt_resume_id,
+    mppt_stop_id,
     meas_get_voltage_id,
     meas_get_current_id,
     meas_get_IV_point_id,

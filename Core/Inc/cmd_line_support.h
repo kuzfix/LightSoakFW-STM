@@ -30,6 +30,9 @@ void cmdsprt_request_new_cmds(void);
 
 
 // cmd callback functions (callback for every command)
+int32_t cli_cmd_mpptstart_fn(int32_t argc, char** argv);
+int32_t cli_cmd_mpptresume_fn(int32_t argc, char** argv);
+int32_t cli_cmd_mpptstop_fn(int32_t argc, char** argv);
 int32_t cli_cmd_getvolt_fn(int32_t argc, char** argv);
 int32_t cli_cmd_getcurr_fn(int32_t argc, char** argv);
 int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv);

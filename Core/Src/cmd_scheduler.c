@@ -163,6 +163,29 @@ uint64_t cmdsched_handler(void){
   cmdsched_q_pop();
   //parse depending on cmd_id
   switch (cmd.cmd_id) {
+    case mppt_start_id: {
+      mppt_param_t param;
+      mainser_printf("\r\n");
+      cmdsched_decode(cmd, &param, sizeof(mppt_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      mppt_start(param.channel, param.settling_time);
+      break;
+    }
+    case mppt_resume_id: {
+      mainser_printf("\r\n");
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      mppt_resume();
+      break;
+    }
+    case mppt_stop_id: {
+      mainser_printf("\r\n");
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      mppt_stop();
+      break;
+    }
     case meas_get_voltage_id: {
       meas_get_voltage_param_t param;
       mainser_printf("\r\n");

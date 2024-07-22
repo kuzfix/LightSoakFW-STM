@@ -1033,7 +1033,7 @@ float meas_get_exact_IV_point(uint8_t channel, float voltage, uint8_t disable_cu
  * @param voltage voltage to force
  * @return current measured. used to terminate IV curve mesurements when current reaches 0
  */
-enum shntEnum lastRange[6]={shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X};
+enum shntEnum SelectedRange[6]={shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X};
 void autorange_IV_point(uint8_t channel, float voltage, uint32_t settling_time, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr){
 
   t_daq_sample_raw raw_volt, raw_curr;
@@ -1076,28 +1076,28 @@ void autorange_IV_point(uint8_t channel, float voltage, uint32_t settling_time, 
         if (ch_curr < FEC_SHNT_100X_LOWTHR)
         {
           fec_set_shunt_1000x(ch+1);
-          lastRange[ch] = shnt_1000X;
+          SelectedRange[ch] = shnt_1000X;
           volt_cmd = -22000.0e-6*ch_curr + voltage; //current is in uA
           dbg(Debug, "CH%u: V=%f, I=%f Rs=22k V2=%f\r\n", ch+1, ch_volt,ch_curr,volt_cmd);
         }
         else if (ch_curr < FEC_SHNT_10X_LOWTHR)
         {
           fec_set_shunt_100x(ch+1);
-          lastRange[ch] = shnt_100X;
+          SelectedRange[ch] = shnt_100X;
           volt_cmd = -2200.0e-6*ch_curr + voltage; //current is in uA
           dbg(Debug, "CH%u: V=%f, I=%f Rs=2k2 V2=%f\r\n", ch+1, ch_volt,ch_curr,volt_cmd);
         }
         else if (ch_curr < FEC_SHNT_1X_LOWTHR)
         {
           fec_set_shunt_10x(ch+1);
-          lastRange[ch] = shnt_10X;
+          SelectedRange[ch] = shnt_10X;
           volt_cmd = -220.0e-6*ch_curr + voltage; //current is in uA
           dbg(Debug, "CH%u: V=%f, I=%f Rs=220 V2=%f\r\n", ch+1, ch_volt,ch_curr,volt_cmd);
         }
         else
         {
           fec_set_shunt_1x(ch+1);
-          lastRange[ch] = shnt_1X;
+          SelectedRange[ch] = shnt_1X;
           volt_cmd = -22.0e-6*ch_curr + voltage; //current is in uA
           dbg(Debug, "CH%u: V=%f, I=%f Rs=22  V2=%f\r\n", ch+1, ch_volt,ch_curr,volt_cmd);
         }
@@ -1128,22 +1128,22 @@ void adjust_range_IV_point(uint8_t channel, uint8_t channel_mask, t_daq_sample_c
       if (ch_curr < FEC_SHNT_100X_LOWTHR)
       {
         fec_set_shunt_1000x(ch+1);
-        lastRange[ch] = shnt_1000X;
+        SelectedRange[ch] = shnt_1000X;
       }
       else if (ch_curr < FEC_SHNT_10X_LOWTHR)
       {
         fec_set_shunt_100x(ch+1);
-        lastRange[ch] = shnt_100X;
+        SelectedRange[ch] = shnt_100X;
       }
       else if (ch_curr < FEC_SHNT_1X_LOWTHR)
       {
         fec_set_shunt_10x(ch+1);
-        lastRange[ch] = shnt_10X;
+        SelectedRange[ch] = shnt_10X;
       }
       else
       {
         fec_set_shunt_1x(ch+1);
-        lastRange[ch] = shnt_1X;
+        SelectedRange[ch] = shnt_1X;
       }
     }
   }
@@ -1168,9 +1168,9 @@ void meas_stepV_for_IV_point(uint8_t channel, uint8_t channel_mask, float voltag
   {                                             //to work with 1 or all channels, because we need to control an arbitrary number of channels
     if ((channel_mask & (1<<ch)) != 0)
     {
-      if      (lastRange[ch] == shnt_1000X){Rshunt = 22000.0e-6;}
-      else if (lastRange[ch] == shnt_100X) {Rshunt = 2200.0e-6;}
-      else if (lastRange[ch] == shnt_10X)  {Rshunt = 220.0e-6;}
+      if      (SelectedRange[ch] == shnt_1000X){Rshunt = 22000.0e-6;}
+      else if (SelectedRange[ch] == shnt_100X) {Rshunt = 2200.0e-6;}
+      else if (SelectedRange[ch] == shnt_10X)  {Rshunt = 220.0e-6;}
       else                                 {Rshunt = 22.0e-6;}
       ch_curr = daq_get_from_sample_convd_by_index(*convd_curr, ch+1);  //use previously measured current to adjust set-point voltage
       volt_cmd = - Rshunt * ch_curr + voltage;
@@ -1189,7 +1189,7 @@ void meas_stepV_for_IV_point(uint8_t channel, uint8_t channel_mask, float voltag
  * @return current measured. used to terminate IV curve mesurements when current reaches 0
  */
 
-void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, uint32_t next_trigger_us, uint8_t find_range, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr){
+void meas_get_IV_point(uint8_t channel, uint8_t channel_mask, uint32_t next_trigger_us, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr){
 
   t_daq_sample_raw raw_volt, raw_curr;
   float ch_curr, ch_volt;
@@ -1475,7 +1475,6 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
   uint32_t max_num_iv_points;
   uint32_t micro_step_time_us;
   uint64_t next_trigger_us;
-  uint8_t find_range = 1;
   uint8_t inProgress;
   float voltHistory[6][3];
   float setp;
@@ -1516,9 +1515,8 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
     for (int m = 0; m < Npoints_per_step; m++)
     {
       mainser_printf("[%lu]", n*Npoints_per_step+m);
-      meas_get_IV_point(channel, inProgress, next_trigger_us, find_range, &convd_volt, &convd_curr);
+      meas_get_IV_point(channel, inProgress, next_trigger_us, &convd_volt, &convd_curr);
       next_trigger_us += micro_step_time_us;
-      find_range=0;	//only look for range on the first measured point, later just verify.
     }
     //adjust_range_IV_point(channel, inProgress, &convd_curr);
 
@@ -1730,6 +1728,232 @@ void meas_flashmeasure_dumpbuffer(uint8_t channel, float illum, uint32_t flash_d
   //dump data
   prv_meas_print_data_ident_flashmeasure_dump();
   prv_meas_dump_from_buffer_human_readable_volt(channel, num_samples);
+}
+
+
+/**
+ * @brief measures I and V for MPPT
+ * @param Navg  Number of measurements to average
+ * @param *convd_volt  pointer to where to store voltage results
+ * @param *convd_curr  pointer to where to store current results
+ */
+
+void meas_mpp_IV_point(uint32_t Navg, t_daq_sample_convd* convd_volt, t_daq_sample_convd* convd_curr){
+
+  t_daq_sample_raw raw_volt, raw_curr;
+  uint32_t t1, t2;
+
+  dbg(Debug, "MPPT:meas_mpp_IV_point()\r\n");
+
+  t1 = usec_get_timestamp();
+
+  //perform the measurement
+  daq_prepare_for_sampling(Navg);
+  //start sampling
+  daq_start_sampling();     //Measures all channels in any case
+  //wait for sampling to finish
+  while(!daq_is_sampling_done());
+  //get raw averages from buffer
+  raw_volt = daq_volt_raw_get_average(Navg);
+  raw_curr = daq_curr_raw_get_average(Navg);
+  //convert to volts and amps
+  *convd_volt = daq_raw_to_volt(raw_volt);
+  *convd_curr = daq_raw_to_curr(raw_curr);
+
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MPPT:meas_mpp_IV_point() took: %lu usec\r\n", t2-t1);
+
+}
+
+
+uint8_t MpptOn=MPPT_ALL_OFF;
+uint64_t MpptPeriod = 10000;
+uint64_t NextMpptExecutionTime = 0;
+int8_t Udir = +1; //+1 increasing direction, -1 decreasing direction
+float Pold[FEC_NUM_CHANNELS];
+float MPPT_VsetPoint[FEC_NUM_CHANNELS];
+float MaxMPPVoltage = MPPT_MAX_VOLTAGE_DEFAULT;
+void mppt_start(uint8_t channel, uint32_t settling_time)
+{
+  t_daq_sample_convd convd_volt;
+  t_daq_sample_convd convd_curr;
+  float curr;
+  float volt;
+  float Pnew;
+  float Ithreshold;
+  int DirReverseCounter;
+  float voltageStep[FEC_NUM_CHANNELS];
+  uint8_t MpptFound=0;
+
+  dbg(Debug, "\r\nMPPT:Starting...\r\n");
+  if (channel == 0) MpptOn = MPPT_ALL_ON;
+  else MpptOn = 1<<(channel-1);
+  NextMpptExecutionTime = 0;
+
+  //select range for MPP
+  autorange_IV_point(channel, 0, settling_time, &convd_volt, &convd_curr);
+
+  //Measure Voc
+  dbg(Debug, "MPPT:Measuring Voc\r\n");
+  fec_disable_current(channel); //0 = All channels
+  usec_delay(settling_time);
+  meas_mpp_IV_point(1, &convd_volt, &convd_curr);   //Only a single measurement, as this will be used only as a first guess for Vmpp
+  for (int ch=0; ch<FEC_NUM_CHANNELS; ch++)
+  {
+    if ( (MpptOn & (1<<ch)) != 0 )
+    {
+      volt = daq_get_from_sample_convd_by_index(convd_volt, ch+1);
+      MPPT_VsetPoint[ch] = MPPT_FVOC * volt;
+      voltageStep[ch] = MPPT_SEARCH_VOLTAGE_STEP;
+      dbg(Debug, "MPPT CH%u:Voc=%.3fV,VmppStart=%.3fV\r\n",ch+1, volt, MPPT_VsetPoint[ch]);
+      fec_set_force_voltage(ch+1, MPPT_VsetPoint[ch]);  //set force voltage
+    }
+  }
+  fec_enable_current(channel); //0 = All channels
+
+  DirReverseCounter = 0;
+  for (int i=0; i<MPPT_MAX_START_STEPS; i++)
+  {
+    usec_delay(settling_time/10); //step quite quickly (10x faster than normal)
+    meas_mpp_IV_point(prv_meas_num_avg, &convd_volt, &convd_curr);
+    for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
+    {
+      if ( (MpptOn & (1<<ch)) != 0 )
+      {
+        curr = daq_get_from_sample_convd_by_index(convd_curr, ch+1);
+        volt = daq_get_from_sample_convd_by_index(convd_volt, ch+1);
+
+        //Check current. If too low, decrease voltage
+        Pnew = curr * volt;
+        dbg(Debug, "MPPT step %02d, CH%u:V=%.3fV, I=%.3fuA, P=%.3fuW\r\n",i ,ch+1, volt, curr, Pnew);
+        switch (SelectedRange[ch])
+        {
+          case shnt_1X:    Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_1X_LOWTHR/0.08;   break;
+          case shnt_10X:   Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_10X_LOWTHR/0.08;  break;
+          case shnt_100X:  Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_100X_LOWTHR/0.08; break;
+          case shnt_1000X:
+          default:         Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_100X_LOWTHR/0.8;  break;
+        }
+        //check for minimum voltage (0V)
+        if (volt < 0.0)
+        {
+          dbg(Debug, "V<0\r\n");
+          Udir = +1;
+        }
+        //check for maximum voltage set by the user
+        else if (volt > MaxMPPVoltage)
+        {
+          dbg(Debug, "V>Max\r\n");
+          Udir = -1;
+        }
+        else if (curr < Ithreshold)
+        {
+          dbg(Debug, "I<min (%.3fuA)\r\n",Ithreshold);
+          Udir = -1; //if current is too small, ignore power, reduce voltage
+        }
+        //*** BASIC MPPT ***
+        else if (Pnew < Pold[ch])
+        {
+          Udir *= -1; //if new power is smaller than previous, reverse direction and reduce voltage step size to half
+          voltageStep[ch] /= 2;
+          if (voltageStep[ch] < MPPT_VOLTAGE_STEP) voltageStep[ch] = MPPT_VOLTAGE_STEP;
+          DirReverseCounter++;
+          if (DirReverseCounter > MPPT_DIR_REVERSE_THRESHOLD) MpptFound |= (1<<ch); //No need to stop adjusting this channel. Just flag that MPP has been reached.
+          dbg(Debug, "Pnew<Pold: dir=%+d, step=%.3fV, revCnt=%d\r\n",Udir, voltageStep[ch],DirReverseCounter);
+        }
+        MPPT_VsetPoint[ch] += Udir * voltageStep[ch];
+        //*** BASIC MPPT END ***
+        //check voltage limits:
+        if (MPPT_VsetPoint[ch] > MPPT_VMAX) MPPT_VsetPoint[ch] = MPPT_VMAX;
+        if (MPPT_VsetPoint[ch] < MPPT_VMIN) MPPT_VsetPoint[ch] = MPPT_VMIN;
+
+        //Apply new voltage
+        fec_set_force_voltage(ch+1, MPPT_VsetPoint[ch]);  //set force voltage
+        dbg(Debug, "New SetPointV=%.3f\r\n",MPPT_VsetPoint[ch]);
+        Pold[ch] = Pnew;
+      }
+    }
+    if ((MpptFound & MpptOn) == MpptOn) break;
+  }
+}
+
+void mppt_resume()
+{
+  MpptOn = MPPT_ALL_ON;
+}
+
+void mppt_stop()
+{
+  MpptOn = MPPT_ALL_OFF;
+}
+
+void mppt()
+{
+  t_daq_sample_convd convd_volt;
+  t_daq_sample_convd convd_curr;
+  float curr;
+  float volt;
+  float Pnew;
+  float Ithreshold;
+
+  if (MpptOn == MPPT_ALL_OFF) return;
+  if (usec_get_timestamp_64() < NextMpptExecutionTime) return;
+  NextMpptExecutionTime = usec_get_timestamp_64() + MpptPeriod;
+
+  meas_mpp_IV_point(prv_meas_num_avg, &convd_volt, &convd_curr);
+  for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
+  {
+    if ( (MpptOn & (1<<ch)) != 0 )
+    {
+      curr = daq_get_from_sample_convd_by_index(convd_curr, ch+1);
+      volt = daq_get_from_sample_convd_by_index(convd_volt, ch+1);
+
+      Pnew = curr * volt;
+      dbg(Debug, "MPPT CH%u:V=%.3fV, I=%.3fuA, P=%.3fuW\r\n",ch+1, volt, curr, Pnew);
+      switch (SelectedRange[ch])
+      {
+        case shnt_1X:    Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_1X_LOWTHR/0.08;   break;
+        case shnt_10X:   Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_10X_LOWTHR/0.08;  break;
+        case shnt_100X:  Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_100X_LOWTHR/0.08; break;
+        case shnt_1000X:
+        default:         Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_100X_LOWTHR/0.8;  break;
+      }
+      //check for minimum voltage (0V)
+      if (volt < 0.0)
+      {
+        dbg(Debug, "V<0\r\n");
+        Udir = +1;
+      }
+      //check for maximum voltage set by the user
+      else if (volt > MaxMPPVoltage)
+      {
+        dbg(Debug, "V>Max\r\n");
+        Udir = -1;
+      }
+      //Check current. If too low, decrease voltage
+      else if (curr < Ithreshold)
+      {
+        dbg(Debug, "I<min (%.3fuA)\r\n",Ithreshold);
+        Udir = -1; //if current is too small, ignore power, reduce voltage
+      }
+      //*** BASIC MPPT ***
+      else if (Pnew < Pold[ch])
+      {
+        Udir *= -1; //if new power is smaller than previous, reverse direction and reduce voltage step size to half
+        dbg(Debug, "Pnew<Pold: dir=%+d\r\n",Udir);
+      }
+      MPPT_VsetPoint[ch] += Udir * MPPT_VOLTAGE_STEP;
+      //*** BASIC MPPT END ***
+      //check voltage limits:
+      if (MPPT_VsetPoint[ch] > MPPT_VMAX) MPPT_VsetPoint[ch] = MPPT_VMAX;
+      if (MPPT_VsetPoint[ch] < MPPT_VMIN) MPPT_VsetPoint[ch] = MPPT_VMIN;
+
+      //Apply new voltage
+      fec_set_force_voltage(ch+1, MPPT_VsetPoint[ch]);  //set force voltage
+      dbg(Debug, "New SetPointV=%.3f\r\n",MPPT_VsetPoint[ch]);
+      Pold[ch] = Pnew;
+    }
+  }
 }
 
 /**

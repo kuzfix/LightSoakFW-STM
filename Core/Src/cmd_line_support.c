@@ -58,8 +58,91 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("setdutsettle", cli_cmd_setdutsettle_fn, "Set settling time of DUT for measuring IV points and IV characteristics. -t #settle_time[ms]# to set. In ms.");
   lwshell_register_cmd("getdutsettle", cli_cmd_getdutsettle_fn, "Get settling time of DUT for measuring IV points and IV characteristics In ms.");
   lwshell_register_cmd("getnoise", cli_cmd_getnoise_fn, "Measures noise (RMSmV and SNR) on channels. -c #ch# to select channel. No param for all channels. -VOLT or/and -CURR to measure noise on voltage or/and current channels.");
+  lwshell_register_cmd("mpptstart", cli_cmd_mpptstart_fn, "Start MPPT. -c #ch# to select channel. No param for all channels. -t settling time in us (100ms default, 1/10 of the setting will be used to find the first MPP)");
+  lwshell_register_cmd("mpptresume", cli_cmd_mpptresume_fn, "Resume MPPT - doesn't determine current range and doesn't use the faster algorithm to find the first MPPT. Uses previous settings.");
+  lwshell_register_cmd("mpptstop", cli_cmd_mpptstop_fn, "Stop MPPT - Stops MPPT. Once stopped it can be resumed.");
 }
 
+int32_t cli_cmd_mpptstart_fn(int32_t argc, char** argv){
+  uint32_t ch, settling_time;
+
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+  else{
+    ch = 0;
+  }
+
+  if(cmdsprt_is_arg("-t", argc, argv)){
+    //settling time argument present, parse
+    cmdsprt_parse_uint32("-t", &settling_time, argc, argv);
+  }
+  else{
+    settling_time = MPPT_SETTLING_TIME_DEFAULT;
+  }
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+
+    // schedule command ##########
+    mppt_param_t param;
+    param.channel = ch;
+    param.settling_time = settling_time;
+    cmdsched_encode_and_add(sched_time, mppt_start_id, &param, sizeof(mppt_param_t));
+    // END schedule command ##########
+
+  }
+  else{
+    //immediate command
+    mppt_start(ch,settling_time);
+  }
+  return 0;
+}
+
+int32_t cli_cmd_mpptresume_fn(int32_t argc, char** argv){
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, mppt_resume_id, NULL, 0);
+    // END schedule command ##########
+
+  }
+  else{
+    //immediate command
+    mppt_resume();
+  }
+  return 0;
+}
+
+int32_t cli_cmd_mpptstop_fn(int32_t argc, char** argv){
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, mppt_stop_id, NULL, 0);
+    // END schedule command ##########
+
+  }
+  else{
+    //immediate command
+    mppt_stop();
+  }
+  return 0;
+}
 
 int32_t cli_cmd_getvolt_fn(int32_t argc, char** argv){
   uint32_t ch;

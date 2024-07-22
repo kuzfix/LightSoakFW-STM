@@ -208,7 +208,8 @@ int main(void)
 
     dbg(Warning, "Starting main loop!\r\n");
 
-    int64_t time_to_cmd=0;
+    int64_t time_to_cmd=0, t1;
+
     while(1) {
       if (mainser_available()) {
         char c = mainser_read();
@@ -217,14 +218,22 @@ int main(void)
 
       if ((HAL_GetTick()-temptime > 1000) && (time_to_cmd > LEDCTRL_TEMP_READ_TIME_US)){
         temptime = HAL_GetTick();
+        t1 = usec_get_timestamp_64();
         ds18b20_handler();	//Takes about 6ms
         ledctrl_handler();	//Takes about 70us and only makes sense if temperature has just been measured
         if(LEDCTRL_PERIODIC_TEMP_REPORT_MAINSER){
           mainser_printf("\r\n");
           ledctrl_print_temperature_mainser();
         }
+        time_to_cmd -= usec_get_timestamp_64() - t1;  //There should never be any problems with over/uderflow,
+                                                      //because time_to_cmd should always be much larger
+                                                      //than the time needed for the above tasks
       }
 
+      if (time_to_cmd > MPPT_DURATION)
+      {
+        mppt(); //if mppt is not (manually) switched on, it will immediately return
+      }
       time_to_cmd = cmdsched_handler();
     }
 
