@@ -1790,6 +1790,7 @@ void mppt_start(uint8_t channel, uint32_t settling_time)
 
   dbg(Debug, "\r\nMPPT:Starting...\r\n");
   t1 = usec_get_timestamp();
+  MpptPeriod = settling_time;
   if (channel == 0) MpptOn = MPPT_ALL_ON;
   else MpptOn = 1<<(channel-1);
   NextMpptExecutionTime = 0;

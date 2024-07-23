@@ -38,18 +38,17 @@
 
 #define MPPT_DURATION 2000  //us
 #define MPPT_VOLTAGE_STEP 0.002 //V
-#define MPPT_SEARCH_VOLTAGE_STEP 0.100 //V
+#define MPPT_SEARCH_VOLTAGE_STEP 0.10 //V
 #define MPPT_SETTLING_TIME_DEFAULT  100000  //us
 #define MPPT_ALL_ON   0x3F
 #define MPPT_ALL_OFF  0x00
 #define MPPT_MAX_START_STEPS  100
 #define MPPT_FVOC 0.75  //first guess is Vmpp = 75% of Voc
-#define MPPT_DIR_REVERSE_THRESHOLD  10  //When first looking for MPP, MPP is reached when search algorithem reverses direction this many times
+#define MPPT_DIR_REVERSE_THRESHOLD  4  //When first looking for MPP, MPP is reached when search algorithem reverses direction this many times
 #define MPPT_VMAX 1.5   //V
 #define MPPT_VMIN -0.1  //V
 #define MPPT_IMIN_OF_RANGE 0.01 //Minimum current depends on range. 0.01 is 1% of current range.
 #define MPPT_MAX_VOLTAGE_DEFAULT  1.2 //V
-#define MPPT_NUM_SAMPLES  4
 
 
 //each approach iteration, shunt voltage is calculated and compensated

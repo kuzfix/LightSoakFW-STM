@@ -113,6 +113,19 @@ Example 2: *setshunt -c 1 -1000x* Set 1000X range on channel 1
 - ***setforcevolt*** - Manually sets voltage to be forced on a specific channel/s. Keep in mind the actual voltage on DUT deffers by the voltage drop on the shunt resistor. Always measure the actual voltage on DUT with *getvolt*.
 - ***autorange*** - Manually trigger shunt autoranging on all channels.
 
+- ***mpptstart*** - starts MPPT. MPPT uses Perturb & Observe algorithm. The start function measures Isc to determine the current range and select appropriate shunts, measures Voc and guesses Vmpp, from there it starts searching for MPP with large steps (100mV) and gradualy reduces them to the minimum value (2mV). After that, background MPPT is activated. Other measurements in the schedule have priority over MPPT, meaning that if there is not enough time between items in the schedule, MPPT will not be performed. Parameters:
+	- *-c*: channel (0=All, 1 to 6, one of the channels)
+	- *-t*: time between MPPT runs/samples/adjustments (us)
+	- *-r*: report every x-th MPP measurement	**NOT YET IMPLEMENTED** - no reporting at the moment
+Example: *mpptstart -c 0 -t 100000 -r 10*	Perform MPPT on all channels every 100ms and report I and V on every 10-th step (once per 1s)
+Warning: some functions do not play nice with MPPT. MPPT does not automatically enable current measuring circuit if another command disables it nor does it switch back to the correct current measurement range. Any larger illumination change should be accompanied with repeated *mpptstart* to determine new current measurement range.
+Warning: I suspect that in some cases (when current noise is relatively large) the MPPT can drift uncontrollably - MPPT tracking is not global!
+
+- ***mpptresume*** - starts the MPPT without the autorange and quick find MPP step. Just enables periodic (background) MPPT functionality and restores previously determined current measurement ranges. Does not change any paramters.
+
+- ***mpptstop*** - stops background MPPT service.
+
+
 - ***ENDSEQUENCE*** - This command should be called by Python data logging code at the end of the sequence. Reboots the device one second after this command is invoked.
 
 
