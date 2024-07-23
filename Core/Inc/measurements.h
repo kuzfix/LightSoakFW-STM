@@ -49,6 +49,8 @@
 #define MPPT_VMIN -0.1  //V
 #define MPPT_IMIN_OF_RANGE 0.01 //Minimum current depends on range. 0.01 is 1% of current range.
 #define MPPT_MAX_VOLTAGE_DEFAULT  1.2 //V
+#define MPPT_NUM_SAMPLES  4
+
 
 //each approach iteration, shunt voltage is calculated and compensated
 //for better stability we can compensate a bit less

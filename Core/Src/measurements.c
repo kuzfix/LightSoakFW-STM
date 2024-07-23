@@ -1773,6 +1773,8 @@ int8_t Udir = +1; //+1 increasing direction, -1 decreasing direction
 float Pold[FEC_NUM_CHANNELS];
 float MPPT_VsetPoint[FEC_NUM_CHANNELS];
 float MaxMPPVoltage = MPPT_MAX_VOLTAGE_DEFAULT;
+enum shntEnum MPPTRange[6]={shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X};
+
 void mppt_start(uint8_t channel, uint32_t settling_time)
 {
   t_daq_sample_convd convd_volt;
@@ -1784,14 +1786,17 @@ void mppt_start(uint8_t channel, uint32_t settling_time)
   int DirReverseCounter;
   float voltageStep[FEC_NUM_CHANNELS];
   uint8_t MpptFound=0;
+  uint32_t t1,t2;
 
   dbg(Debug, "\r\nMPPT:Starting...\r\n");
+  t1 = usec_get_timestamp();
   if (channel == 0) MpptOn = MPPT_ALL_ON;
   else MpptOn = 1<<(channel-1);
   NextMpptExecutionTime = 0;
 
   //select range for MPP
   autorange_IV_point(channel, 0, settling_time, &convd_volt, &convd_curr);
+  for (int ch=0; ch<FEC_NUM_CHANNELS; ch++) MPPTRange[ch] = SelectedRange[ch];
 
   //Measure Voc
   dbg(Debug, "MPPT:Measuring Voc\r\n");
@@ -1826,7 +1831,7 @@ void mppt_start(uint8_t channel, uint32_t settling_time)
         //Check current. If too low, decrease voltage
         Pnew = curr * volt;
         dbg(Debug, "MPPT step %02d, CH%u:V=%.3fV, I=%.3fuA, P=%.3fuW\r\n",i ,ch+1, volt, curr, Pnew);
-        switch (SelectedRange[ch])
+        switch (MPPTRange[ch])
         {
           case shnt_1X:    Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_1X_LOWTHR/0.08;   break;
           case shnt_10X:   Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_10X_LOWTHR/0.08;  break;
@@ -1875,11 +1880,25 @@ void mppt_start(uint8_t channel, uint32_t settling_time)
     }
     if ((MpptFound & MpptOn) == MpptOn) break;
   }
+  t2 = usec_get_timestamp();
+  dbg(Debug, "MPPT first MPP finding took: %lu usec\r\n", t2-t1);
 }
 
 void mppt_resume()
 {
   MpptOn = MPPT_ALL_ON;
+  for (int ch=0; ch<FEC_NUM_CHANNELS; ch++)
+  {
+    switch (MPPTRange[ch])
+    {
+      case shnt_1X:    fec_set_shunt_1x(ch+1); break;
+      case shnt_10X:   fec_set_shunt_10x(ch+1); break;
+      case shnt_100X:  fec_set_shunt_100x(ch+1); break;
+      case shnt_1000X: fec_set_shunt_1000x(ch+1); break;
+      default:
+        break;
+    }
+  }
 }
 
 void mppt_stop()
@@ -1907,10 +1926,10 @@ void mppt()
     {
       curr = daq_get_from_sample_convd_by_index(convd_curr, ch+1);
       volt = daq_get_from_sample_convd_by_index(convd_volt, ch+1);
-
       Pnew = curr * volt;
+
       dbg(Debug, "MPPT CH%u:V=%.3fV, I=%.3fuA, P=%.3fuW\r\n",ch+1, volt, curr, Pnew);
-      switch (SelectedRange[ch])
+      switch (MPPTRange[ch])
       {
         case shnt_1X:    Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_1X_LOWTHR/0.08;   break;
         case shnt_10X:   Ithreshold = MPPT_IMIN_OF_RANGE * FEC_SHNT_10X_LOWTHR/0.08;  break;
@@ -1921,19 +1940,19 @@ void mppt()
       //check for minimum voltage (0V)
       if (volt < 0.0)
       {
-        dbg(Debug, "V<0\r\n");
+        dbg(Warning, "V<0\r\n");
         Udir = +1;
       }
       //check for maximum voltage set by the user
       else if (volt > MaxMPPVoltage)
       {
-        dbg(Debug, "V>Max\r\n");
+        dbg(Warning, "V>Max\r\n");
         Udir = -1;
       }
       //Check current. If too low, decrease voltage
       else if (curr < Ithreshold)
       {
-        dbg(Debug, "I<min (%.3fuA)\r\n",Ithreshold);
+        dbg(Warning, "I<min (%.3fuA)\r\n",Ithreshold);
         Udir = -1; //if current is too small, ignore power, reduce voltage
       }
       //*** BASIC MPPT ***
@@ -1942,6 +1961,7 @@ void mppt()
         Udir *= -1; //if new power is smaller than previous, reverse direction and reduce voltage step size to half
         dbg(Debug, "Pnew<Pold: dir=%+d\r\n",Udir);
       }
+      Pold[ch]=Pnew;
       MPPT_VsetPoint[ch] += Udir * MPPT_VOLTAGE_STEP;
       //*** BASIC MPPT END ***
       //check voltage limits:
@@ -1951,7 +1971,6 @@ void mppt()
       //Apply new voltage
       fec_set_force_voltage(ch+1, MPPT_VsetPoint[ch]);  //set force voltage
       dbg(Debug, "New SetPointV=%.3f\r\n",MPPT_VsetPoint[ch]);
-      Pold[ch] = Pnew;
     }
   }
 }
