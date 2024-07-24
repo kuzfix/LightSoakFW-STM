@@ -113,7 +113,7 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
 
 void meas_end_of_sequence(void);
 
-void mppt_start(uint8_t channel, uint32_t settling_time);
+void mppt_start(uint8_t channel, uint32_t settling_time, uint32_t report_every_xth_point);
 void mppt_resume();
 void mppt_stop();
 void mppt();
@@ -122,6 +122,7 @@ void mppt();
 //sample printing to main serial functions
 void prv_meas_print_timestamp(uint64_t timestamp);
 void prv_meas_print_ch_ident(uint8_t channel, uint8_t sample_timestamp);
+void prv_meas_print_ch_ident_by_mask(uint8_t channel_mask, uint8_t sample_timestamp);
 void prv_meas_print_data_ident_voltage(void);
 void prv_meas_print_data_ident_current(void);
 void prv_meas_print_data_ident_IV_point(void);
@@ -129,12 +130,14 @@ void prv_meas_print_data_ident_dump_text_volt(void);
 void prv_meas_print_data_ident_dump_text_curr(void);
 void prv_meas_print_data_ident_dump_text_IV(void);
 void prv_meas_print_data_ident_IV_characteristic(void);
+void prv_meas_print_data_ident_MPP(void);
 void prv_meas_print_data_ident_flashmeasure_single(void);
 void prv_meas_print_data_ident_flashmeasure_dump(void);
 void prv_meas_print_dump_end(void);
 void prv_meas_print_sample(t_daq_sample_convd sample, uint8_t channel);
 void prv_meas_print_IV_point_ts(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel, uint8_t channel_mask);
 void prv_meas_print_IV_point(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel);
+void prv_meas_print_mpp(uint8_t channel_mask, t_daq_sample_convd *sample_volt, t_daq_sample_convd *sample_curr);
 void prv_meas_dump_from_buffer_human_readable_volt(uint8_t channel, uint32_t num_samples);
 void prv_meas_dump_from_buffer_human_readable_curr(uint8_t channel, uint32_t num_samples);
 void prv_meas_dump_from_buffer_human_readable_iv(uint8_t channel, uint32_t num_samples);
@@ -145,6 +148,7 @@ void prv_meas_dump_from_buffer_human_readable_iv(uint8_t channel, uint32_t num_s
 typedef struct{
   uint8_t channel;
   uint32_t settling_time;
+  uint32_t report_every_xth_point;
 } mppt_param_t;
 
 //meas_get_voltage

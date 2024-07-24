@@ -169,7 +169,7 @@ uint64_t cmdsched_handler(void){
       cmdsched_decode(cmd, &param, sizeof(mppt_param_t));
       //wait for exact time to call function
       while(usec_get_timestamp_64() < cmd.exec_time);
-      mppt_start(param.channel, param.settling_time);
+      mppt_start(param.channel, param.settling_time, param.report_every_xth_point);
       break;
     }
     case mppt_resume_id: {

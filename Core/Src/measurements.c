@@ -1400,6 +1400,32 @@ void prv_meas_print_ch_ident(uint8_t channel, uint8_t sample_timestamp){
 }
 
 /**
+ * @brief prints channel identification as per channel mask (any number of channels from 1 to 6)
+ * - CH1 if single or CH1:CH2:CH3:CH4:CH5:CH6 if all
+ * @param timestamp timestamp to print
+ */
+void prv_meas_print_ch_ident_by_mask(uint8_t channel_mask, uint8_t sample_timestamp){
+  char str[30];
+  int str_idx=0;
+  for (int ch=0; ch<FEC_NUM_CHANNELS; ch++)
+  {
+    if ( (channel_mask & (1<<ch)) != 0 )
+    {
+      str_idx += sprintf(&str[str_idx],"CH%u:",ch+1);
+    }
+  }
+  if (sample_timestamp != 0)
+  {
+    sprintf(&str[str_idx],"t\r\n");
+  }
+  else
+  {
+    sprintf(&str[str_idx-1],"\r\n");
+  }
+  mainser_printf(str);
+}
+
+/**
  * @brief prints data identification VOLT
  */
 void prv_meas_print_data_ident_voltage(void){
@@ -1446,6 +1472,13 @@ void prv_meas_print_data_ident_dump_text_IV(void){
  */
 void prv_meas_print_data_ident_IV_characteristic(void){
   mainser_printf("IVCHAR[uA__V]:\r\n");
+}
+
+/**
+ * @brief prints data identification human readable MPP point
+ */
+void prv_meas_print_data_ident_MPP(void){
+  mainser_printf("MPPT[uA__V]:\r\n");
 }
 
 /**
@@ -1766,16 +1799,18 @@ void meas_mpp_IV_point(uint32_t Navg, t_daq_sample_convd* convd_volt, t_daq_samp
 }
 
 
-uint8_t MpptOn=MPPT_ALL_OFF;
+uint8_t MpptOn = MPPT_ALL_OFF;
 uint64_t MpptPeriod = 10000;
 uint64_t NextMpptExecutionTime = 0;
+uint32_t MpptReportEveryXthPoint = 0;
+uint32_t MpptReportCnt;
 int8_t Udir = +1; //+1 increasing direction, -1 decreasing direction
 float Pold[FEC_NUM_CHANNELS];
 float MPPT_VsetPoint[FEC_NUM_CHANNELS];
 float MaxMPPVoltage = MPPT_MAX_VOLTAGE_DEFAULT;
 enum shntEnum MPPTRange[6]={shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X,shnt_10X};
 
-void mppt_start(uint8_t channel, uint32_t settling_time)
+void mppt_start(uint8_t channel, uint32_t settling_time, uint32_t report_every_xth_point)
 {
   t_daq_sample_convd convd_volt;
   t_daq_sample_convd convd_curr;
@@ -1791,6 +1826,8 @@ void mppt_start(uint8_t channel, uint32_t settling_time)
   dbg(Debug, "\r\nMPPT:Starting...\r\n");
   t1 = usec_get_timestamp();
   MpptPeriod = settling_time;
+  MpptReportEveryXthPoint = report_every_xth_point;
+  MpptReportCnt = 0;
   if (channel == 0) MpptOn = MPPT_ALL_ON;
   else MpptOn = 1<<(channel-1);
   NextMpptExecutionTime = 0;
@@ -1907,6 +1944,44 @@ void mppt_stop()
   MpptOn = MPPT_ALL_OFF;
 }
 
+void prv_meas_print_mpp(uint8_t channel_mask, t_daq_sample_convd *sample_volt, t_daq_sample_convd *sample_curr)
+{
+  int not_first=0;
+  if (MpptReportEveryXthPoint == 0) return;
+  MpptReportCnt++;
+  if (MpptReportCnt >= MpptReportEveryXthPoint)
+  {
+    MpptReportCnt=0;
+    if(sample_volt->timestamp != sample_curr->timestamp){
+      dbg(Warning,"prv_meas_print_volt_and_curr(): Volt/Curr timestamps not equal!\r\n");
+      //I am guessing this can happen on occasion, if the timer
+    }
+    prv_meas_print_data_ident_MPP();
+    prv_meas_print_timestamp(sample_volt->timestamp);
+    prv_meas_print_ch_ident_by_mask(channel_mask,0);
+
+    for (int ch=0; ch < FEC_NUM_CHANNELS; ch++)
+    {
+      if ( (MpptOn & (1<<ch)) != 0 )
+      {
+        if (not_first) mainser_printf(":");
+        not_first = 1;
+        switch(ch+1){
+          case 1: mainser_printf("%f_%f", sample_curr->ch1, sample_volt->ch1); break;
+          case 2: mainser_printf("%f_%f", sample_curr->ch2, sample_volt->ch2); break;
+          case 3: mainser_printf("%f_%f", sample_curr->ch3, sample_volt->ch3); break;
+          case 4: mainser_printf("%f_%f", sample_curr->ch4, sample_volt->ch4); break;
+          case 5: mainser_printf("%f_%f", sample_curr->ch5, sample_volt->ch5); break;
+          case 6: mainser_printf("%f_%f", sample_curr->ch6, sample_volt->ch6); break;
+          default:
+            break;
+        }
+      }
+    }
+    mainser_printf("\r\n");
+  }
+}
+
 void mppt()
 {
   t_daq_sample_convd convd_volt;
@@ -1972,8 +2047,11 @@ void mppt()
       //Apply new voltage
       fec_set_force_voltage(ch+1, MPPT_VsetPoint[ch]);  //set force voltage
       dbg(Debug, "New SetPointV=%.3f\r\n",MPPT_VsetPoint[ch]);
+
     }
   }
+  //Report mppt point
+  prv_meas_print_mpp(MpptOn, &convd_volt, &convd_curr);
 }
 
 /**
