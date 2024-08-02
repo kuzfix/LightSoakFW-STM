@@ -107,21 +107,43 @@ int32_t cli_cmd_mpptstart_fn(int32_t argc, char** argv){
 }
 
 int32_t cli_cmd_mpptresume_fn(int32_t argc, char** argv){
-  //scheduled or immediate
+  uint32_t ch = 0;
+  uint32_t settling_time = UINT32_MAX;
+  uint32_t report_every_xth_point = UINT32_MAX;
 
+  if(cmdsprt_is_arg("-c", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-c", &ch, argc, argv);
+  }
+
+  if(cmdsprt_is_arg("-t", argc, argv)){
+    //settling time argument present, parse
+    cmdsprt_parse_uint32("-t", &settling_time, argc, argv);
+  }
+
+  if(cmdsprt_is_arg("-r", argc, argv)){
+    //settling time argument present, parse
+    cmdsprt_parse_uint32("-r", &report_every_xth_point, argc, argv);
+  }
+
+  //scheduled or immediate
   if(cmdsprt_is_arg("-sched", argc, argv)){
     //scheduled command
     uint64_t sched_time;
     cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
 
     // schedule command ##########
-    cmdsched_encode_and_add(sched_time, mppt_resume_id, NULL, 0);
+    mppt_param_t param;
+    param.channel = ch;
+    param.settling_time = settling_time;
+    param.report_every_xth_point = report_every_xth_point;
+    cmdsched_encode_and_add(sched_time, mppt_resume_id, &param, sizeof(mppt_param_t));
     // END schedule command ##########
 
   }
   else{
     //immediate command
-    mppt_resume();
+    mppt_resume(ch,settling_time,report_every_xth_point);
   }
   return 0;
 }

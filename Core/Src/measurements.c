@@ -1922,21 +1922,28 @@ void mppt_start(uint8_t channel, uint32_t settling_time, uint32_t report_every_x
   dbg(Debug, "MPPT first MPP finding took: %lu usec\r\n", t2-t1);
 }
 
-void mppt_resume()
+void mppt_resume(uint8_t channel, uint32_t settling_time, uint32_t report_every_xth_point)
 {
-  MpptOn = MPPT_ALL_ON;
+  if (channel == 0) MpptOn = MPPT_ALL_ON;
+  else MpptOn = 1<<(channel-1);
+
+  if (settling_time != UINT32_MAX) MpptPeriod = settling_time;
+  if (report_every_xth_point != UINT32_MAX) MpptReportEveryXthPoint = report_every_xth_point;
+
   for (int ch=0; ch<FEC_NUM_CHANNELS; ch++)
   {
     switch (MPPTRange[ch])
     {
-      case shnt_1X:    fec_set_shunt_1x(ch+1); break;
-      case shnt_10X:   fec_set_shunt_10x(ch+1); break;
-      case shnt_100X:  fec_set_shunt_100x(ch+1); break;
-      case shnt_1000X: fec_set_shunt_1000x(ch+1); break;
+      case shnt_1X:    fec_set_shunt_1x(ch+1);    fec_enable_current(ch+1); break;
+      case shnt_10X:   fec_set_shunt_10x(ch+1);   fec_enable_current(ch+1); break;
+      case shnt_100X:  fec_set_shunt_100x(ch+1);  fec_enable_current(ch+1); break;
+      case shnt_1000X: fec_set_shunt_1000x(ch+1); fec_enable_current(ch+1); break;
       default:
         break;
     }
   }
+
+  NextMpptExecutionTime = usec_get_timestamp_64();
 }
 
 void mppt_stop()

@@ -114,7 +114,7 @@ void meas_check_out_of_rng_curr(t_daq_sample_convd sample, uint8_t channel);
 void meas_end_of_sequence(void);
 
 void mppt_start(uint8_t channel, uint32_t settling_time, uint32_t report_every_xth_point);
-void mppt_resume();
+void mppt_resume(uint8_t channel, uint32_t settling_time, uint32_t report_every_xth_point);
 void mppt_stop();
 void mppt();
 

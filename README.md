@@ -74,32 +74,42 @@ Parameters:
 	- *-c* - channel (1-6 or 0 for all (default))
 	- *-n* - number of samples
 	- *-VOLT/-CURR/-IV* - measure either voltage or current or both
+
 Example: *measuredump -c 0 -n 1000 -VOLT* will measure voltage on all channels for a time period of 10ms.
 
 - ***flashmeasure*** - Performs a flashmeasure measurement on specified channel/s. This measurement consists of a short pulse of light, during which forward voltage is measured. By defaul, voltage is measured as an average of a certain number of samples at a certain time during the flash. *-DUMP* parameter can be used to dump the voltage samples of the whole flashmeasure measurement.
+
 Example: *flashmeasure -illum 1.0 -t 100 -DUMP* will generate a 100us long pulse of light with 1 sun irradiance and return all voltage measurements during the duration of the pulse.
+
 Example: *flashmeasure -illum 1.0 -t 100 -m 10 -n 4* will generate a 100us long pulse of light with 1 sun irradiance and start measuring voltages 10us after the start of the pulse. The result will be the average of 4 measurements.
 
 - ***getnoise*** - Evaluates the noise on input channels (voltage current or both) as RMS and SNR ratio. Evaluated on maximum possible number of buffered samples (2000).
 
 - ***setledcurr*** - Sets LED current. This is temperature compensated to a reference temperature of 25 C. Actual led current might differ due to this, but the light output will be constant for a given current at any LED temperature. (Max current is 1.5 A, allowing for temperature compensation even a bit less. Practical resolution is about 1% or 15 mA (compared to theoretical 1/4096 or 0.37 mA))
+
 Warning: The system keeps correcting LED current to compensate for temperature if the schedule allows it - only if there is at least 10ms before the next measurement in the schedule to be performed.
 
 - ***setledillum*** - Sets illumination in unit of Sun. Temperature compensated. Calibration should be done with *calibillum* as a point of LED current and illumination measured by external equipment. This should be configured for every test and is not persistent across reboots.
+
 Warning: The system keeps correcting LED current to compensate for temperature if the schedule allows it - only if there is at least 10ms before the next measurement in the schedule to be performed.
 
 - ***calibillum*** - Calibrates the relation between LED current and illumination. Relation is assumed to be linear. Calibrate at the illumination that will be used during the test for best accuracy. Not persistent across reboots. Parameters:
 	- *-illum*: illumination, unit: [sun]
 	- *-i*: current, unit: [A]
+
 Example: *calibillum -illum 1.0 -i 1.4* means that at current of 1.4 A, an illumination of 1.0 suns is achieved.
 To get the calibration parameters, use *setledcurr* to set the current, and measure the achieved illumination with external equipment.
 
 - ***enablecurrent*** - Connects the current measurement circuitry on a specific channel/s.
+
 Example 1: *enablecurrent* Enable current measurement circuitry on all channels.
+
 Example 2: *enablecurrent -c 3* Enable current measurement circuitry on channel 3.
 
 - ***disablecurrent*** - Disconnects the current measurement circuitry on a specific channel/s.
+
 Example 1: *disablecurrent* Disable current measurement circuitry on all channels.
+
 Example 2: *disablecurrent -c 3* Disable current measurement circuitry on channel 3.
 
 - ***setshunt*** - Manually sets shunt range on a specific channel/s. Defaults to 1000X. Before enabling current circuitry, always start at 1X range to avoid damage. Recomended ranges for currents are:
@@ -107,21 +117,33 @@ Example 2: *disablecurrent -c 3* Disable current measurement circuitry on channe
   - 10X: Above 38uA
   - 100X: Above 3.8uA
   - 1000X: Below 3.8uA
+
 Example 1: *setshunt -1x*	Set 1X range on all channels
+
 Example 2: *setshunt -c 1 -1000x* Set 1000X range on channel 1
 
-- ***setforcevolt*** - Manually sets voltage to be forced on a specific channel/s. Keep in mind the actual voltage on DUT deffers by the voltage drop on the shunt resistor. Always measure the actual voltage on DUT with *getvolt*.
+- ***setforcevolt*** - Manually sets voltage to be forced on a specific channel/s. Keep in mind the actual voltage on DUT differs by the voltage drop on the shunt resistor. Always measure the actual voltage on DUT with *getvolt*.
+
 - ***autorange*** - Manually trigger shunt autoranging on all channels.
 
 - ***mpptstart*** - starts MPPT. MPPT uses Perturb & Observe algorithm. The start function measures Isc to determine the current range and select appropriate shunts, measures Voc and guesses Vmpp, from there it starts searching for MPP with large steps (100mV) and gradualy reduces them to the minimum value (2mV). After that, background MPPT is activated. Other measurements in the schedule have priority over MPPT, meaning that if there is not enough time between items in the schedule, MPPT will not be performed. Parameters:
 	- *-c*: channel (0=All, 1 to 6, one of the channels)
 	- *-t*: time between MPPT runs/samples/adjustments (us)
 	- *-r*: report every x-th MPP measurement (0 = No reporting, 1 = report every MPP, 10 = report every tenth MPP,...)
+
 Example: *mpptstart -c 0 -t 100000 -r 10*	Perform MPPT on all channels every 100ms and report I and V on every 10-th step (once per 1s)
+
 Warning: some functions do not play nice with MPPT. MPPT does not automatically enable current measuring circuit if another command disables it nor does it switch back to the correct current measurement range. Any larger illumination change should be accompanied with repeated *mpptstart* to determine new current measurement range.
+
 Warning: I suspect that in some cases (when current noise is relatively large) the MPPT can drift uncontrollably - MPPT tracking is not global!
 
-- ***mpptresume*** - starts the MPPT without the autorange and quick find MPP step. Just enables periodic (background) MPPT functionality and restores previously determined current measurement ranges. Does not change any paramters.
+- ***mpptresume*** - starts the MPPT without the autorange and quick find MPP step. Just enables periodic (background) MPPT functionality and restores previously determined current measurement ranges. Provides opportunity to change time between MPPT runs and reporting rate. Parameters:
+	- *-c*: channel (no parameter or 0 = All, 1 to 6 = one of the channels)
+	- *-t*: time between MPPT runs/samples/adjustments (us), no parameter keeps previous setting
+	- *-r*: report every x-th MPP measurement (0 = No reporting, 1 = report every MPP, 10 = report every tenth MPP,...), no parameter keeps previous setting
+
+Example: *mpptstart -c 1* resumes MPPT, but only on channel 1, all other parameters remain unchanged
+
 
 - ***mpptstop*** - stops background MPPT service.
 
