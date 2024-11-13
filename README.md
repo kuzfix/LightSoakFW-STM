@@ -59,7 +59,19 @@ List of all commands can be printed via CLI by issuing a *help* command. Help fo
 - ***setnumavg*** - Set number of measurements to average. Applies to *getvolt* and *getcurr*. Buffer size for measurement results is 12000, meaning max. value can be 12000 if only 1 channel is to be mesured, or 2000 if all 6 are to be measured - not tested!
 Example: *setnumavg -n 20* Set number of measurements to average to 20.
 
+- ***setdutsettle*** - Set settling time of DUT for measuring IV points and IV characteristics.
+Parameters:
+	*-t* - settle_time [ms] to set.
+Example: *setdutsettle -t 10* Set settling time to 10 ms.
+
+- ***getdutsettle*** - Get settling time of DUT for measuring IV points and IV characteristics in ms.
+
 - ***getivpoint*** - Enables current measurement circuitry and measures current at a specified voltage. This measurement can take a while, depending on various conditions. See *setdutsettle* and *getdutsettle* to specify the settling time of DUT.
+Parameters:
+	- *-c* - channel (1-6 or 0 for all (default))
+	- *-v* - voltage [V] at which to measure the current
+	- *-d* - disable current when finished (0 - leave voltage, current and shunt, 1 - disable current circuitry, reset shunt to -1000X after measurement is complete)
+	
 - ***getivchar*** - Measures an IV curve on specified channel. This measurement can take a while, depending on various conditions. 
 Parameters:
 	- *-c* - channel (1-6 or 0 for all (default))

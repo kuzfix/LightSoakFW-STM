@@ -233,6 +233,7 @@ int32_t cli_cmd_getcurr_fn(int32_t argc, char** argv){
 
 int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv){
   uint32_t ch;
+  uint32_t disable_current_when_finished;
   float cmdvolt;
 
   //parse ch
@@ -254,6 +255,13 @@ int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv){
     return -1;
   }
 
+  //parse disable current measurement when finished
+  disable_current_when_finished = 0;
+  if(cmdsprt_is_arg("-d", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_uint32("-d", &disable_current_when_finished, argc, argv);
+  }
+
   //scheduled or immediate
 
   if(cmdsprt_is_arg("-sched", argc, argv)){
@@ -264,14 +272,14 @@ int32_t cli_cmd_getiv_point_fn(int32_t argc, char** argv){
     meas_get_IV_point_param_t param;
     param.channel = ch;
     param.voltage = cmdvolt;
-    param.disable_current_when_finished = 1;
+    param.disable_current_when_finished = disable_current_when_finished;
     param.noident = 0;
     cmdsched_encode_and_add(sched_time, meas_get_IV_point_id, &param, sizeof(meas_get_IV_point_param_t));
     // END schedule command ##########
   }
   else{
     //immediate command
-    meas_get_exact_IV_point(ch, cmdvolt, 1, 0);
+    meas_get_exact_IV_point(ch, cmdvolt, disable_current_when_finished, 0);
   }
   return 0;
 }
