@@ -43,7 +43,7 @@ void ledctrl_print_temperature_mainser(void);
 float ledctrl_illumination_to_current(float illumination);
 float ledctrl_compensate_current_for_temp(float current);
 
-void ledctrl_calibrate_illum_curr(float illum, float current);
+void ledctrl_calibrate_illum_curr(float illum, float current, float a, float b, float c);
 
 void ledctrl_handler(void);
 

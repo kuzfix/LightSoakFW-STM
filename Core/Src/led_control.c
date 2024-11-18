@@ -5,6 +5,9 @@
 
 // coefficient to set current for requested illumination. Can be set by user through CLI as illlum - current point
 float prv_ledctrl_illum_to_curr_coeff = 1.0f;
+float prv_ledctrl_nonlin_poly_a = 0.0f;
+float prv_ledctrl_nonlin_poly_b = 1.0f;
+float prv_ledctrl_nonlin_poly_c = 0.0f;
 
 //currently set current
 float prv_ledctrl_current_now_notempcomp = 0.0f;
@@ -116,8 +119,10 @@ void ledctrl_set_illum(float illum){
  * @param current current in A
  */
 float ledctrl_illumination_to_current(float illumination){
+  //LED efficiency decreases with increasing current. Compensate for that with a 2nd order polynomial.
+  float lin_illumination = prv_ledctrl_nonlin_poly_a * illumination * illumination + prv_ledctrl_nonlin_poly_b * illumination + prv_ledctrl_nonlin_poly_c;
   //this is exact for 25degc, so needs to be compensated for temperature
-  float curr = illumination * prv_ledctrl_illum_to_curr_coeff;
+  float curr = lin_illumination * prv_ledctrl_illum_to_curr_coeff;
   return curr;
 }
 
@@ -151,10 +156,13 @@ void ledctrl_print_temperature_mainser(void){
  * @param illum illumination in suns
  * @param current current in A
  */
-void ledctrl_calibrate_illum_curr(float illum, float current){
+void ledctrl_calibrate_illum_curr(float illum, float current, float a, float b, float c){
   prv_ledctrl_illum_to_curr_coeff = current / illum;
-  mainser_printf("[A] per [sun]: %f\r\n", prv_ledctrl_illum_to_curr_coeff);
-  dbg(Warning, "prv_ledctrl_illum_to_curr_coeff set to: %f\r\n", prv_ledctrl_illum_to_curr_coeff);
+  prv_ledctrl_nonlin_poly_a = a;
+  prv_ledctrl_nonlin_poly_b = b;
+  prv_ledctrl_nonlin_poly_c = c;
+  mainser_printf("[A] per [sun]: %f, Non-linearity correction polynomial: %.2ex^2 +%.2ex +%.2e\r\n", prv_ledctrl_illum_to_curr_coeff,a,b,c);
+  dbg(Warning, "prv_ledctrl_illum_to_curr_coeff set to: %f, Non-linearity correction polynomial: %.2ex^2 +%.2ex +%.2e\r\n", prv_ledctrl_illum_to_curr_coeff,a,b,c);
 }
 
 /**

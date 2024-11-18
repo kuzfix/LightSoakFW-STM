@@ -942,6 +942,9 @@ int32_t cli_cmd_endseq_fn(int32_t argc, char** argv){
 int32_t cli_cmd_calib_illum_fn(int32_t argc, char** argv){
   float illum;
   float curr;
+  float a=0;
+  float b=1;
+  float c=0;
   //parse illum
   if(cmdsprt_is_arg("-illum", argc, argv)){
     //channel argument present, parse
@@ -961,6 +964,22 @@ int32_t cli_cmd_calib_illum_fn(int32_t argc, char** argv){
     return -1;
   }
 
+  //parse polynomial coefficient a
+  if(cmdsprt_is_arg("-pa", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-pa", &a, argc, argv);
+  }
+  //parse polynomial coefficient b
+  if(cmdsprt_is_arg("-pb", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-pb", &b, argc, argv);
+  }
+  //parse polynomial coefficient c
+  if(cmdsprt_is_arg("-pc", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-pc", &c, argc, argv);
+  }
+
   //scheduled or immediate
 
   if(cmdsprt_is_arg("-sched", argc, argv)){
@@ -971,13 +990,16 @@ int32_t cli_cmd_calib_illum_fn(int32_t argc, char** argv){
     ledctrl_calibillum_param_t param;
     param.illum = illum;
     param.curr = curr;
+    param.a = a;
+    param.b = b;
+    param.c = c;
     // schedule command ##########
     cmdsched_encode_and_add(sched_time, calibillum_id, &param, sizeof(ledctrl_calibillum_param_t));
     // END schedule command ##########
   }
   else{
     //immediate command
-    ledctrl_calibrate_illum_curr(illum, curr);
+    ledctrl_calibrate_illum_curr(illum, curr, a, b, c);
   }
   return 0;
 }

@@ -232,6 +232,9 @@ typedef struct{
 typedef struct{
     float illum;
     float curr;
+    float a;
+    float b;
+    float c;
 } ledctrl_calibillum_param_t;
 
 // setnumavg
