@@ -167,7 +167,7 @@ void prv_meas_print_volt_and_curr(t_daq_sample_convd sample_volt, t_daq_sample_c
  * @param channel channel to measure
  */
 void prv_meas_print_IV_point_ts(t_daq_sample_convd sample_volt, t_daq_sample_convd sample_curr, uint8_t channel, uint8_t channel_mask){
-  uint64_t sample_time;
+  int64_t sample_time;
   //voltage and current should have same timestamp if we want to print them in one go. Timestamp for voltage is used.
   //warning if timestamps not equal
   if(sample_volt.timestamp != sample_curr.timestamp){
@@ -184,31 +184,31 @@ void prv_meas_print_IV_point_ts(t_daq_sample_convd sample_volt, t_daq_sample_con
       (channel_mask & (1<<3)) ? mainser_printf("%f_%f:", sample_curr.ch4, sample_volt.ch4) : mainser_printf("NaN_NaN:");
       (channel_mask & (1<<4)) ? mainser_printf("%f_%f:", sample_curr.ch5, sample_volt.ch5) : mainser_printf("NaN_NaN:");
       (channel_mask & (1<<5)) ? mainser_printf("%f_%f:", sample_curr.ch6, sample_volt.ch6) : mainser_printf("NaN_NaN:");
-      mainser_printf("%llu\r\n", sample_time);
+      mainser_printf("%lld\r\n", sample_time);
       break;
     case 1:
       mainser_printf("%f_%f:", sample_curr.ch1, sample_volt.ch1);
-      mainser_printf("%llu\r\n", sample_time);
+      mainser_printf("%lld\r\n", sample_time);
       break;
     case 2:
       mainser_printf("%f_%f:", sample_curr.ch2, sample_volt.ch2);
-      mainser_printf("%llu\r\n", sample_time);
+      mainser_printf("%lld\r\n", sample_time);
       break;
     case 3:
       mainser_printf("%f_%f:", sample_curr.ch3, sample_volt.ch3);
-      mainser_printf("%llu\r\n", sample_time);
+      mainser_printf("%lld\r\n", sample_time);
       break;
     case 4:
       mainser_printf("%f_%f:", sample_curr.ch4, sample_volt.ch4);
-      mainser_printf("%llu\r\n", sample_time);
+      mainser_printf("%lld\r\n", sample_time);
       break;
     case 5:
       mainser_printf("%f_%f:", sample_curr.ch5, sample_volt.ch5);
-      mainser_printf("%llu\r\n", sample_time);
+      mainser_printf("%lld\r\n", sample_time);
       break;
     case 6:
       mainser_printf("%f_%f:", sample_curr.ch6, sample_volt.ch6);
-      mainser_printf("%llu\r\n", sample_time);
+      mainser_printf("%lld\r\n", sample_time);
       break;
     default:
       break;
@@ -1510,7 +1510,6 @@ void prv_meas_print_data_ident_flashmeasure_dump(void){
 
 /**
  * @brief Measure IV characteristic of DUT. Prints results to main serial
- * - !!! this is limited to single channel measurements !!!
  * @param channel channel to measure
  * @param start_volt start (low) voltage
  * @param end_volt end (high) voltage
@@ -1539,8 +1538,8 @@ void meas_get_iv_characteristic(uint8_t channel, float start_volt, float end_vol
   autorange_IV_point(channel, start_volt, step_time, &convd_volt, &convd_curr);  //autorange first, then mark the beginning of the IV scan
 
   micro_step_time_us = (step_time*1000) / Npoints_per_step;
-  prv_meas_start_timestamp = usec_get_timestamp_64() + micro_step_time_us;
-  next_trigger_us = prv_meas_start_timestamp;
+  prv_meas_start_timestamp = usec_get_timestamp_64();
+  next_trigger_us = prv_meas_start_timestamp + micro_step_time_us;
   //print ident
   //timestamp is just start of measurements, not for sample points
   prv_meas_print_data_ident_IV_characteristic();
