@@ -53,10 +53,16 @@ List of all commands can be printed via CLI by issuing a *help* command. Help fo
 - ***resettimestamp*** - Resets the microsecond timestamp counter to zero. This counter is used for timestamping measurements.
 
 - ***getvolt*** - Measures the voltage on specified channel/s [V]. Measurement is the average of a certain number of samples. See *getnumavg* and *setnumavg*.
+Parameters:
+	- *-c* - channel (1-6 or 0 for all (default))
 
 - ***getcurr*** - Measures the current on specified channel/s [uA]. Measurement is the average of a certain number of samples. See *getnumavg* and *setnumavg*. Does not change any current measuring parameters. By default, the measurement will be zero, as current measurement circuitry is disconnected.
+Parameters:
+	- *-c* - channel (1-6 or 0 for all (default))
 
 - ***setnumavg*** - Set number of measurements to average. Applies to *getvolt* and *getcurr*. Buffer size for measurement results is 12000, meaning max. value can be 12000 if only 1 channel is to be mesured, or 2000 if all 6 are to be measured - not tested!
+Parameters:
+	- *-n* - number of measurements to average (1-12000)
 Example: *setnumavg -n 20* Set number of measurements to average to 20.
 
 - ***setdutsettle*** - Set settling time of DUT for measuring IV points and IV characteristics.
@@ -120,6 +126,8 @@ Example 2: *enablecurrent -c 3* Enable current measurement circuitry on channel 
 
 - ***disablecurrent*** - Disconnects the current measurement circuitry on a specific channel/s.
 
+!!!Warning!!!: If the operating point voltage is set higher than is the voltage of the solar cell under test, the MOSFET body diode may start conducting. Make sure to also lower the operating point voltage!
+
 Example 1: *disablecurrent* Disable current measurement circuitry on all channels.
 
 Example 2: *disablecurrent -c 3* Disable current measurement circuitry on channel 3.
@@ -158,6 +166,7 @@ Example: *mpptstart -c 1* resumes MPPT, but only on channel 1, all other paramet
 
 
 - ***mpptstop*** - stops background MPPT service.
+Warning: This command only stops mppt and does not set voltage to 0.
 
 - ***ENDSEQUENCE*** - This command should be called by Python data logging code at the end of the sequence. Reboots the device one second after this command is invoked.
 
