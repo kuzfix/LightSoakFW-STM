@@ -104,6 +104,8 @@ Example: *flashmeasure -illum 1.0 -t 100 -m 10 -n 4* will generate a 100us long 
 - ***getnoise*** - Evaluates the noise on input channels (voltage current or both) as RMS and SNR ratio. Evaluated on maximum possible number of buffered samples (2000).
 
 - ***setledcurr*** - Sets LED current. This is temperature compensated to a reference temperature of 25 C. Actual led current might differ due to this, but the light output will be constant for a given current at any LED temperature. (Max current is 1.5 A, allowing for temperature compensation even a bit less. Practical resolution is about 1% or 15 mA (compared to theoretical 1/4096 or 0.37 mA))
+Parameters:
+	- *-i* - current in A
 
 Warning: The system keeps correcting LED current to compensate for temperature if the schedule allows it - only if there is at least 10ms before the next measurement in the schedule to be performed.
 
