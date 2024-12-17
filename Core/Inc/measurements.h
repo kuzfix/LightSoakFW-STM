@@ -237,6 +237,13 @@ typedef struct{
     float c;
 } ledctrl_calibillum_param_t;
 
+// calibillumL
+typedef struct{
+    float a;
+    float b;
+    float c;
+} ledctrl_calibillumL_param_t;
+
 // setnumavg
 typedef struct{
     uint32_t numavg;
@@ -280,6 +287,7 @@ typedef enum {
     autorange_id,
     getledtemp_id,
     calibillum_id,
+    calibillumL_id,
     meas_set_numavg_id,
     meas_get_numavg_id,
     meas_set_settle_time_id,

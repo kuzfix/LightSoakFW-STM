@@ -8,6 +8,10 @@ float prv_ledctrl_illum_to_curr_coeff = 1.0f;
 float prv_ledctrl_nonlin_poly_a = 0.0f;
 float prv_ledctrl_nonlin_poly_b = 1.0f;
 float prv_ledctrl_nonlin_poly_c = 0.0f;
+float prv_ledctrl_nonlin_poly_aL = 0.0f;
+float prv_ledctrl_nonlin_poly_bL = 1.0f;
+float prv_ledctrl_nonlin_poly_cL = 0.0f;
+float prv_ledctrl_LowHigh_threshold = 0.01f;
 
 //currently set current
 float prv_ledctrl_current_now_notempcomp = 0.0f;
@@ -119,10 +123,29 @@ void ledctrl_set_illum(float illum){
  * @param current current in A
  */
 float ledctrl_illumination_to_current(float illumination){
+  float curr;
+  float currL;
+  float currH;
+  float partH;
   //LED efficiency decreases with increasing current. Compensate for that with a 2nd order polynomial.
   float lin_illumination = prv_ledctrl_nonlin_poly_a * illumination * illumination + prv_ledctrl_nonlin_poly_b * illumination + prv_ledctrl_nonlin_poly_c;
+  float lin_illuminationL = prv_ledctrl_nonlin_poly_aL * illumination * illumination + prv_ledctrl_nonlin_poly_bL * illumination + prv_ledctrl_nonlin_poly_cL;
   //this is exact for 25degc, so needs to be compensated for temperature
-  float curr = lin_illumination * prv_ledctrl_illum_to_curr_coeff;
+  if (illumination < 0.9*prv_ledctrl_LowHigh_threshold)
+  {
+    curr = lin_illuminationL * prv_ledctrl_illum_to_curr_coeff;
+  }
+  else if (illumination > 1.1*prv_ledctrl_LowHigh_threshold)
+  {
+    curr = lin_illumination * prv_ledctrl_illum_to_curr_coeff;
+  }
+  else
+  {
+    currL = lin_illuminationL * prv_ledctrl_illum_to_curr_coeff;
+    currH = lin_illumination * prv_ledctrl_illum_to_curr_coeff;
+    partH = (illumination-prv_ledctrl_LowHigh_threshold)/prv_ledctrl_LowHigh_threshold*10.0/2.0+0.5;
+    curr = (1-partH) * currL + partH*currH;
+  }
   return curr;
 }
 
@@ -153,16 +176,38 @@ void ledctrl_print_temperature_mainser(void){
 
 /**
  * @brief Takes a callibrate point (illumination[sun], current[A]) from user and calculates prv_ledctrl_illum_to_curr_coeff coefficient
+ *        as well as 3 polynomial coefficients for non-linearity correction: y=ax2+bx+c
  * @param illum illumination in suns
  * @param current current in A
+ * @param polynomial coefficient a
+ * @param polynomial coefficient b
+ * @param polynomial coefficient c
  */
 void ledctrl_calibrate_illum_curr(float illum, float current, float a, float b, float c){
   prv_ledctrl_illum_to_curr_coeff = current / illum;
   prv_ledctrl_nonlin_poly_a = a;
   prv_ledctrl_nonlin_poly_b = b;
   prv_ledctrl_nonlin_poly_c = c;
+  prv_ledctrl_nonlin_poly_aL = a;
+  prv_ledctrl_nonlin_poly_bL = b;
+  prv_ledctrl_nonlin_poly_cL = c;
+  prv_ledctrl_LowHigh_threshold = illum/100;
   mainser_printf("[A] per [sun]: %f, Non-linearity correction polynomial: %.2ex^2 +%.2ex +%.2e\r\n", prv_ledctrl_illum_to_curr_coeff,a,b,c);
   dbg(Warning, "prv_ledctrl_illum_to_curr_coeff set to: %f, Non-linearity correction polynomial: %.2ex^2 +%.2ex +%.2e\r\n", prv_ledctrl_illum_to_curr_coeff,a,b,c);
+}
+
+/**
+ * @brief Takes additional low range non-linearity coefficients for current setting correction at ranges below 1%.
+ * @param polynomial coefficient a
+ * @param polynomial coefficient b
+ * @param polynomial coefficient c
+ */
+void ledctrl_calibrate_illum_curr_low(float a, float b, float c){
+  prv_ledctrl_nonlin_poly_aL = a;
+  prv_ledctrl_nonlin_poly_bL = b;
+  prv_ledctrl_nonlin_poly_cL = c;
+  mainser_printf("[A] per [sun]: %f, Non-linearity Low Light corr. poly.: %.2ex^2 +%.2ex +%.2e\r\n", prv_ledctrl_illum_to_curr_coeff,a,b,c);
+  dbg(Warning, "prv_ledctrl_illum_to_curr_coeff set to: %f, Non-linearity Low Light corr. poly.: %.2ex^2 +%.2ex +%.2e\r\n", prv_ledctrl_illum_to_curr_coeff,a,b,c);
 }
 
 /**

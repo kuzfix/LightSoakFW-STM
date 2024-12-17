@@ -48,7 +48,8 @@ void cmdsprt_setup_cli(void){
   lwshell_register_cmd("autorange", cli_cmd_autorange_fn, "Autorange current shunts on all channels. No scheduling.");
   lwshell_register_cmd("reboot", cli_cmd_reboot_fn, "Reboot the device. No scheduling.");
   lwshell_register_cmd("getledtemp", cli_cmd_getledtemp_fn, "Get LED temperature.");
-  lwshell_register_cmd("calibillum", cli_cmd_calib_illum_fn, "Callibrate illumination-current coefficient for LED. Specify a calibrated point with -i #current[A]# -illum #illum[sun]#");
+  lwshell_register_cmd("calibillum", cli_cmd_calib_illum_fn, "Callibrate illumination-current coefficient for LED. Specify a calibrated point with -i #current[A]# -illum #illum[sun]# and non-linearity coefficients -pa #a# -pb #b# -pc #c#");
+  lwshell_register_cmd("calibillumLow", cli_cmd_calib_illum_low_fn, "Callibrate Low part (1st percent) of the illumination-current coefficient for LED. -pa #a# -pb #b# -pc #c#");
   lwshell_register_cmd("yeet", cli_cmd_yeet_fn, "Y E E E E E T");
   lwshell_register_cmd("setbaud", cli_cmd_setbaud_fn, "sets baud rate. -b #baud# to set baud rate. No scheduling.");
   lwshell_register_cmd("ready?", cli_cmd_ready_fn, "Call to check if ready.");
@@ -1000,6 +1001,49 @@ int32_t cli_cmd_calib_illum_fn(int32_t argc, char** argv){
   else{
     //immediate command
     ledctrl_calibrate_illum_curr(illum, curr, a, b, c);
+  }
+  return 0;
+}
+
+int32_t cli_cmd_calib_illum_low_fn(int32_t argc, char** argv){
+  float a=0;
+  float b=1;
+  float c=0;
+
+  //parse polynomial coefficient a
+  if(cmdsprt_is_arg("-pa", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-pa", &a, argc, argv);
+  }
+  //parse polynomial coefficient b
+  if(cmdsprt_is_arg("-pb", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-pb", &b, argc, argv);
+  }
+  //parse polynomial coefficient c
+  if(cmdsprt_is_arg("-pc", argc, argv)){
+    //channel argument present, parse
+    cmdsprt_parse_float("-pc", &c, argc, argv);
+  }
+
+  //scheduled or immediate
+
+  if(cmdsprt_is_arg("-sched", argc, argv)){
+    //scheduled command
+    uint64_t sched_time;
+    cmdsprt_parse_uint64("-sched", &sched_time, argc, argv);
+    //save params
+    ledctrl_calibillumL_param_t param;
+    param.a = a;
+    param.b = b;
+    param.c = c;
+    // schedule command ##########
+    cmdsched_encode_and_add(sched_time, calibillumL_id, &param, sizeof(ledctrl_calibillumL_param_t));
+    // END schedule command ##########
+  }
+  else{
+    //immediate command
+    ledctrl_calibrate_illum_curr_low(a, b, c);
   }
   return 0;
 }

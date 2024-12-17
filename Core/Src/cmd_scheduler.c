@@ -370,6 +370,15 @@ uint64_t cmdsched_handler(void){
       ledctrl_calibrate_illum_curr(param.illum, param.curr, param.a, param.b, param.c);
       break;
     }
+    case calibillumL_id: {
+      mainser_printf("\r\n");
+      ledctrl_calibillumL_param_t param;
+      cmdsched_decode(cmd, &param, sizeof(ledctrl_calibillumL_param_t));
+      //wait for exact time to call function
+      while(usec_get_timestamp_64() < cmd.exec_time);
+      ledctrl_calibrate_illum_curr_low(param.a, param.b, param.c);
+      break;
+    }
     case meas_set_numavg_id: {
       mainser_printf("\r\n");
       meas_set_num_avg_param_t param;
