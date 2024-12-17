@@ -36,7 +36,7 @@
 #define MEAS_IV_CHAR_MIN_STEPS_THR 3 //
 #define MEAS_IV_CHAR_MIN_DELTA_V 0.002 //V  //PWM ripple up to 0.62mV and step size 1.6 mV
 
-#define MPPT_DURATION 2000  //us
+#define MPPT_DURATION 21000  //us
 #define MPPT_VOLTAGE_STEP 0.020 //0.002 V
 #define MPPT_SEARCH_VOLTAGE_STEP 0.10 //V
 #define MPPT_SETTLING_TIME_DEFAULT  100000  //us
