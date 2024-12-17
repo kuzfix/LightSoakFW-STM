@@ -1816,7 +1816,7 @@ uint64_t MpptPeriod = 10000;
 uint64_t NextMpptExecutionTime = 0;
 uint32_t MpptReportEveryXthPoint = 0;
 uint32_t MpptReportCnt;
-int8_t Udir = +1; //+1 increasing direction, -1 decreasing direction
+int8_t Udir[FEC_NUM_CHANNELS] = {+1,+1,+1,+1,+1,+1}; //+1 increasing direction, -1 decreasing direction
 float Pold[FEC_NUM_CHANNELS];
 float MPPT_VsetPoint[FEC_NUM_CHANNELS];
 float MaxMPPVoltage = MPPT_MAX_VOLTAGE_DEFAULT;
@@ -1893,30 +1893,30 @@ void mppt_start(uint8_t channel, uint32_t settling_time, uint32_t report_every_x
         if (volt < 0.0)
         {
           dbg(Debug, "V<0\r\n");
-          Udir = +1;
+          Udir[ch] = +1;
         }
         //check for maximum voltage set by the user
         else if (volt > MaxMPPVoltage)
         {
           dbg(Debug, "V>Max\r\n");
-          Udir = -1;
+          Udir[ch] = -1;
         }
         else if (curr < Ithreshold)
         {
           dbg(Debug, "I<min (%.3fuA)\r\n",Ithreshold);
-          Udir = -1; //if current is too small, ignore power, reduce voltage
+          Udir[ch] = -1; //if current is too small, ignore power, reduce voltage
         }
         //*** BASIC MPPT ***
         else if (Pnew < Pold[ch])
         {
-          Udir *= -1; //if new power is smaller than previous, reverse direction and reduce voltage step size to half
+          Udir[ch] *= -1; //if new power is smaller than previous, reverse direction and reduce voltage step size to half
           voltageStep[ch] /= 2;
           if (voltageStep[ch] < MPPT_VOLTAGE_STEP) voltageStep[ch] = MPPT_VOLTAGE_STEP;
           DirReverseCounter++;
           if (DirReverseCounter > MPPT_DIR_REVERSE_THRESHOLD) MpptFound |= (1<<ch); //No need to stop adjusting this channel. Just flag that MPP has been reached.
-          dbg(Debug, "Pnew<Pold: dir=%+d, step=%.3fV, revCnt=%d\r\n",Udir, voltageStep[ch],DirReverseCounter);
+          dbg(Debug, "Pnew<Pold: dir=%+d, step=%.3fV, revCnt=%d\r\n",Udir[ch], voltageStep[ch],DirReverseCounter);
         }
-        MPPT_VsetPoint[ch] += Udir * voltageStep[ch];
+        MPPT_VsetPoint[ch] += Udir[ch] * voltageStep[ch];
         //*** BASIC MPPT END ***
         //check voltage limits:
         if (MPPT_VsetPoint[ch] > MPPT_VMAX) MPPT_VsetPoint[ch] = MPPT_VMAX;
@@ -2036,28 +2036,28 @@ void mppt()
       if (volt < 0.0)
       {
         dbg(Warning, "V<0\r\n");
-        Udir = +1;
+        Udir[ch] = +1;
       }
       //check for maximum voltage set by the user
       else if (volt > MaxMPPVoltage)
       {
         dbg(Warning, "V>Max\r\n");
-        Udir = -1;
+        Udir[ch] = -1;
       }
       //Check current. If too low, decrease voltage
       else if (curr < Ithreshold)
       {
         dbg(Warning, "I<min (%.3fuA)\r\n",Ithreshold);
-        Udir = -1; //if current is too small, ignore power, reduce voltage
+        Udir[ch] = -1; //if current is too small, ignore power, reduce voltage
       }
       //*** BASIC MPPT ***
       else if (Pnew < Pold[ch])
       {
-        Udir *= -1; //if new power is smaller than previous, reverse direction and reduce voltage step size to half
-        dbg(Debug, "Pnew<Pold: dir=%+d\r\n",Udir);
+        Udir[ch] *= -1; //if new power is smaller than previous, reverse direction and reduce voltage step size to half
+        dbg(Debug, "Pnew<Pold: dir=%+d\r\n",Udir[ch]);
       }
       Pold[ch]=Pnew;
-      MPPT_VsetPoint[ch] += Udir * MPPT_VOLTAGE_STEP;
+      MPPT_VsetPoint[ch] += Udir[ch] * MPPT_VOLTAGE_STEP;
       //*** BASIC MPPT END ***
       //check voltage limits:
       if (MPPT_VsetPoint[ch] > MPPT_VMAX) MPPT_VsetPoint[ch] = MPPT_VMAX;
