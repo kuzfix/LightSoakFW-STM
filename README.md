@@ -96,6 +96,7 @@ Parameters:
 Example: *measuredump -c 0 -n 1000 -VOLT* will measure voltage on all channels for a time period of 10ms.
 
 - ***flashmeasure*** - Performs a flashmeasure measurement on specified channel/s. This measurement consists of a short pulse of light, during which forward voltage is measured. By defaul, voltage is measured as an average of a certain number of samples at a certain time during the flash. *-DUMP* parameter can be used to dump the voltage samples of the whole flashmeasure measurement.
+**Warning:** At low irradiances the LED controll circuit response becomes quite slow. At 3W/m2 (0.3% of maximum) the LED needed 1ms to respond! That means that setting parameter -t 5000 resulted in a 4 ms flash.
 
 Example: *flashmeasure -illum 1.0 -t 100 -DUMP* will generate a 100us long pulse of light with 1 sun irradiance and return all voltage measurements during the duration of the pulse.
 

@@ -84,7 +84,7 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
     mainser_printf("SCHED_FAIL\r\n");
     return -1;
   }
-  if(exec_time < cmdsched_last_scheduled_time){
+  if(exec_time <= cmdsched_last_scheduled_time){
     dbg(Error, "sched time before last sched time\n");
     mainser_printf("SCHED_FAIL:NOT_CHRONOLOGICAL\r\n");
     return -1;
@@ -126,7 +126,8 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
     uint64_t time_to_cmd =  cmd.exec_time - usec_get_timestamp_64() - CMDSCHED_POP_BEFORE_EXEC_US;
     if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
       // send request for new cmds to put in cmd queue
-      cmdsprt_request_new_cmds();
+      if(cmdsched_q_free_spaces() > 0)
+        cmdsprt_request_new_cmds();
     }
   }
   else
@@ -455,7 +456,8 @@ uint64_t cmdsched_handler(void){
   uint64_t time_to_cmd =  cmd.exec_time - usec_get_timestamp_64() - CMDSCHED_POP_BEFORE_EXEC_US;
   if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
     // send request for new cmds to put in cmd queue
-    cmdsprt_request_new_cmds();
+    if(cmdsched_q_free_spaces() > 0)
+      cmdsprt_request_new_cmds();
   }
   return time_to_cmd;
 }
