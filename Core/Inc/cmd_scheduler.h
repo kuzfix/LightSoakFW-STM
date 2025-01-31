@@ -18,6 +18,7 @@
 //cmds are poped from the queue and parsed some time before execution.
 //When this happens, code waits in blocking until the time of execution.
 #define CMDSCHED_POP_BEFORE_EXEC_US 500
+#define CMDSCHED_TIME_BETWEEN_REQUESTS_US 100000  //0.1s
 
 //todo: implement a check so that cmds are scheduled after now and cronologically one after the other
 

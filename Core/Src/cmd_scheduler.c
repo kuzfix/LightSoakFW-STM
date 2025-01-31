@@ -76,7 +76,8 @@ void cmdsched_start() {
 
 //######################################################################
 
-
+uint8_t EndOfSequenceReceived = 0;
+uint64_t time_of_lastcmd_request = 0;
 int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *params, uint8_t params_len){
   uint32_t free_space = cmdsched_q_free_spaces();
   if(free_space == 0){
@@ -103,10 +104,12 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
   if (free_space == 0)
     cmdsched_start();
   if (cmd_id == end_of_sequence_id)
+  {
+    EndOfSequenceReceived = 1;
     cmdsched_start();
+  }
 
   //request new cmd if time
-  //return time left until next cmd is to be executed
   if(cmdsched_q_count() == 0){
     //nothing in queue, we have a lot of time, request sched
     cmdsprt_request_new_cmds();
@@ -123,19 +126,20 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
       return 0;
     }
 
-    uint64_t time_to_cmd =  cmd.exec_time - usec_get_timestamp_64() - CMDSCHED_POP_BEFORE_EXEC_US;
+    uint64_t time_to_cmd =  cmd.exec_time - tnow - CMDSCHED_POP_BEFORE_EXEC_US;
     if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
       // send request for new cmds to put in cmd queue
       if(cmdsched_q_free_spaces() > 0)
+      {
+        time_of_lastcmd_request = tnow;
         cmdsprt_request_new_cmds();
+      }
     }
   }
   else
   {
     cmdsprt_request_new_cmds();
   }
-
-  // ##
 
   return 0;
 }
@@ -146,17 +150,33 @@ void cmdsched_decode(cmd_sched_t cmd, void *params, uint8_t params_len){
 
 //run this as often as possible. returns time left until next cmd is to be executed
 uint64_t cmdsched_handler(void){
+  uint64_t time_to_cmd;
+
   if(cmdsched_q_count() == 0 || !isSchRunning()){
     //nothing in queue. we have a lot of time.
+    time_of_lastcmd_request = 0;
     return 0xFFFFFFFFFFFFFFFF;
   }
   uint64_t time_now = usec_get_timestamp_64();
   cmd_sched_t cmd = cmdsched_q_peek();
   //time to parse and run?
-  if(time_now < cmd.exec_time - CMDSCHED_POP_BEFORE_EXEC_US){
+  if(time_now < cmd.exec_time - CMDSCHED_POP_BEFORE_EXEC_US)
+  {
     //nothing to do yet. return time to next cmd
-    return cmd.exec_time - time_now - CMDSCHED_POP_BEFORE_EXEC_US;
-
+    time_to_cmd =  cmd.exec_time - time_now - CMDSCHED_POP_BEFORE_EXEC_US;
+    if((cmdsched_q_free_spaces() > 0) && (EndOfSequenceReceived == 0)) //if there is any room in the buffer
+    {
+      if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US)    //and enough time to do it
+      {                                                   //send request for new cmds to put in cmd queue
+        //however, prevent flooding with requests by limiting the request rate to 1 per 100(?) ms
+        if (time_now - time_of_lastcmd_request > CMDSCHED_TIME_BETWEEN_REQUESTS_US)
+        {
+          time_of_lastcmd_request = time_now;
+          cmdsprt_request_new_cmds();
+        }
+      }
+    }
+    return time_to_cmd;
   }
 
   //time to pop, parse and execute cmd
@@ -439,7 +459,7 @@ uint64_t cmdsched_handler(void){
     }
   }
   //return time left until next cmd is to be executed
-  if(cmdsched_q_count() == 0){
+  if ( (cmdsched_q_count() == 0) && (EndOfSequenceReceived == 0) ){
     //nothing in queue, we have a lot of time, request sched
     cmdsprt_request_new_cmds();
     return 0xFFFFFFFFFFFFFFFF;
@@ -453,11 +473,5 @@ uint64_t cmdsched_handler(void){
     return 0;
   }
 
-  uint64_t time_to_cmd =  cmd.exec_time - usec_get_timestamp_64() - CMDSCHED_POP_BEFORE_EXEC_US;
-  if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
-    // send request for new cmds to put in cmd queue
-    if(cmdsched_q_free_spaces() > 0)
-      cmdsprt_request_new_cmds();
-  }
   return time_to_cmd;
 }
