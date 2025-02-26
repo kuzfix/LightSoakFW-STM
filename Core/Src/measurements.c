@@ -1942,16 +1942,25 @@ void mppt_resume(uint8_t channel, uint32_t settling_time, uint32_t report_every_
   if (settling_time != UINT32_MAX) MpptPeriod = settling_time;
   if (report_every_xth_point != UINT32_MAX) MpptReportEveryXthPoint = report_every_xth_point;
 
+  //Set next MPPT execution time. Right now apply last MPPT voltages.
+  NextMpptExecutionTime = usec_get_timestamp_64() + MpptPeriod;
+
   for (int ch=0; ch<FEC_NUM_CHANNELS; ch++)
   {
-    switch (MPPTRange[ch])
+    if ( (MpptOn & (1<<ch)) != 0 )
     {
-      case shnt_1X:    fec_set_shunt_1x(ch+1);    fec_enable_current(ch+1); break;
-      case shnt_10X:   fec_set_shunt_10x(ch+1);   fec_enable_current(ch+1); break;
-      case shnt_100X:  fec_set_shunt_100x(ch+1);  fec_enable_current(ch+1); break;
-      case shnt_1000X: fec_set_shunt_1000x(ch+1); fec_enable_current(ch+1); break;
-      default:
-        break;
+      switch (MPPTRange[ch])
+      {
+        case shnt_1X:    fec_set_shunt_1x(ch+1);    fec_enable_current(ch+1); break;
+        case shnt_10X:   fec_set_shunt_10x(ch+1);   fec_enable_current(ch+1); break;
+        case shnt_100X:  fec_set_shunt_100x(ch+1);  fec_enable_current(ch+1); break;
+        case shnt_1000X: fec_set_shunt_1000x(ch+1); fec_enable_current(ch+1); break;
+        default:
+          break;
+      }
+      //Apply previously determined (last used) MPP voltage
+      fec_set_force_voltage(ch+1, MPPT_VsetPoint[ch]);  //set force voltage
+      dbg(Debug, "New SetPointV=%.3f\r\n",MPPT_VsetPoint[ch]);
     }
   }
 
