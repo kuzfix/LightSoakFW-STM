@@ -108,10 +108,12 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
     EndOfSequenceReceived = 1;
     cmdsched_start();
   }
+  uint64_t tnow = usec_get_timestamp_64();
 
   //request new cmd if time
   if(cmdsched_q_count() == 0){
     //nothing in queue, we have a lot of time, request sched
+    time_of_lastcmd_request = tnow;
     cmdsprt_request_new_cmds();
     return 0;
   }
@@ -119,7 +121,6 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
 
   if (isSchRunning())
   {
-    uint64_t tnow = usec_get_timestamp_64();
     //check that if time left is actually positive (scheduled cmds can be late...)
     if((tnow + CMDSCHED_POP_BEFORE_EXEC_US) >  cmd.exec_time){
       //we are already late, no time to transfer cmds. return 0
@@ -129,7 +130,7 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
     uint64_t time_to_cmd =  cmd.exec_time - tnow - CMDSCHED_POP_BEFORE_EXEC_US;
     if(time_to_cmd > MIN_TIME_TO_CMD_TO_REQ_CMDS_US){
       // send request for new cmds to put in cmd queue
-      if(cmdsched_q_free_spaces() > 0)
+      if ( (cmdsched_q_free_spaces() > 0) && (!EndOfSequenceReceived))
       {
         time_of_lastcmd_request = tnow;
         cmdsprt_request_new_cmds();
@@ -138,6 +139,7 @@ int8_t cmdsched_encode_and_add(uint64_t exec_time, meas_funct_id cmd_id, void *p
   }
   else
   {
+    time_of_lastcmd_request = tnow;
     cmdsprt_request_new_cmds();
   }
 
@@ -464,14 +466,15 @@ uint64_t cmdsched_handler(void){
     cmdsprt_request_new_cmds();
     return 0xFFFFFFFFFFFFFFFF;
   }
-  cmd = cmdsched_q_peek();
 
+  cmd = cmdsched_q_peek();
   uint64_t tnow = usec_get_timestamp_64();
+  time_to_cmd =  cmd.exec_time - time_now - CMDSCHED_POP_BEFORE_EXEC_US;
   //check that if time left is actually positive (scheduled cmds can be late...)
+  //  (unsigned numbers can be tricky :) - time_to_cmd is always positive value)
   if((tnow + CMDSCHED_POP_BEFORE_EXEC_US) >  cmd.exec_time){
     //we are already late, no time to transfer cmds. return 0
     return 0;
   }
-
   return time_to_cmd;
 }
